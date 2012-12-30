@@ -1,0 +1,37 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: Arbuckle_2Go
+  pool: 5
+  timeout: 5000
+  username: root
+  password: 3times69
+  host: localhost
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+test:
+  adapter: mysql2
+  database: arbuckle_test
+  encoding: utf8
+  pool: 5
+  username: root
+  password: 3times69
+  host: localhost
+  socket: /tmp/mysql.sock
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: g_arbucklecafe_arbuckleapp
+  pool: 5
+  timeout: 5000
+  username: garbucklecafea
+  password: 3times69
+  host: mysql-user.stanford.edu
+  socket: /tmp/mysql.sock
