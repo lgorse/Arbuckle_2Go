@@ -1,7 +1,6 @@
 Autotest.add_hook(:initialize) {|at|
   at.add_exception %r{^\.git}  # ignore Version Control System
   at.add_exception %r{^./tmp}  # ignore temp files, lest autotest will run again, and again...
-  at.add_exception %r{^./spec/controllers}  # ignore controllers until cache has been fixed. auto test taking too long for now
   at.add_exception %r{^./log}  # ignore temp files, lest autotest will run again, and again...
 
 
@@ -11,3 +10,5 @@ Autotest.add_hook(:initialize) {|at|
   }
   nil
 }
+
+ # at.add_exception %r{^./spec/controllers}  ignore controllers until cache has been fixed. auto test taking too long for now

@@ -6,7 +6,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: Arbuckle_2Go
+  database: ArbuckleUserList
   pool: 5
   timeout: 5000
   username: root

@@ -11,9 +11,65 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121230185810) do
+ActiveRecord::Schema.define(:version => 20121231001846) do
+
+  create_table "ArbuckleGroup", :primary_key => "groupID", :force => true do |t|
+    t.integer "typeID",                  :null => false
+    t.string  "groupName", :limit => 36, :null => false
+    t.float   "Price"
+    t.string  "Detail",    :limit => 68, :null => false
+  end
+
+  create_table "ArbuckleItem", :primary_key => "itemID", :force => true do |t|
+    t.integer "groupID",                   :null => false
+    t.string  "itemName",    :limit => 36, :null => false
+    t.float   "Price"
+    t.boolean "ComboSubset",               :null => false
+    t.string  "Detail",      :limit => 68, :null => false
+    t.string  "Spicy",       :limit => 11, :null => false
+  end
+
+  create_table "ArbuckleOrderDetails", :id => false, :force => true do |t|
+    t.integer "DetailID", :null => false
+    t.integer "OrderID",  :null => false
+    t.integer "typeID",   :null => false
+    t.integer "groupID",  :null => false
+    t.integer "itemID",   :null => false
+    t.integer "Quantity", :null => false
+    t.boolean "Spicy",    :null => false
+  end
+
+  add_index "ArbuckleOrderDetails", ["DetailID"], :name => "DetailID", :unique => true
+
+  create_table "ArbuckleOrderList", :primary_key => "orderID", :force => true do |t|
+    t.integer "UserID",                   :null => false
+    t.date    "Order Date",               :null => false
+    t.date    "DUE DATE",                 :null => false
+    t.string  "Day",        :limit => 36, :null => false
+    t.time    "Time",                     :null => false
+    t.boolean "Blocked",                  :null => false
+    t.boolean "Filled",                   :null => false
+  end
+
+  create_table "ArbuckleType", :primary_key => "typeID", :force => true do |t|
+    t.string "typeName", :limit => 36, :null => false
+    t.float  "Price"
+  end
+
+  create_table "ArbuckleUserList", :primary_key => "userID", :force => true do |t|
+    t.string  "UserName",   :limit => 36, :null => false
+    t.string  "first_name", :limit => 48, :null => false
+    t.string  "last_name",  :limit => 48, :null => false
+    t.string  "e_mail",     :limit => 48, :null => false
+    t.boolean "just_sent",                :null => false
+  end
 
   create_table "users", :force => true do |t|
+    t.string   "UserName"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "e_mail"
+    t.integer  "just_sent"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
