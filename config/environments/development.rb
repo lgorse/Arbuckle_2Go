@@ -34,4 +34,6 @@ Arbuckle2Go::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  #URI::DEFAULT_PARSER = URI::Parser.new(:UNRESERVED => URI::REGEXP::PATTERN::UNRESERVED + '\"')
 end
