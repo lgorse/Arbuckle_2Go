@@ -11,3 +11,55 @@
  *= require_self
  *= require_tree .
  */
+
+ body{
+ 	margin: 0;
+ 	padding:0;
+ }
+
+ header.greeting{
+ 	width: auto;
+ 	min-width: 800px;
+ 	margin-right: 0;
+ 	overflow: auto;
+ 	height: 70px;
+ 	border-bottom: 2px solid;
+ 	background-color: #2F4F4F;
+ }
+
+ .menu_core{
+ 	margin-left: 40px;
+ }
+
+div.welcome{
+	text-align: left;
+	float:left;
+	color: white;
+	margin-left: 1em;
+}
+
+div#logout{
+	text-align: right;
+	float:right;
+	margin-top: 1.5em;
+	margin-right: 2em;
+	background-color: white;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+div#logout a{
+text-decoration: none;
+}
+
+div#logout a:hover{
+	color: red;
+}
+
+.round{
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}

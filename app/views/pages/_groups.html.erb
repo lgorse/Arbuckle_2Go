@@ -1,0 +1,8 @@
+<% type.groups.find_each do |group| %>
+	<table class = "menu_table">
+		<tr class = "group_row">
+			<th class="group_header" colspan =4><%= group.groupName %></th>
+		</tr>
+		<%= render 'items', :group => group %>
+	</table>
+<% end %>	

@@ -1,0 +1,6 @@
+<ul class = 'type_tab'>
+<%Type.find_each do |type| %>
+<% name = type.typeName %>
+<li><%= link_to type.typeName, menu_path(:type => type), :class => 'type_link', :remote =>true %></li>
+<% end %>
+</ul>

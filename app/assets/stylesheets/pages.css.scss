@@ -1,3 +1,141 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.menu_name{
+	position: absolute;
+	top: 0px;
+	left: 15px;
+	width: 200px;
+	height: 100px;
+	border: 1px solid  black;
+	display: table;
+}
+
+.menu_name p{
+	text-align: center;
+display: table-cell;
+vertical-align: middle;
+margin-bottom: 10px;
+	color: blue;
+}
+
+.instructions{
+	position: absolute;
+	left: 217px;
+	height: 50px;
+	width: 80%;
+	max-width: 1366px;
+	border: 1px solid black;
+	background-color: grey;
+	display: table;
+
+	h3{
+		font-weight: normal;
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.button_to{
+		position: absolute;
+		left: 75%;
+		top: 25%;
+		margin-right: 5px;
+		text-align: left;
+	}
+}
+
+header.menu_header{
+	margin-right: 0;
+	position: absolute;
+	display: inline-block;
+	padding-right: 0px;
+	min-width: 600px;
+	width: 100%;
+	//border: 1px solid black;
+}
+
+#type_section{
+	position:absolute;
+	top: 173px;
+	border: 1px solid black;
+	left: 55px;
+	width: 200px;
+
+	ul{
+		margin: 0;
+		padding: 0;
+	}
+
+	li{
+		height: 30px;
+		border-bottom: 1px solid black;
+		padding-top: 5px;
+
+	}
+
+	.type_tab{
+		list-style-type: none;
+	}
+
+	.type_link{
+		text-decoration: none;
+		margin-left: 10px;
+	}
+
+
+}
+
+.menu_section{
+	position: absolute;
+	top: 123px;
+	left: 257px;
+	list-style-type: none;
+	text-align: center;
+}
+
+.menu_table{
+width: 700px;
+border-collapse: collapse;
+}
+
+.group_row{
+	margin-top: 1px;
+	
+}
+
+.group_header{
+	border: 1px solid black;
+	padding:5px;
+
+}
+
+.item_row{
+
+
+}
+
+.item_data{
+width: 300px;
+padding-left: 5px;
+text-align: left;
+border: 1px solid black;
+}
+
+.item_table{
+
+}
+
+.item_name{
+
+}
+
+.item_detail{
+	font-style: italic;
+}
+
+.order_details{
+	float: right;
+	position: relative;
+overflow: hidden;
+}

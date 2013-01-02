@@ -7,7 +7,7 @@
 #  first_name :string(48)       not null
 #  last_name  :string(48)       not null
 #  e_mail     :string(48)       not null
-#  just_sent  :boolean          not null
+#  just_sent  :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'

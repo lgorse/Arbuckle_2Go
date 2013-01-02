@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121231060732) do
+ActiveRecord::Schema.define(:version => 20130101004245) do
 
   create_table "ArbuckleGroup", :primary_key => "groupID", :force => true do |t|
     t.integer "typeID",                  :null => false
@@ -64,6 +64,55 @@ ActiveRecord::Schema.define(:version => 20121231060732) do
     t.boolean "just_sent",                :default => false, :null => false
   end
 
+  create_table "battles", :primary_key => "Id", :force => true do |t|
+    t.integer "HeroId",               :null => false
+    t.string  "Battle", :limit => 36, :null => false
+  end
+
+  create_table "conquerorBattles", :primary_key => "BattleID", :force => true do |t|
+    t.integer "HeroID",               :null => false
+    t.string  "Battle", :limit => 36, :null => false
+  end
+
+  create_table "conquerors", :primary_key => "ID", :force => true do |t|
+    t.string "Name",     :limit => 36, :null => false
+    t.string "Origin",   :limit => 36, :null => false
+    t.string "Conquest", :limit => 36, :null => false
+    t.string "Battle",   :limit => 36, :null => false
+    t.string "Enemy",    :limit => 36, :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.integer  "typeID"
+    t.string   "groupName"
+    t.decimal  "Price",      :precision => 10, :scale => 0
+    t.string   "Detail"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "groups", ["typeID"], :name => "index_groups_on_typeID"
+
+  create_table "items", :force => true do |t|
+    t.integer  "groupID"
+    t.string   "itemName"
+    t.decimal  "Price",       :precision => 10, :scale => 0
+    t.boolean  "ComboSubset"
+    t.string   "Detail"
+    t.string   "Spicy"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
+  add_index "items", ["groupID"], :name => "index_items_on_groupID"
+
+  create_table "types", :force => true do |t|
+    t.string   "typeName"
+    t.decimal  "Price",      :precision => 10, :scale => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "UserName"
     t.string   "first_name", :default => ""
@@ -72,6 +121,12 @@ ActiveRecord::Schema.define(:version => 20121231060732) do
     t.integer  "just_sent"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "warriors", :primary_key => "key", :force => true do |t|
+    t.string  "Name",  :limit => 36, :null => false
+    t.string  "Enemy", :limit => 36, :null => false
+    t.integer "Age",                 :null => false
   end
 
 end

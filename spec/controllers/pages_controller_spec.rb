@@ -27,36 +27,62 @@ describe PagesController do
 
 	describe "GET 'home'" do
 
-		before(:each) do
-			request.cookies[:user_name] = "Laurent"
-			request.cookies[:user_login] = "lgorse"
-			@user = User.new
-			@user.UserName = cookies[:user_login]
-			@user.first_name = cookies[:user_name]
+		describe "valid login" do
+
+			before(:each) do
+				request.cookies[:user_name] = "Laurent"
+				request.cookies[:user_login] = "lgorse"
+				@user = User.new
+				@user.UserName = cookies[:user_login]
+				@user.first_name = cookies[:user_name]
+				@user.save
+
+				@type = FactoryGirl.create(:type)
+				3.times do |n|
+					FactoryGirl.create(:type)
+				end
+				5.times do |g|
+					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+					FactoryGirl.create(:item, :groupID => @group.groupID)
+				end
+			end
+
+			it "should be successful" do
+				get 'home'
+				response.should be_success
+
+			end
+
+			it "must contain user name" do
+				get 'home'
+				response.body.should have_selector("h3", :text => cookies[:user_name])
+			end
+
+
+			it "should create a new session" do
+				get 'home'
+				session[:user_token].should == @user.userID
+			end
+
+			it "should lead to the current user" do
+				get 'home'
+				User.find(session[:user_token]).should == @user
+			end
+
+			it "should have a visible logout link" do
+				get 'home'
+				response.body.should have_css("a", :text =>"Log out")
+			end
+
 		end
 
-		it "must contain user name" do
-			@user.save
-			get 'home'
-			response.body.should have_selector("p", :text => cookies[:user_name])
-		end
+		describe "failed or irregular entry" do
 
-		it "must contain user login" do
-			@user.save
-			get 'home'
-			response.body.should have_selector("p", :text => cookies[:user_login])
-		end
-
-		it "should create a new session" do
-			@user.save
-			get 'home'
-			session[:user_token].should == @user.userID
-		end
-
-		it "should lead to the current user" do
-			@user.save
-			get 'home'
-			User.find(session[:user_token]).should == @user
+			it "should redirect the user to the signin page if not signed in" do
+				#cookies.delete[:user_login]
+				get 'home'
+				response.should redirect_to root_path
+			end
 
 		end
 
@@ -70,6 +96,15 @@ describe PagesController do
 			request.cookies[:user_first_name] = "New"
 			request.cookies[:user_last_name] = "kid"
 			request.cookies[:user_e_mail] = "in@town.com"
+
+			@type = FactoryGirl.create(:type)
+			3.times do |n|
+				FactoryGirl.create(:type)
+			end
+			5.times do |g|
+				@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+				FactoryGirl.create(:item, :groupID => @group.groupID)
+			end
 		end
 
 

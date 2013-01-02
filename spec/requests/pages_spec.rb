@@ -16,17 +16,11 @@ describe "Pages" do
 
 	describe "GET/ user_parse" do
 
-		it "should not contain a parsing message" do
-			visit user_parse_path
-			page.should_not have_css("p", :text => "Parsing user information")
-		end
+	
 	end
 
 	describe "GET/ home" do
-		it "should have a visible logout link" do
-			visit home_path
-			page.should have_css("a", :text =>"Log out")
-		end
+
 
 	end
 end

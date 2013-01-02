@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
 
+
 	def home
+		redirect_to root_path if cookies[:user_login].nil?
 		@user = User.find_by_UserName(cookies[:user_login])
 		create_user if (@user.nil?)
 		@name = @user.first_name
@@ -9,7 +11,7 @@ class PagesController < ApplicationController
 	end
 
 	def sign_in
-		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails.php"
+		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails-local.php"
 	end
 
 	def user_parse
@@ -41,5 +43,15 @@ class PagesController < ApplicationController
 		reset_session
 		redirect_to(logout_url)
 	end
+
+	def menu
+@type = Type.find(params[:type])
+		respond_to do |format|
+			format.html {redirect_to home_path}
+			format.js 
+		end
+
+	end
+
 
 end
