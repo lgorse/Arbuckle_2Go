@@ -45,13 +45,20 @@ class PagesController < ApplicationController
 	end
 
 	def menu
-@type = Type.find(params[:type])
+		@type = Type.find(params[:type])
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 
 		end
-
 	end
+
+	def order_details
+		respond_to do |format|
+			format.html {redirect_to home_path}
+			format.js
+		end
+	end
+	
 
 
 end

@@ -7,6 +7,7 @@ Arbuckle2Go::Application.routes.draw do
   match '/user_parse', :to => "pages#user_parse"
   match '/logout', :to => 'pages#logout'
   match '/menu', :to => "pages#menu"
+  match '/order_details', :to => "pages#order_details"
 
   
   # The priority is based upon order of creation:
