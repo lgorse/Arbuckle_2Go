@@ -30,12 +30,8 @@ describe PagesController do
 		describe "valid login" do
 
 			before(:each) do
-				request.cookies[:user_name] = "Laurent"
-				request.cookies[:user_login] = "lgorse"
-				@user = User.new
-				@user.UserName = cookies[:user_login]
-				@user.first_name = cookies[:user_name]
-				@user.save
+				@user = FactoryGirl.create(:user)
+			request.session[:user_token] = @user.userID
 
 				@type = FactoryGirl.create(:type)
 				3.times do |n|
@@ -55,7 +51,7 @@ describe PagesController do
 
 			it "must contain user name" do
 				get 'home'
-				response.body.should have_selector("h3", :text => cookies[:user_name])
+				response.body.should have_selector("h3", :text => @user.first_name)
 			end
 
 
@@ -79,7 +75,6 @@ describe PagesController do
 		describe "failed or irregular entry" do
 
 			it "should redirect the user to the signin page if not signed in" do
-				get 'sign_in'
 				get 'logout'
 				get 'home'
 				response.should redirect_to root_path
@@ -91,32 +86,15 @@ describe PagesController do
 
 	describe "GET 'create'" do
 
-		before(:each) do
-			@user = nil
-			request.cookies[:user_login] = "newguy"
-			request.cookies[:user_first_name] = "New"
-			request.cookies[:user_last_name] = "kid"
-			request.cookies[:user_e_mail] = "in@town.com"
-
-			@type = FactoryGirl.create(:type)
-			3.times do |n|
-				FactoryGirl.create(:type)
-			end
-			5.times do |g|
-				@group = FactoryGirl.create(:group, :typeID => @type.typeID)
-				FactoryGirl.create(:item, :groupID => @group.groupID)
-			end
-		end
-
-
+	
 		it "should add the user to the database" do
 			lambda do
-				get 'home'
+				get :user_parse, :login => "newguy", :first_name => "New", :last_name => "kid", :e_mail => "in@town.com"
 			end.should change(User, :count).by(1)
 		end
 
 		it "should flash a welcome message to new users" do
-			get 'home'
+			get :user_parse, :login => "newguy", :first_name => "New", :last_name => "kid", :e_mail => "in@town.com"
 			flash[:notice].should =~ /Welcome to Arbuckle 2Go!/i
 		end
 

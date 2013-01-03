@@ -1,13 +1,11 @@
 class PagesController < ApplicationController
 
+before_filter :authenticate, :only => [:home]
 
 	def home
-		redirect_to root_path if cookies[:user_login].nil?
-		@user = User.find_by_UserName(cookies[:user_login])
-		create_user if (@user.nil?)
-		@name = @user.first_name
-		@login = @user.UserName
-		set_session
+			@user = User.find_by_userID(session[:user_token])
+			@name = @user.first_name
+			@login = @user.UserName
 	end
 
 	def sign_in
@@ -19,18 +17,20 @@ class PagesController < ApplicationController
 		cookies.permanent[:user_login] = params[:login]
 		cookies.permanent[:user_last_name] = params[:last_name]
 		cookies.permanent[:user_e_mail] = params[:e_mail]
+		@user = User.find_by_UserName(cookies[:user_login])
+		create_user if (@user.nil?)
+		set_session
 		redirect_to home_path
 	end
 
 	def create_user
-		user = User.new
-		user.UserName = cookies[:user_login]
-		user.first_name = cookies[:user_first_name]
-		user.last_name = cookies[:user_last_name]
-		user.e_mail = cookies[:user_e_mail]
-		user.just_sent = 0
-		user.save
-		@user = user
+		@user = User.new
+		@user.UserName = cookies[:user_login]
+		@user.first_name = cookies[:user_first_name]
+		@user.last_name = cookies[:user_last_name]
+		@user.e_mail = cookies[:user_e_mail]
+		@user.just_sent = 0
+		@user.save
 		flash[:notice] = "Welcome to Arbuckle 2Go!"
 	end
 
@@ -63,6 +63,12 @@ class PagesController < ApplicationController
 
 	def order_details
 		@new_item = params[:f]
+	end
+
+	protected
+
+	def authenticate
+			redirect_to root_path if session[:user_token].nil?
 	end
 	
 
