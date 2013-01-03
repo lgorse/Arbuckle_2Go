@@ -6,7 +6,7 @@
 
 header.menu_header{
 	width: auto;
-	min-width: 800px;
+	min-width: 1050px;
 	margin-right: 0;
 	padding-right: 0;
 	margin: 0;
@@ -88,6 +88,7 @@ header.menu_header{
 
 .menu_section{
 	position: relative;
+	width: 700px;
 	top: 0px;
 	left: 257px;
 	list-style-type: none;
@@ -127,12 +128,6 @@ header.menu_header{
 
 .item_detail{
 	font-style: italic;
-}
-
-#slideout{
-	margin: 0;
-	padding: 0;
-
 }
 
 .order_details{

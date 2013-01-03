@@ -5,12 +5,12 @@ $("#slideout").html("<%=escape_javascript(render 'order_details')  %>").click(fu
 
 $(function(){
 	$("#menu_core").css({opacity: 0.5})
-$("#order_details").animate({right:0}, {queue: false, duration: 250});
+$("#order_details").animate({right:0}, {duration: 250})
 
 });
 
 
 $('html').click(function(){
 	$("#menu_core").css({opacity:1})
-	$("#order_details").animate({"right":"-400px"}, 250)
+	$("#order_details").animate({"right":"-400px"}, 250, "linear")
 });
