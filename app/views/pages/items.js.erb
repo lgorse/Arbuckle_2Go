@@ -1,3 +1,4 @@
+
 $("#slideout").html("<%=escape_javascript(render 'order_details')  %>").click(function(event){
 	event.stopPropagation()
 });
@@ -6,11 +7,13 @@ $("#slideout").html("<%=escape_javascript(render 'order_details')  %>").click(fu
 $(function(){
 	$("#menu_core").css({opacity: 0.5})
 $("#order_details").animate({right:0}, {duration: 250})
+$("#menu_core a").bind('click', false).css({cursor:'default'});
 
 });
 
 
-$('html').click(function(){
+$('html, #menu_core a').click(function(){
 	$("#menu_core").css({opacity:1})
 	$("#order_details").animate({"right":"-400px"}, 250, "linear")
+	$("#menu_core a").unbind('click', false).css({cursor:'pointer'});
 });

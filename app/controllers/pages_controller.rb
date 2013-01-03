@@ -40,6 +40,7 @@ class PagesController < ApplicationController
 
 	def logout
 		logout_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/website_scripts/logoutRails.php"
+		cookies.delete(:user_login)
 		reset_session
 		redirect_to(logout_url)
 	end

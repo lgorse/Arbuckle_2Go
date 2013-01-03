@@ -79,7 +79,8 @@ describe PagesController do
 		describe "failed or irregular entry" do
 
 			it "should redirect the user to the signin page if not signed in" do
-				#cookies.delete[:user_login]
+				get 'sign_in'
+				get 'logout'
 				get 'home'
 				response.should redirect_to root_path
 			end
