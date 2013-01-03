@@ -2,10 +2,14 @@
 	<div class = "welcome"><h2>Arbuckle 2Go</h2></div>
 	<div id="logout" class="round"><a><%= link_to 'Log out',  logout_path %><a></div>
 </header>
-<section class = "menu_core">
 	<header class="menu_header"><%= render 'instructions' %></header>
-	<section id="type_section"><%= render 'types' %></section>
-	<section class="menu_section"><%= render 'groups', :type => Type.first %></section>
-	<div id = "slideout"></div>
-</section>
-</ul>
+	<section id = "menu_core">
+		<section id="type_section"><%= render 'types' %></section>
+		<section class="menu_section"><%= render 'groups', :type => Type.first %></section>
+	</section>
+	<section>
+		<div id = "slideout"></div>
+	</section>
+
+
+

@@ -2,58 +2,54 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.menu_name{
-	position: absolute;
-	top: 0px;
-	left: 15px;
-	width: 200px;
-	height: 100px;
-	border: 1px solid  black;
-	display: table;
-}
 
-.menu_name p{
-	text-align: center;
-	display: table-cell;
-	vertical-align: middle;
-	margin-bottom: 10px;
-	color: blue;
-}
-
-.instructions{
-	position: absolute;
-	left: 217px;
-	height: 50px;
-	width: 80%;
-	max-width: 1366px;
-	border: 1px solid black;
-	background-color: grey;
-	display: table;
-
-	h3{
-		font-weight: normal;
-		display: table-cell;
-		vertical-align: middle;
-	}
-
-	.button_to{
-		position: absolute;
-		left: 75%;
-		top: 25%;
-		margin-right: 5px;
-		text-align: left;
-	}
-}
 
 header.menu_header{
+	width: auto;
+	min-width: 800px;
 	margin-right: 0;
-	position: absolute;
-	display: inline-block;
-	padding-right: 0px;
-	min-width: 600px;
-	width: 100%;
-	//border: 1px solid black;
+	padding-right: 0;
+	margin: 0;
+
+	.menu_name{
+		position: absolute;
+		top: 71px;
+		left: 55px;
+		width: 200px;
+		height: 100px;
+		border: 1px solid  black;
+		display: table;
+
+	}
+
+	.menu_name p{
+		text-align: center;
+		display: table-cell;
+		vertical-align: middle;
+		color: blue;
+	}
+
+	.instructions{
+		position: static;
+		margin-left: 257px;
+		height: 50px;
+		width: auto;
+		border: 1px solid black;
+		background-color: grey;
+		
+
+		h3{
+			font-weight: normal;
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.button_to{
+			float: right;
+		}
+	}
 }
+
 
 #type_section{
 	position:absolute;
@@ -86,9 +82,13 @@ header.menu_header{
 
 }
 
+#menu_core{
+	height: auto;
+}
+
 .menu_section{
-	position: absolute;
-	top: 123px;
+	position: relative;
+	top: 0px;
 	left: 257px;
 	list-style-type: none;
 	text-align: center;
@@ -107,11 +107,6 @@ header.menu_header{
 .group_header{
 	border: 1px solid black;
 	padding:5px;
-
-}
-
-.item_row{
-
 
 }
 
@@ -134,36 +129,19 @@ header.menu_header{
 	font-style: italic;
 }
 
+#slideout{
+	margin: 0;
+	padding: 0;
+
+}
+
 .order_details{
-	position: absolute;
+	position: fixed;
 	top: 200px;
 	right: -350px;
 	width: 400px;
 	height: 400px;
 	margin: 0;
-	padding:0;
+	padding: 0;
 	background-color: grey;
-
-	ul{
-		width: 400px;
-		border: 1px solid black;
-		position:relative;
-		overflow: hidden;	
-		background-color: grey;	
-	}
-
-	li{
-		position:relative;
-		overflow: hidden;	
-		background-color: grey;	
-		text-align: center;
-	}
-}
-
-.order_details:hover{
-	right:0;
-	transition: all 0.5s ease-in-out;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
 }
