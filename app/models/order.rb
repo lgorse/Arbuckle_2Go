@@ -8,8 +8,8 @@
 #  DUE DATE   :date             not null
 #  Day        :string(36)       not null
 #  Time       :time             not null
-#  Blocked    :boolean          not null
-#  Filled     :boolean          not null
+#  Blocked    :boolean          default(FALSE), not null
+#  Filled     :boolean          default(FALSE), not null
 #
 
 class Order < ActiveRecord::Base

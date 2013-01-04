@@ -32,5 +32,15 @@ FactoryGirl.define do
 
 	end
 
+	factory :order do |order|
+		order.userID 1
+		order.date Date.current
+		order.day Date.current.strftime('%a')
+		order.time Time.current
+		order.due Date.tomorrow
+		order.blocked false
+		order.filled false
+	end
+
 
 end

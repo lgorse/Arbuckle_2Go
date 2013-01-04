@@ -41,6 +41,9 @@ before_filter :authenticate, :only => [:home]
 	def logout
 		logout_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/website_scripts/logoutRails.php"
 		cookies.delete(:user_login)
+		cookies.delete(:user_first_name)
+		cookies.delete(:user_last_name)
+		cookies.delete(:user_e_mail)
 		reset_session
 		redirect_to(logout_url)
 	end
