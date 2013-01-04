@@ -13,7 +13,6 @@
 class User < ActiveRecord::Base
 	self.table_name = "ArbuckleUserList"
 	before_save :default_values
-	#attr_accessible :UserName, :e_mail, :first_name, :just_sent, :last_name
 
 
 	validates :UserName, :presence => true

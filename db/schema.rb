@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130101004245) do
+ActiveRecord::Schema.define(:version => 20130104041135) do
 
   create_table "ArbuckleGroup", :primary_key => "groupID", :force => true do |t|
     t.integer "typeID",                  :null => false
@@ -105,6 +105,20 @@ ActiveRecord::Schema.define(:version => 20130101004245) do
   end
 
   add_index "items", ["groupID"], :name => "index_items_on_groupID"
+
+  create_table "orders", :force => true do |t|
+    t.integer  "userID"
+    t.date     "date"
+    t.date     "due"
+    t.string   "day",        :default => ""
+    t.time     "time"
+    t.boolean  "blocked",    :default => false
+    t.boolean  "filled",     :default => true
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "orders", ["userID"], :name => "index_orders_on_UserID"
 
   create_table "types", :force => true do |t|
     t.string   "typeName"
