@@ -2,6 +2,8 @@ Arbuckle2Go::Application.routes.draw do
 
   root :to => 'pages#sign_in'
 
+  resources :orders
+
   match '/home' , :to => "pages#home"
   match '/signin', :to => "pages#sign_in"
   match '/user_parse', :to => "pages#user_parse"

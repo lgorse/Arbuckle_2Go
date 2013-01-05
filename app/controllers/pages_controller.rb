@@ -3,7 +3,8 @@ class PagesController < ApplicationController
 before_filter :authenticate, :only => [:home]
 
 	def home
-			@user = User.find_by_userID(session[:user_token])
+		set_user
+		set_order
 			@name = @user.first_name
 			@login = @user.UserName
 	end
@@ -34,9 +35,7 @@ before_filter :authenticate, :only => [:home]
 		flash[:notice] = "Welcome to Arbuckle 2Go!"
 	end
 
-	def set_session
-		session[:user_token] = @user.userID
-	end
+	
 
 	def logout
 		logout_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/website_scripts/logoutRails.php"
@@ -73,7 +72,31 @@ before_filter :authenticate, :only => [:home]
 	def authenticate
 			redirect_to root_path if session[:user_token].nil?
 	end
-	
 
+	def set_user
+		@user = User.find_by_userID(session[:user_token])
+	end
+
+	def set_order
+		order_array = Order.where(:userID => @user.userID, :filled => false)
+
+		if order_array.size > 1
+			flash[:error] = "There was a problem with your pending order. Try again. Your pending order has been deleted."
+			Order.destroy_all(:userID => @user.userID, :filled => false)
+			render 'pages/home'
+		end
+
+		order_array.blank? ? @order = Order.new : @order = order_array.first
+		set_order_cookie
+	end
+
+	def set_order_cookie
+		cookies.permanent[:current_order] = @order
+	end
+
+		def set_session
+		session[:user_token] = @user.userID
+	end
 
 end
+

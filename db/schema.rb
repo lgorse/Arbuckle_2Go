@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104082828) do
+ActiveRecord::Schema.define(:version => 20130104112937) do
 
   create_table "ArbuckleGroup", :primary_key => "groupID", :force => true do |t|
     t.integer "typeID",                  :null => false
@@ -39,13 +39,13 @@ ActiveRecord::Schema.define(:version => 20130104082828) do
   end
 
   create_table "ArbuckleOrderList", :primary_key => "orderID", :force => true do |t|
-    t.integer "UserID",                                      :null => false
-    t.date    "Order Date",                                  :null => false
-    t.date    "DUE DATE",                                    :null => false
-    t.string  "Day",        :limit => 36,                    :null => false
-    t.time    "Time",                                        :null => false
-    t.boolean "Blocked",                  :default => false, :null => false
-    t.boolean "Filled",                   :default => false, :null => false
+    t.integer "UserID",                   :null => false
+    t.date    "Order Date",               :null => false
+    t.date    "DUE DATE",                 :null => false
+    t.string  "Day",        :limit => 36, :null => false
+    t.time    "Time",                     :null => false
+    t.boolean "Blocked",                  :null => false
+    t.boolean "Filled",                   :null => false
   end
 
   create_table "ArbuckleType", :primary_key => "typeID", :force => true do |t|
@@ -104,31 +104,29 @@ ActiveRecord::Schema.define(:version => 20130104082828) do
   add_index "items", ["groupID"], :name => "index_items_on_groupID"
 
   create_table "order_details", :force => true do |t|
-    t.integer  "orderID",    :null => false
-    t.integer  "typeID",     :null => false
-    t.integer  "groupID",    :null => false
-    t.integer  "itemID",     :null => false
-    t.integer  "quantity",   :null => false
-    t.boolean  "spicy",      :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "orderID"
+    t.integer "typeID"
+    t.integer "groupID"
+    t.integer "itemID"
+    t.integer "quantity"
+    t.boolean "spicy"
   end
 
-  add_index "order_details", ["orderID", "groupID"], :name => "index_order_details_on_orderID_and_groupID"
+  add_index "order_details", ["orderID"], :name => "index_order_details_on_orderID"
 
   create_table "orders", :force => true do |t|
     t.integer  "userID",                                        :null => false
     t.date     "date",                                          :null => false
     t.date     "due",                                           :null => false
     t.string   "day",        :default => ""
-    t.datetime "time",       :default => '2013-01-04 00:11:22', :null => false
+    t.datetime "time",       :default => '2013-01-04 03:02:46', :null => false
     t.boolean  "blocked",    :default => false,                 :null => false
     t.boolean  "filled",     :default => false,                 :null => false
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
   end
 
-  add_index "orders", ["userID"], :name => "index_orders_on_UserID"
+  add_index "orders", ["id"], :name => "index_orders_on_id"
 
   create_table "types", :force => true do |t|
     t.string   "typeName"

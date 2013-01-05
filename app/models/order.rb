@@ -22,7 +22,9 @@ class Order < ActiveRecord::Base
 	alias_attribute :blocked, :Blocked
 	alias_attribute :filled, :Filled
 
-	attr_accessible :userID, :date, :day, :due, :time, :blocked, :filled
-	
+	attr_protected :userID, :date, :day, :due, :time, :blocked, :filled
+
+	has_many :order_details, :foreign_key => :orderID, :dependent => :destroy
+	accepts_nested_attributes_for :order_details
   
 end

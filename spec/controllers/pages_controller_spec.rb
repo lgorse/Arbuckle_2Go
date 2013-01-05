@@ -31,7 +31,7 @@ describe PagesController do
 
 			before(:each) do
 				@user = FactoryGirl.create(:user)
-			request.session[:user_token] = @user.userID
+				request.session[:user_token] = @user.userID
 
 				@type = FactoryGirl.create(:type)
 				3.times do |n|
@@ -82,11 +82,108 @@ describe PagesController do
 
 		end
 
+		describe "order management" do
+
+			before(:each) do
+				@user = FactoryGirl.create(:user)
+				request.session[:user_token] = @user.userID
+
+				@type = FactoryGirl.create(:type)
+				3.times do |n|
+					FactoryGirl.create(:type)
+				end
+				5.times do |g|
+					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+					FactoryGirl.create(:item, :groupID => @group.groupID)
+				end
+			end
+
+			
+			describe "if an order doesn't exist" do
+
+				it "should create a new order" do
+					get 'home'
+					assigns(:order).should_not be_blank
+				end
+
+
+				it "should not be initialized" do
+					get 'home'
+					order = assigns(:order)
+					order.attributes.values.any?.should be_false
+				end
+
+				it "should create a cookie" do
+					get 'home'
+					cookies[:current_order].should_not be_blank
+				end
+			end
+
+			describe "if an order exists" do
+				before(:each) do
+					@order = FactoryGirl.create(:order, :userID => @user.userID)
+				end
+
+				it "should define the existing order as the session order" do
+					get 'home'
+					order = assigns(:order)
+					order.should == Order.find(@order.orderID)
+				end
+
+				it "should create  a cookie" do
+					get 'home'
+					cookies[:current_order].should_not be_blank
+				end
+
+				describe "if there are redundant orders" do
+					
+					before(:each) do
+						@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => false)
+						@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => false)
+						@order3 = FactoryGirl.create(:order, :userID => 1)
+						@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => true)
+					end
+
+					it "should remove all unfilled orders from a user" do
+						get 'home'
+						Order.where(:userID => @user.userID, :filled => false).size.should == 0
+					end	
+
+					it "should definitely not clear the whole database!" do
+						get 'home'
+						Order.all.size.should_not == 0
+					end
+
+					it "should not clear filled orders" do
+						get 'home'
+						Order.where(:userID => @user.userID).size.should == 1
+					end
+
+					it "should display a warning message" do
+						get 'home'
+						flash[:error].should =~ /There was a problem with your pending order/i
+					end
+
+					it "should create a new order" do
+						get 'home'
+						order = assigns(:order)
+						order.attributes.values.any?.should be_false
+					end
+
+					it "should create  a cookie" do
+						get 'home'
+						cookies[:current_order].should_not be_blank
+					end
+				end
+
+			end
+		end
+
 	end
 
 	describe "GET 'create'" do
 
-	
+
 		it "should add the user to the database" do
 			lambda do
 				get :user_parse, :login => "newguy", :first_name => "New", :last_name => "kid", :e_mail => "in@town.com"

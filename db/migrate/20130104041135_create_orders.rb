@@ -11,6 +11,6 @@ class CreateOrders < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :orders, :UserID
+    add_index :orders, :orderID
   end
 end

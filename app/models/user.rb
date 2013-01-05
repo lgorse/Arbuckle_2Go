@@ -17,10 +17,14 @@ class User < ActiveRecord::Base
 
 	validates :UserName, :presence => true
 
+
 	def default_values
 		self.first_name ||= ''
 		self.last_name ||= ''
 		self.e_mail ||= ''
 	end
+
+
+
 
 end

@@ -19,7 +19,11 @@ class OrderDetail < ActiveRecord::Base
 	alias_attribute :spicy, :Spicy
 	alias_attribute :orderID, :OrderID
 
-  attr_accessible :groupID, :itemID, :orderID, :quantity, :spicy, :typeID
+  attr_accessible :quantity, :spicy
+  
   validates :quantity, :presence => true, 
   					   :numericality => {:greater_than => 0}
+
+  belongs_to :order, :foreign_key => :OrderID
+  accepts_nested_attributes_for :order
 end
