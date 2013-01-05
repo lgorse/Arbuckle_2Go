@@ -70,6 +70,7 @@ describe PagesController do
 				response.body.should have_css("a", :text =>"Log out")
 			end
 
+
 		end
 
 		describe "failed or irregular entry" do
@@ -99,6 +100,7 @@ describe PagesController do
 			end
 
 			
+			
 			describe "if an order doesn't exist" do
 
 				it "should create a new order" do
@@ -113,10 +115,6 @@ describe PagesController do
 					order.attributes.values.any?.should be_false
 				end
 
-				it "should create a cookie" do
-					get 'home'
-					cookies[:current_order].should_not be_blank
-				end
 			end
 
 			describe "if an order exists" do
@@ -130,10 +128,6 @@ describe PagesController do
 					order.should == Order.find(@order.orderID)
 				end
 
-				it "should create  a cookie" do
-					get 'home'
-					cookies[:current_order].should_not be_blank
-				end
 
 				describe "if there are redundant orders" do
 					
@@ -170,10 +164,6 @@ describe PagesController do
 						order.attributes.values.any?.should be_false
 					end
 
-					it "should create  a cookie" do
-						get 'home'
-						cookies[:current_order].should_not be_blank
-					end
 				end
 
 			end
@@ -195,9 +185,32 @@ describe PagesController do
 			flash[:notice].should =~ /Welcome to Arbuckle 2Go!/i
 		end
 
+		it "should have a valid user name cookie" do
+				get :user_parse, :login => "newguy", :first_name => "New", :last_name => "kid", :e_mail => "in@town.com"
+				assigns(:user).first_name.should == cookies.signed[:user_first_name]
+
+			end
+
 	end
 
 	describe "GET logout" do
+
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			request.session[:user_token] = @user.userID
+			@type = FactoryGirl.create(:type)
+
+			3.times do |n|
+				FactoryGirl.create(:type)
+			end
+
+			5.times do |g|
+				@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+				FactoryGirl.create(:item, :groupID => @group.groupID)
+			end
+
+			get 'home'
+		end
 
 		it "should transfer the user to Stanford's webauth logout" do
 			get 'logout'
@@ -207,6 +220,11 @@ describe PagesController do
 		it "should delete the session" do
 			get 'logout'
 			session[:user_token].should == nil
+		end
+
+		it "should delete the order cookie" do
+			get 'logout'
+			cookies.signed[:current_order].should == nil
 		end
 	end
 
