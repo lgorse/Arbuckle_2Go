@@ -8,8 +8,8 @@
 #  DUE DATE   :date             not null
 #  Day        :string(36)       not null
 #  Time       :time             not null
-#  Blocked    :boolean          default(FALSE), not null
-#  Filled     :boolean          default(FALSE), not null
+#  Blocked    :boolean          not null
+#  Filled     :integer          not null
 #
 
 require 'spec_helper'
@@ -42,8 +42,8 @@ describe Order do
 		@order.blocked.should_not be_true
 	end
 
-	it "should default to filled" do
-		@order.filled.should be_false
+	it "should default to sent" do
+		@order.filled.should == 0
 	end
 
 	describe "dependencies" do
@@ -56,7 +56,7 @@ describe Order do
 			@order.due = Date.tomorrow
 			@order.time = Time.current
 			@order.blocked = false
-			@order.filled = false
+			@order.filled = 0
 			@order.save
 
 			@detail = @order.order_details.new(:quantity => 2, :spicy => false)

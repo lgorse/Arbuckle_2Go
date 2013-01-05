@@ -82,11 +82,11 @@ class PagesController < ApplicationController
 	end
 
 	def set_order
-		order_array = Order.where(:userID => @user.userID, :filled => false)
+		order_array = Order.where(:userID => @user.userID, :filled => [PENDING,CONFIRMED])
 
 		if order_array.size > 1
 			flash[:error] = "There was a problem with your pending order. Try again. Your pending order has been deleted."
-			Order.destroy_all(:userID => @user.userID, :filled => false)
+			Order.destroy_all(:userID => @user.userID, :filled => [PENDING, CONFIRMED])
 			render 'pages/home'
 		end
 

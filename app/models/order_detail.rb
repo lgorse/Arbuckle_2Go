@@ -9,7 +9,7 @@
 #  itemID   :integer          not null
 #  Quantity :integer          not null
 #  Spicy    :boolean          not null
-#
+
 
 
 
@@ -18,6 +18,7 @@ class OrderDetail < ActiveRecord::Base
 	alias_attribute :quantity, :Quantity
 	alias_attribute :spicy, :Spicy
 	alias_attribute :orderID, :OrderID
+	alias_attribute :detailID, :DetailID
 
   attr_accessible :quantity, :spicy
   

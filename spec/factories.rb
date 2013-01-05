@@ -39,8 +39,16 @@ FactoryGirl.define do
 		order.time Time.current
 		order.due Date.tomorrow
 		order.blocked false
-		order.filled false
+		order.filled 0
 	end
 
+	factory :order_detail do |detail|
+		detail.orderID 1
+		detail.typeID 3
+		detail.groupID 2
+		detail.itemID 4
+		detail.quantity 5
+		detail.spicy false
+	end
 
 end

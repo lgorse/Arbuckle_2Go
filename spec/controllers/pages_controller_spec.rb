@@ -99,6 +99,25 @@ describe PagesController do
 				end
 			end
 
+			describe "if an order has not been confirmed" do
+				before(:each) do
+					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
+				end
+
+				it "should define it as the session order " do
+					get 'home'
+					order = assigns(:order)
+					order.should == Order.find(@order.orderID)
+				end
+
+				it "should have a filled status of 2" do
+					get 'home'
+					order = assigns(:order)
+					order.filled.should == 2
+				end
+
+			end
+
 			
 			
 			describe "if an order doesn't exist" do
@@ -117,7 +136,7 @@ describe PagesController do
 
 			end
 
-			describe "if an order exists" do
+			describe "if an order has been confirmed" do
 				before(:each) do
 					@order = FactoryGirl.create(:order, :userID => @user.userID)
 				end
@@ -132,15 +151,15 @@ describe PagesController do
 				describe "if there are redundant orders" do
 					
 					before(:each) do
-						@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => false)
-						@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => false)
+						@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => 0)
+						@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
 						@order3 = FactoryGirl.create(:order, :userID => 1)
-						@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => true)
+						@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => 1)
 					end
 
 					it "should remove all unfilled orders from a user" do
 						get 'home'
-						Order.where(:userID => @user.userID, :filled => false).size.should == 0
+						Order.where(:userID => @user.userID, :filled => 0).size.should == 0
 					end	
 
 					it "should definitely not clear the whole database!" do

@@ -1,18 +1,14 @@
 class OrderController < ApplicationController
 
 	def destroy
-		TempOrder.delete(@order)
-		render 'pages/home'
+		Order.find(params[:orderID]).destroy
+		redirect_to home_path
 	end
 
-	def show
-@user = User.find(session[:user_token])
-		@order = TempOrder.find(@user.userID)
+	def update
+		@order = Order.find(params[:orderID])
+		@order.update_attribute(:filled, SENT)
+		
 	end
 
-	def clear
-	end
-
-	def send
-	end
 end

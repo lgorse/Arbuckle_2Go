@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104112937) do
+ActiveRecord::Schema.define(:version => 20130105092217) do
 
   create_table "ArbuckleGroup", :primary_key => "groupID", :force => true do |t|
     t.integer "typeID",                  :null => false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20130104112937) do
     t.string  "Day",        :limit => 36, :null => false
     t.time    "Time",                     :null => false
     t.boolean "Blocked",                  :null => false
-    t.boolean "Filled",                   :null => false
+    t.integer "Filled",                   :null => false
   end
 
   create_table "ArbuckleType", :primary_key => "typeID", :force => true do |t|
@@ -59,24 +59,6 @@ ActiveRecord::Schema.define(:version => 20130104112937) do
     t.string  "last_name",  :limit => 48,                    :null => false
     t.string  "e_mail",     :limit => 48,                    :null => false
     t.boolean "just_sent",                :default => false, :null => false
-  end
-
-  create_table "battles", :primary_key => "Id", :force => true do |t|
-    t.integer "HeroId",               :null => false
-    t.string  "Battle", :limit => 36, :null => false
-  end
-
-  create_table "conquerorBattles", :primary_key => "BattleID", :force => true do |t|
-    t.integer "HeroID",               :null => false
-    t.string  "Battle", :limit => 36, :null => false
-  end
-
-  create_table "conquerors", :primary_key => "ID", :force => true do |t|
-    t.string "Name",     :limit => 36, :null => false
-    t.string "Origin",   :limit => 36, :null => false
-    t.string "Conquest", :limit => 36, :null => false
-    t.string "Battle",   :limit => 36, :null => false
-    t.string "Enemy",    :limit => 36, :null => false
   end
 
   create_table "groups", :force => true do |t|
@@ -115,18 +97,16 @@ ActiveRecord::Schema.define(:version => 20130104112937) do
   add_index "order_details", ["orderID"], :name => "index_order_details_on_orderID"
 
   create_table "orders", :force => true do |t|
-    t.integer  "userID",                                        :null => false
-    t.date     "date",                                          :null => false
-    t.date     "due",                                           :null => false
+    t.integer  "userID",                        :null => false
+    t.date     "date",                          :null => false
+    t.date     "due",                           :null => false
     t.string   "day",        :default => ""
-    t.datetime "time",       :default => '2013-01-04 03:02:46', :null => false
-    t.boolean  "blocked",    :default => false,                 :null => false
-    t.boolean  "filled",     :default => false,                 :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "time",                          :null => false
+    t.boolean  "blocked",    :default => false, :null => false
+    t.integer  "filled",     :default => 0,     :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
-
-  add_index "orders", ["id"], :name => "index_orders_on_id"
 
   create_table "types", :force => true do |t|
     t.string   "typeName"
@@ -143,12 +123,6 @@ ActiveRecord::Schema.define(:version => 20130104112937) do
     t.integer  "just_sent"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "warriors", :primary_key => "key", :force => true do |t|
-    t.string  "Name",  :limit => 36, :null => false
-    t.string  "Enemy", :limit => 36, :null => false
-    t.integer "Age",                 :null => false
   end
 
 end
