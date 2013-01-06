@@ -47,14 +47,7 @@ class PagesController < ApplicationController
 		end
 	end
 
-def items
-		@item = Item.find(params[:item])
-		@orderID = params[:orderID]
-		respond_to do |format|
-			format.html {redirect_to home_path}
-			format.js
-		end
-	end
+
 	
 	
 

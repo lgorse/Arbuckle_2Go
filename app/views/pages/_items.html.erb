@@ -2,8 +2,7 @@
 <tr class = "item_row">
 	<% items.each do |item| %>
 	<td class = "item_data">
-		<%= link_to items_path(:item => item, :orderID => @order.orderID),
-							   :remote => true do%>
+		<%= link_to new_order_detail_path(:item => item, :orderID => @order.orderID, :controller => 'order_detail', :action =>'new'), :remote => true do%>
 		<table class = "item_table">
 			<tr>
 			<% if item.Price.nil? %>
@@ -19,3 +18,9 @@
 	<% end %>
 </tr>
 <% end %>
+
+<% 
+=begin %>
+<%= link_to 'new'(:item => item, :orderID => @order.orderID, :controller => 'order_detail', :action =>'new'), :remote => true do%>
+<%
+=end  %>

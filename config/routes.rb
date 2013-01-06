@@ -3,7 +3,7 @@ Arbuckle2Go::Application.routes.draw do
   root :to => 'pages#sign_in'
 
   resources :order, :only => [:destroy, :update]
-  resources :order_details
+  resources :order_detail
   
 
   match '/home' , :to => "pages#home"
@@ -11,7 +11,7 @@ Arbuckle2Go::Application.routes.draw do
   match '/user_parse', :to => "pages#user_parse"
   match '/logout', :to => 'pages#logout'
   match '/menu', :to => "pages#menu"
-  match '/order_details', :to => "order_detail#order_details"
+  #match '/order_details', :to => "order_details#order_details"
   match '/items', :to => 'pages#items'
   match '/close', :to => 'pages#close'
 
