@@ -16,35 +16,66 @@ require 'spec_helper'
 
 describe Order do
 
-	before(:each) do
-		FactoryGirl.create(:order)
-		@order = Order.last
+	describe "General order features" do
+
+		before(:each) do
+			FactoryGirl.create(:order)
+			@order = Order.last
+
+		end
+
+		it "should return the same order as @order" do
+			Order.last.should == @order
+		end
+
+		it "should set the close-enough current time" do
+			Time.now.strftime('%H:%M').should == @order.time.strftime('%H:%M')
+		end
+
+		it "should set today's date" do
+			@order.date.should == Date.current
+		end
+
+		it "should set the correct day format" do
+			@order.day.should == Date.current.strftime('%a')
+		end
+
+		it "should default to not blocked" do
+			@order.blocked.should_not be_true
+		end
+
+		it "should default to sent" do
+			@order.filled.should == 0
+		end
 
 	end
 
-	it "should return the same order as @order" do
-		Order.last.should == @order
+	describe 'blank_order' do
+
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+		end
+
+
+		it "should add an order to the database" do
+			lambda do
+				Order.blank_order(@user.userID)
+			end.should change(Order, :count).by(1)
+		end
+
+		it "should be pending" do
+			@order = Order.blank_order(@user.userID)
+			@order.filled.should == PENDING
+		end
+
+		it "should have an orderID" do
+			@order = Order.blank_order(@user.userID)
+			Order.find(@order.orderID).should_not be_blank
+		end
+
 	end
 
-	it "should set the close-enough current time" do
-		Time.now.strftime('%H:%M').should == @order.time.strftime('%H:%M')
-	end
 
-	it "should set today's date" do
-		@order.date.should == Date.current
-	end
-
-	it "should set the correct day format" do
-		@order.day.should == Date.current.strftime('%a')
-	end
-
-	it "should default to not blocked" do
-		@order.blocked.should_not be_true
-	end
-
-	it "should default to sent" do
-		@order.filled.should == 0
-	end
 
 	describe "dependencies" do
 

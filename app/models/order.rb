@@ -26,5 +26,19 @@ class Order < ActiveRecord::Base
 
 	has_many :order_details, :foreign_key => :orderID, :dependent => :destroy
 	accepts_nested_attributes_for :order_details
+
+	def self.blank_order(userID)
+		order = Order.new
+		order.userID = userID
+		order.date = Date.current
+		order.day = Date.current.strftime('%a')
+		order.due = Date.tomorrow
+		order.time = Time.current
+		order.blocked = false
+		order.filled = PENDING
+		order.save
+		return order
+	end
+
   
 end

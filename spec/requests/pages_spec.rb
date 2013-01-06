@@ -21,6 +21,20 @@ describe "Pages" do
 
 	describe "GET/ home" do
 
+		
+			before(:each) do
+
+				@user = FactoryGirl.create(:user, :UserName => "lgorse")
+
+				@type = FactoryGirl.create(:type)
+				3.times do |n|
+					FactoryGirl.create(:type)
+				end
+				5.times do |g|
+					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+					FactoryGirl.create(:item, :groupID => @group.groupID)
+				end
+			end
 
 	end
 end

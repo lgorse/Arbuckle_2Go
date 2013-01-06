@@ -3,5 +3,8 @@
 </section>
 <section class = "instructions">
 	<h3>Place an order, <%= @user.first_name %></h3>
-	<div><%= button_to 'checkout' %></div>
+	<%= form_for @order, :url => {:action => "update", :method => "put", :controller => "order"} do |f|%>
+	<%= render 'order/order_update_fields', :f => f%>
+	<div><%= f.submit 'Confirm' %></div>
+	<% end %>
 </section>

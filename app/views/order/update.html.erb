@@ -1,0 +1,7 @@
+<h3>'Hello, world'</h3>
+<p><%= @order.orderID %></p>
+<p><%= @order.filled %></p>
+<p><%=  @order.day %></p>
+<div><%= link_to 'Cancel', @order, :method => :delete,
+									:confirm => "Your order will be deleted",
+									:class => "delete_order" %></div>

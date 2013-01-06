@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105092217) do
+ActiveRecord::Schema.define(:version => 20130105191340) do
 
   create_table "ArbuckleGroup", :primary_key => "groupID", :force => true do |t|
     t.integer "typeID",                  :null => false
@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(:version => 20130105092217) do
 
   create_table "ArbuckleUserList", :primary_key => "userID", :force => true do |t|
     t.string  "UserName",   :limit => 36,                    :null => false
-    t.string  "first_name", :limit => 48,                    :null => false
-    t.string  "last_name",  :limit => 48,                    :null => false
-    t.string  "e_mail",     :limit => 48,                    :null => false
-    t.boolean "just_sent",                :default => false, :null => false
+    t.string  "first_name", :limit => 48, :default => ""
+    t.string  "last_name",  :limit => 48, :default => ""
+    t.string  "e_mail",     :limit => 48, :default => ""
+    t.boolean "just_sent",                :default => false
   end
 
   create_table "groups", :force => true do |t|
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20130105092217) do
     t.string   "first_name", :default => ""
     t.string   "last_name",  :default => ""
     t.string   "e_mail",     :default => ""
-    t.integer  "just_sent"
+    t.integer  "just_sent",  :default => 0
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
   end

@@ -70,7 +70,6 @@ describe PagesController do
 				response.body.should have_css("a", :text =>"Log out")
 			end
 
-
 		end
 
 		describe "failed or irregular entry" do
@@ -127,13 +126,6 @@ describe PagesController do
 					assigns(:order).should_not be_blank
 				end
 
-
-				it "should not be initialized" do
-					get 'home'
-					order = assigns(:order)
-					order.attributes.values.any?.should be_false
-				end
-
 			end
 
 			describe "if an order has been confirmed" do
@@ -151,36 +143,37 @@ describe PagesController do
 				describe "if there are redundant orders" do
 					
 					before(:each) do
-						@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => 0)
-						@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
-						@order3 = FactoryGirl.create(:order, :userID => 1)
-						@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => 1)
+						@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+						@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
+						@order3 = FactoryGirl.create(:order, :userID => 1003)
+						@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
 					end
 
-					it "should remove all unfilled orders from a user" do
+					it "should remove extra orders but create a single one" do
 						get 'home'
-						Order.where(:userID => @user.userID, :filled => 0).size.should == 0
+						Order.where(:userID => @user.userID, :filled => [0,2]).size.should == 1
 					end	
 
-					it "should definitely not clear the whole database!" do
+					it "should create an initialized basic order" do
 						get 'home'
-						Order.all.size.should_not == 0
+						@order = Order.where(:userID => @user.userID, :filled => [0,2]).first
+						@order.attributes.values.any?.should be_true
+					end
+
+					it "should create an initial basic order without order details" do
+						get 'home'
+						@order = Order.where(:userID => @user.userID, :filled => [0,2]).first
+						@order.order_details.blank?.should be_true
 					end
 
 					it "should not clear filled orders" do
 						get 'home'
-						Order.where(:userID => @user.userID).size.should == 1
+						Order.where(:userID => @user.userID, :filled => SENT).size.should == 1
 					end
 
 					it "should display a warning message" do
 						get 'home'
 						flash[:error].should =~ /There was a problem with your pending order/i
-					end
-
-					it "should create a new order" do
-						get 'home'
-						order = assigns(:order)
-						order.attributes.values.any?.should be_false
 					end
 
 				end
@@ -204,11 +197,7 @@ describe PagesController do
 			flash[:notice].should =~ /Welcome to Arbuckle 2Go!/i
 		end
 
-		it "should have a valid user name cookie" do
-				get :user_parse, :login => "newguy", :first_name => "New", :last_name => "kid", :e_mail => "in@town.com"
-				assigns(:user).first_name.should == cookies.signed[:user_first_name]
-
-			end
+		
 
 	end
 

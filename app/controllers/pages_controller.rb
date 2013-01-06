@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+	include PagesHelper
 
 	before_filter :authenticate, :only => [:home]
 
@@ -14,11 +15,7 @@ class PagesController < ApplicationController
 	end
 
 	def user_parse
-		cookies.permanent.signed[:user_first_name] = params[:first_name]
-		cookies.permanent.signed[:user_login] = params[:login]
-		cookies.permanent.signed[:user_last_name] = params[:last_name]
-		cookies.permanent.signed[:user_e_mail] = params[:e_mail]
-		@user = User.find_by_UserName(cookies.signed[:user_login])
+		@user = User.find_by_UserName(params[:login])
 		create_user if (@user.nil?)
 		set_session
 		redirect_to home_path
@@ -26,23 +23,18 @@ class PagesController < ApplicationController
 
 	def create_user
 		@user = User.new
-		@user.UserName = cookies.signed[:user_login]
-		@user.first_name = cookies.signed[:user_first_name]
-		@user.last_name = cookies.signed[:user_last_name]
-		@user.e_mail = cookies.signed[:user_e_mail]
+		@user.UserName = params[:login]
+		@user.first_name = params[:first_name]
+		@user.last_name = params[:last_name]
+		@user.e_mail = params[:e_mail]
 		@user.just_sent = 0
 		@user.save
 		flash[:notice] = "Welcome to Arbuckle 2Go!"
 	end
-
 	
 
 	def logout
 		logout_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/website_scripts/logoutRails.php"
-		cookies.delete(:user_login)
-		cookies.delete(:user_first_name)
-		cookies.delete(:user_last_name)
-		cookies.delete(:user_e_mail)
 		reset_session
 		redirect_to(logout_url)
 	end
@@ -87,11 +79,13 @@ class PagesController < ApplicationController
 		if order_array.size > 1
 			flash[:error] = "There was a problem with your pending order. Try again. Your pending order has been deleted."
 			Order.destroy_all(:userID => @user.userID, :filled => [PENDING, CONFIRMED])
-			render 'pages/home'
+			redirect_to root_path
 		end
 
-		order_array.blank? ? @order = Order.new : @order = order_array.first	
+		order_array.blank? ? @order = Order.blank_order(@user.userID) : @order = order_array.first	
 	end
+
+
 
 
 end
