@@ -47,17 +47,16 @@ class PagesController < ApplicationController
 		end
 	end
 
-	def items
+def items
 		@item = Item.find(params[:item])
+		@orderID = params[:orderID]
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js
 		end
 	end
-
-	def order_details
-		@new_item = params[:f]
-	end
+	
+	
 
 	protected
 

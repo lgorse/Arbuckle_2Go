@@ -23,10 +23,10 @@ class OrderDetail < ActiveRecord::Base
   attr_accessible :quantity, :spicy, :orderID, :typeID, :groupID, :itemID
   
   validates :quantity, :presence => true, 
-  					   :numericality => {:greater_than => 0}
-
+  					   :inclusion => 1..10
   validates :orderID, :presence => true
 
   belongs_to :order, :foreign_key => :OrderID
   accepts_nested_attributes_for :order
+
 end

@@ -1,0 +1,25 @@
+<div class = "order_details", id= "order_details">
+	<%= link_to 'go back', close_path %>
+	<h3>Add Item</h3>
+	<p><%= @orderID %></p>
+	<h4><%= @item.itemName %> <%= @item.group.groupName %></h4>
+	<p><%= @item.Detail %></p>
+	<p>$<%= @item.Price %></p>
+<% 
+=begin %>
+	<%= form_for @detail, :url => {:action => "new", :method => "get", :controller => "order_detail"} do |f| %>
+		<%= f.label "Spicy" %>
+		<%= f.check_box :spicy %><br/>
+		<%= f.label "Quantity" %>
+		<%= f.select :detail, :quantity, [0..10]  %><br/>
+		<%= f.hidden_field :typeID, :value => @item.typeID %>
+		<%= f.hidden_field :groupID, :value => @item.groupID %>
+		<%= f.hidden_field :itemID, :value => @item.itemID %>
+		<%= f.hidden_field  :orderID, :value => @orderID%>
+		<%= f.submit "Add to order" %>
+	<% end %>
+<%
+=end  %>
+
+
+</div>

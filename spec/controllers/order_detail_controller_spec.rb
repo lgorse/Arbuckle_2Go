@@ -2,23 +2,23 @@ require 'spec_helper'
 
 describe OrderDetailController do
 
-	describe "'CREATE'" do
+	
 
-		before(:each) do
-			@order = FactoryGirl.create(:order)
-			@attr = {:orderID => @order.orderID, :typeID => 1,
-				:groupID => 3, :itemID => 14,
-				:quantity => 2, :spicy => false}
-			end
+	describe "'POST 'create'" do
 
-			it 'should create a new instance given a valid attribute' do
-				OrderDetail.create!(@attr)
-			end
+		it "should create a new order detail" do
 
-			it 'should require a quantity less than or equal to 10' do
-				hi_quant_detail = OrderDetail.new(@attr.merge(:quantity => 11))
-				hi_quant_detail.should_not be_valid
-			end
+		end
+
+		it "should remain linked to the user order" do
+
+		end
+
+		it "should close the item detail window" do
+
+		end
+
+		
 	end
 
 end

@@ -2,7 +2,8 @@
 <tr class = "item_row">
 	<% items.each do |item| %>
 	<td class = "item_data">
-		<%= link_to items_path(:item => item), :remote => true do%>
+		<%= link_to items_path(:item => item, :orderID => @order.orderID),
+							   :remote => true do%>
 		<table class = "item_table">
 			<tr>
 			<% if item.Price.nil? %>
