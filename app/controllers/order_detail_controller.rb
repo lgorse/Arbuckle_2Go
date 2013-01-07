@@ -15,14 +15,21 @@ class OrderDetailController < ApplicationController
 	def create
 		@order_detail = OrderDetail.new(params[:order_detail])
 		@order_detail.detailID.blank? ? OrderDetail.create!(params[:order_detail]) : OrderDetail.find(@order_detail.detailID).update_attributes(params[:order_detail])
-		redirect_to home_path
-	rescue
-		redirect_to home_path
+		respond_to do |format|
+			format.html {redirect_to home_path}
+			format.js 
+		end
 	end
 
+
+
 	def delete
-		OrderDetail.destroy(params[:detail]) unless params[:detail].blank?
+		OrderDetail.find(params[:id]).destroy unless params[:id].blank?
 		redirect_to home_path
+		#respond_to do |format|
+		#	format.html {redirect_to home_path}
+		#	format.js 
+		#end
 	end
 
 

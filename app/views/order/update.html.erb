@@ -2,6 +2,10 @@
 <p><%= @order.orderID %></p>
 <p><%= @order.filled %></p>
 <p><%=  @order.day %></p>
+<% @order.order_details.each do |detail| %>
+<p><%= Item.find(detail.itemID).itemName  %></p>
+<p><%= detail.detailID %></p>
+<% end %>
 <div><%= link_to 'Cancel', @order, :method => :delete,
 									:confirm => "Your order will be deleted",
 									:class => "delete_order" %></div>

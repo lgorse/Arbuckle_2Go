@@ -94,13 +94,13 @@ describe OrderDetailController do
 			
 			it "should remove the order detail" do
 				lambda do
-					delete :destroy, :detail => @detail.detailID
+					delete :delete, :detail => @detail.detailID
 				end.should change(OrderDetail, :count).by(-1)
 
 			end
 
 			it "should take the user back to home" do
-				delete :destroy, :detail => @detail.detailID
+				delete :delete, :detail => @detail.detailID
 				response.should redirect_to(home_path)
 			end
 		end

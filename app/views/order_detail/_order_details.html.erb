@@ -1,12 +1,13 @@
 <div class = "order_details", id= "order_details">
-	<div><%= link_to 'Back', :back, {:id => 'close_details'}, :remote => true %></div>
+	<div><%= link_to 'Back', 'javascript:;', {:id => 'close_details'}, :remote => true %></div>
 	<h3>Add Item</h3>
 	<p class = "detail_type"><%= @item.group.type.typeName %></p>
 	<h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4>
 	<p class = "detail_description"><%= @item.detail %></p>
 	<p class = "detail_item_price">$<%= @item.price %></p>
+	<%= @detail.detailID %>
 
-	<%= form_for @detail, :url => {:action => "create", :method => "post", :controller => "order_detail"} do |f| %>
+	<%= form_for @detail, :url => {:action => "create", :method => "post", :controller => "order_detail"}, :remote => true do |f| %>
 		<%= f.label "Spicy" %>
 		<%= f.check_box :spicy %><br/>
 		<%= f.label "Quantity" %>
@@ -15,7 +16,10 @@
 		<%= f.hidden_field :groupID, :value => @item.groupID %>
 		<%= f.hidden_field :itemID, :value => @item.itemID %>
 		<%= f.hidden_field  :orderID, :value => @orderID%>
-		<%= f.submit "Add to order" %>
+		<%= f.submit "Add to order", :id => 'save_order_detail' %>
 	<% end %>
-	<div><%= link_to 'Clear', 'delete', :method => :delete, :class => "delete_order_detail" %></div>
+	
+<%= form_for @detail, :url =>{:action => "delete", :method => :delete} do |f| %>
+<%= f.submit "Clear",:id => "delete_order_detail"%>
+<% end %>
 </div>
