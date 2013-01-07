@@ -33,7 +33,6 @@ describe OrderDetailController do
 			it "should use a pre-existing order" do
 				get 'new', :orderID => @order.orderID, :item => @selected_item
 				assigns(:detail).detailID.should == @detail.detailID
-
 			end
 
 		end
@@ -94,13 +93,13 @@ describe OrderDetailController do
 			
 			it "should remove the order detail" do
 				lambda do
-					delete :delete, :detail => @detail.detailID
+					delete :delete, :id => @detail.detailID
 				end.should change(OrderDetail, :count).by(-1)
 
 			end
 
 			it "should take the user back to home" do
-				delete :delete, :detail => @detail.detailID
+				delete :delete, :id => @detail.detailID
 				response.should redirect_to(home_path)
 			end
 		end
