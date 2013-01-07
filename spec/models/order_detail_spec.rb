@@ -20,8 +20,7 @@ describe OrderDetail do
 
 		before(:each) do
 			@order = FactoryGirl.create(:order)
-			@attr = {:orderID => @order.orderID, :typeID => 1,
-				:groupID => 3, :itemID => 14,
+			@attr = {:orderID => @order.orderID, :typeID => 1, :groupID => 3, :itemID => 14,
 				:quantity => 2, :spicy => false}
 			end
 
@@ -38,5 +37,9 @@ describe OrderDetail do
 				lo_quant_detail = OrderDetail.new(@attr.merge(:quantity => 0))
 				lo_quant_detail.should_not be_valid
 			end
+
 	end
+
+
 end
+

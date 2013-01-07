@@ -20,7 +20,7 @@ class OrderDetail < ActiveRecord::Base
 	alias_attribute :orderID, :OrderID
 	alias_attribute :detailID, :DetailID
 
-  attr_accessible :quantity, :spicy, :orderID, :typeID, :groupID, :itemID
+  attr_accessible :quantity, :spicy, :orderID, :typeID, :groupID, :itemID, :DetailID, :detailID, :OrderID,:Quantity, :Spicy
   
   validates :quantity, :presence => true, 
   					   :inclusion => 1..10
@@ -28,5 +28,6 @@ class OrderDetail < ActiveRecord::Base
 
   belongs_to :order, :foreign_key => :OrderID
   accepts_nested_attributes_for :order
+
 
 end

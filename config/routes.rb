@@ -11,12 +11,13 @@ Arbuckle2Go::Application.routes.draw do
   match '/user_parse', :to => "pages#user_parse"
   match '/logout', :to => 'pages#logout'
   match '/menu', :to => "pages#menu"
-  #match '/order_details', :to => "order_details#order_details"
   match '/items', :to => 'pages#items'
   match '/close', :to => 'pages#close'
 
   match '/cancel', :to => 'order#destroy'
   match '/send', :to => 'order#update'
+  match '/delete', :to => "order_detail#delete"
+
 
   
   # The priority is based upon order of creation:

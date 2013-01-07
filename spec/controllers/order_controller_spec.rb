@@ -52,7 +52,7 @@ describe OrderController do
 
 			it "should change the filled status to CONFIRMED" do
 				put :update, :order => @order, :order => {:orderID => @order.orderID, :filled => SENT}
-				Order.find(@order.orderID).filled.should == SENT
+				Order.find(@order.orderID).filled.should == CONFIRMED
 			end
 
 			it "should set the day to the proper format" do

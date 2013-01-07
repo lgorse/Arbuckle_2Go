@@ -48,9 +48,6 @@ class PagesController < ApplicationController
 	end
 
 
-	
-	
-
 	protected
 
 	def authenticate

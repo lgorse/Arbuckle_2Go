@@ -1,21 +1,21 @@
 <div class = "order_details", id= "order_details">
-	<%= link_to 'go back', close_path %>
+	<div><%= link_to 'Back', :back, {:id => 'close_details'}, :remote => true %></div>
 	<h3>Add Item</h3>
-	<p><%= @orderID %></p>
-	<h4><%= @item.itemName %> <%= @item.group.groupName %></h4>
-	<p><%= @item.Detail %></p>
-	<p>$<%= @item.Price %></p>
+	<p class = "detail_type"><%= @item.group.type.typeName %></p>
+	<h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4>
+	<p class = "detail_description"><%= @item.detail %></p>
+	<p class = "detail_item_price">$<%= @item.price %></p>
 
-	<%= form_for @detail, :url => {:action => "new", :method => "get", :controller => "order_detail"} do |f| %>
+	<%= form_for @detail, :url => {:action => "create", :method => "post", :controller => "order_detail"} do |f| %>
 		<%= f.label "Spicy" %>
 		<%= f.check_box :spicy %><br/>
 		<%= f.label "Quantity" %>
-		<%= f.select :quantity, [0..10]  %><br/>
+		<%= f.select :quantity, (0..10)  %><br/>
 		<%= f.hidden_field :typeID, :value => @item.group.typeID %>
 		<%= f.hidden_field :groupID, :value => @item.groupID %>
 		<%= f.hidden_field :itemID, :value => @item.itemID %>
 		<%= f.hidden_field  :orderID, :value => @orderID%>
 		<%= f.submit "Add to order" %>
 	<% end %>
-
+	<div><%= link_to 'Clear', 'delete', :method => :delete, :class => "delete_order_detail" %></div>
 </div>
