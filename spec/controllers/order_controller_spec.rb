@@ -50,9 +50,14 @@ describe OrderController do
 				:typeID => 1, :groupID => 7)
 			end
 
+			it "should not create an additional order " do
+				put :update, :order => @order, :order => {:orderID => @order, :filled => SENT}
+				Order.where(:orderID => @order.orderID).size.should == 1
+			end
+
 			it "should change the filled status to CONFIRMED" do
-				put :update, :order => @order, :order => {:orderID => @order.orderID, :filled => SENT}
-				Order.find(@order.orderID).filled.should == @order.filled
+				put :update, :order => @order, :order => {:orderID => @order, :filled => SENT}
+				Order.find(@order.orderID).filled.should == SENT
 			end
 
 			it "should set the day to the proper format" do

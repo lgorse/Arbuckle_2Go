@@ -40,5 +40,16 @@ class Order < ActiveRecord::Base
 		return order
 	end
 
+	def self.set_session_order(user)
+		order_array = Order.where(:userID => user.userID, :filled => [PENDING,CONFIRMED])
+
+		if order_array.size > 1
+			Order.destroy_all(:userID => user.userID, :filled => [PENDING, CONFIRMED])
+			set_session_order(user)
+		end
+
+		order_array.blank? ? @order = Order.blank_order(user.userID) : @order = order_array.first	
+	end
+
   
 end

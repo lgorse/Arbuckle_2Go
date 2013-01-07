@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
 	def home
 		set_user
-		set_order
+		@order = Order.set_session_order(@user)
 		@name = @user.first_name
 		@login = @user.UserName
 	end
@@ -62,17 +62,7 @@ class PagesController < ApplicationController
 		session[:user_token] = @user.userID
 	end
 
-	def set_order
-		order_array = Order.where(:userID => @user.userID, :filled => [PENDING,CONFIRMED])
-
-		if order_array.size > 1
-			flash[:error] = "There was a problem with your pending order. Try again. Your pending order has been deleted."
-			Order.destroy_all(:userID => @user.userID, :filled => [PENDING, CONFIRMED])
-			redirect_to root_path
-		end
-
-		order_array.blank? ? @order = Order.blank_order(@user.userID) : @order = order_array.first	
-	end
+	
 
 
 

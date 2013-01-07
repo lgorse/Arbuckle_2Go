@@ -1,0 +1,138 @@
+* commit e5561775c5fa3b09e0220ca2f64c530eabd8b14e
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Mon Jan 7 11:33:49 2013 -0800
+| 
+|     fixed deletes and pending orders
+|  
+* commit 5e6f8833749f662627bef4891c2bea4115cae689
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Mon Jan 7 11:05:05 2013 -0800
+| 
+|     Fixed order detail deletion
+|  
+* commit 8530b0f0d91bcb33ebfb6cfda8dbca290cbf85b0
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Mon Jan 7 00:18:17 2013 -0800
+| 
+|     Order details implementation: set up order details side page, and saving of order details
+|  
+* commit ba2e9ad822a541058e990785735be4c905ab5307
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Sun Jan 6 03:45:16 2013 -0800
+| 
+|     Effectively create js-based new orderdetail form
+|  
+* commit 9e4cf9b184a17ca3d6d9c299537c5de89ccfbe3b
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Sun Jan 6 03:08:32 2013 -0800
+| 
+|     About to change javascript again for new details
+|  
+* commit 8e51c79cb05bc497e605e46304df45f86750a29b
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Sun Jan 6 01:05:39 2013 -0800
+| 
+|     Set up complete order model
+|  
+* commit eecfcf15728d2653d60f78bc81bcddc63baa0fa7
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Sat Jan 5 11:03:34 2013 -0800
+| 
+|     Implemented order basics
+|  
+* commit ccd68de94e5ccd28467657b4fefd7e5a22923000
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Sat Jan 5 01:13:16 2013 -0800
+| 
+|     Final implementation before Order chances
+|  
+* commit d668fd0bc06e0cb0b51401a388e04175176250c4
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Fri Jan 4 22:30:08 2013 -0800
+| 
+|     Set up order model
+|  
+* commit 131f83d4961dd7cc923835cab30f774240dfa111
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Fri Jan 4 01:18:11 2013 -0800
+| 
+|     Created Orders and OrderDetails, no relationships
+|  
+* commit ccd624c0e5caa492db3bbe9e09f3161316292c34
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Thu Jan 3 23:07:17 2013 -0800
+| 
+|     Generated order model
+|  
+* commit fdec75bbad538f2dcc496729ec58159f7e63fbf6
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Thu Jan 3 12:43:38 2013 -0800
+| 
+|     UI -> Javascript works and Security => fixed authentication issue
+|  
+* commit c2c93ce3b693a414d596744e5c108a80941151ae
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Thu Jan 3 11:07:04 2013 -0800
+| 
+|     Default status at controller
+|  
+* commit 2a895ae3270cf0bfb4f104c3c7a4440e10d2d280
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Thu Jan 3 03:49:11 2013 -0800
+| 
+|     Finalizing UI in JQuery + CSS
+|  
+* commit 832f2cd90a772c0ecf17fc560f8d972bd37f05f0
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Thu Jan 3 03:21:28 2013 -0800
+| 
+|     More JQuery discovery - fadein/fadeout
+|  
+* commit 4d21e9f980b23d71dd23bbbb4e442f3090a6928b
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Wed Jan 2 18:21:08 2013 -0800
+| 
+|     Functioning menu slider
+|  
+* commit 0035f13bec7e84f31184f9f26fb1a2448f5278e3
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Wed Jan 2 15:59:01 2013 -0800
+| 
+|     Building UI - grepped Ajax
+|  
+* commit dd731b77a9a8acc77546d01859643a54552871e8
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Mon Dec 31 03:11:30 2012 -0800
+| 
+|     Fixed issue with PHP link
+|  
+* commit 15c16a2d868e7c32125c2c39fb505192697e93ea
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Mon Dec 31 03:06:38 2012 -0800
+| 
+|     Implemented user model and session
+|  
+* commit a4606e1715d951dfbb40f25ee1627b07fe344bcc
+| Author: lgorse <lgorse@stanford.edu>
+| Date:   Sun Dec 30 21:05:11 2012 -0800
+| 
+|     Established login protocol
+|    
+*   commit deb7dbed8bffb9385f938a9a352b2494d862f1a1
+|\  Merge: ab119de eb7aa6c
+| | Author: lgorse <lgorse@stanford.edu>
+| | Date:   Sun Dec 30 11:49:12 2012 -0800
+| | 
+| |     More commit snafus
+| |   
+| * commit eb7aa6c8ec33090131cc338c75fdd2f90910e516
+|   Author: lgorse <lgorse@stanford.edu>
+|   Date:   Sun Dec 30 11:46:07 2012 -0800
+|   
+|       Initial commit
+|  
+* commit ab119dee01e261db7bf8f13cfe1e6c54f0f5cc21
+  Author: lgorse <lgorse@stanford.edu>
+  Date:   Sun Dec 30 11:47:41 2012 -0800
+  
+      first commit

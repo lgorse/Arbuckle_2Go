@@ -6,7 +6,7 @@ class OrderController < ApplicationController
 	end
 
 	def update
-		@order = Order.new
+		#@order = Order.new
 		@order = Order.find(params[:order][:orderID])
 		@order.update_attribute(:date, params[:order][:date])
 		@order.update_attribute(:day, params[:order][:day])	

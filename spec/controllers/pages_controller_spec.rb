@@ -171,11 +171,6 @@ describe PagesController do
 						Order.where(:userID => @user.userID, :filled => SENT).size.should == 1
 					end
 
-					it "should display a warning message" do
-						get 'home'
-						flash[:error].should =~ /There was a problem with your pending order/i
-					end
-
 				end
 
 			end
