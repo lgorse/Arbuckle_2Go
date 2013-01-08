@@ -15,7 +15,7 @@ Arbuckle2Go::Application.routes.draw do
   match '/close', :to => 'pages#close'
 
   match '/cancel', :to => 'order#destroy'
-  match '/send', :to => 'order#update'
+  match '/update', :to => 'order#update'
   match '/delete', :to => "order_detail#delete"
 
 
