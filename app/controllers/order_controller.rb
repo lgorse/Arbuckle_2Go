@@ -5,8 +5,8 @@ class OrderController < ApplicationController
 		redirect_to home_path
 	end
 
-	def send
-		@order = Order.new
+	def update
+		#@order = Order.new
 		@order = Order.find(params[:order][:orderID])
 		@order.update_attribute(:date, params[:order][:date])
 		@order.update_attribute(:day, params[:order][:day])	

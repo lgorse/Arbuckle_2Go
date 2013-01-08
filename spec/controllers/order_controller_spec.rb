@@ -72,7 +72,7 @@ describe OrderController do
 
 			it "should return the user to a thank you screen" do
 				put :update, :order => @order, :order => {:orderID => @order.orderID, :day => @order.day, :filled => SENT}
-				response.should render_template('order/send')
+				response.should render_template('order/update')
 			end
 
 		end
