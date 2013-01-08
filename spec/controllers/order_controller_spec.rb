@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe OrderController do
+	render_views
 
 	describe "DELETE delete" do
 
@@ -44,10 +45,9 @@ describe OrderController do
 
 			before(:each) do
 				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
+				@item =  FactoryGirl.create(:item)
 				@detail1 = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
-				:itemID => 10)
-			@detail2 = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
-				:typeID => 1, :groupID => 7)
+				:itemID => @item.itemID)
 			end
 
 			it "should not create an additional order " do
@@ -81,20 +81,24 @@ describe OrderController do
 
 
 	describe "GET edit" do
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+			@item = FactoryGirl.create(:item)
+			@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
+										 :itemID => @item.itemID)
+			
+		end
+ 
+		it 'should be successful' do
+			get :edit, :id => @order
+			response.should be_success
+
+		end
 
 		it "should show all of the order details" do
-
-		end
-
-		it "should save changes to the database" do
-
-		end
-
-		it "should save changes to the database with a filled of PENDING" do
-
-		end
-
-		it "should save all changes to order details" do
+			get :edit, :id => @order
+			response.body.should have_selector('h1', 
+							:text => "Order Page")
 
 		end
 

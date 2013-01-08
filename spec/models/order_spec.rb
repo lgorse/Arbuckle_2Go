@@ -29,7 +29,9 @@ describe Order do
 		end
 
 		it "should set the close-enough current time" do
-			Time.now.strftime('%H:%M').should == @order.time.strftime('%H:%M')
+			diff = ((Time.current - @order.time)%3600/60).to_i
+			diff.should <= 1.minute
+			
 		end
 
 		it "should set today's date" do

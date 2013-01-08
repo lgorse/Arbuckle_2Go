@@ -70,6 +70,12 @@ describe PagesController do
 				response.body.should have_css("a", :text =>"Log out")
 			end
 
+			it "should have a link to the order confirmation" do
+				get 'home'
+				response.body.should have_link('Cart', href: edit_order_path(assigns(:order)))
+
+			end
+
 		end
 
 		describe "failed or irregular entry" do

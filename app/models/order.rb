@@ -51,5 +51,14 @@ class Order < ActiveRecord::Base
 		order_array.blank? ? @order = Order.blank_order(user.userID) : @order = order_array.first	
 	end
 
+	def update_order(order)
+		self.update_attribute(:date, Date.current)
+		self.update_attribute(:day, Date.current.strftime('%a'))	
+		self.update_attribute(:due, Date.tomorrow)
+		self.update_attribute(:time, Time.current)
+		self.update_attribute(:blocked, order[:blocked])
+		self.update_attribute(:filled, order[:filled])
+	end
+
   
 end

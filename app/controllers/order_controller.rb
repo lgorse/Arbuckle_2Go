@@ -6,14 +6,14 @@ class OrderController < ApplicationController
 	end
 
 	def update
-		#@order = Order.new
+		#@order = Order.update_order(:order => params[:order])
 		@order = Order.find(params[:order][:orderID])
-		@order.update_attribute(:date, params[:order][:date])
-		@order.update_attribute(:day, params[:order][:day])	
-		@order.update_attribute(:due, params[:order][:due])
-		@order.update_attribute(:time, params[:order][:time])
-		@order.update_attribute(:blocked, params[:order][:blocked])
-		@order.update_attribute(:filled, params[:order][:filled])
+		@order.update_order(params[:order])
+	end
+
+	def edit
+		@order = Order.find(params[:id])
+
 	end
 
 end

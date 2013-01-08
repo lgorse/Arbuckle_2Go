@@ -1,8 +1,4 @@
 <div><%= f.hidden_field :orderID, :value => @order.orderID %></div>
-<div><%= f.hidden_field :date, :value => Date.current %></div>
-<div><%= f.hidden_field :day, :value => Date.current.strftime('%a') %></div>
-<div><%= f.hidden_field :due, :value => Date.tomorrow %></div>
-<div><%= f.hidden_field :time, :value => Time.current %></div>
 <div><%= f.hidden_field :blocked, :value => false %></div>
 <div><%= f.hidden_field :filled, :value => SENT %></div>
 		
