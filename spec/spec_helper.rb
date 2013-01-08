@@ -37,4 +37,5 @@ RSpec.configure do |config|
 config.include Capybara::DSL
   
   config.order = "random"
+
 end

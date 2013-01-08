@@ -13,5 +13,5 @@ class Group < ActiveRecord::Base
 	self.table_name = "ArbuckleGroup"
   belongs_to :type, :foreign_key => "typeID"
   has_many :items, :foreign_key => "groupID"
-  #accepts_nested_attributes_for :type, :items
+  accepts_nested_attributes_for :type, :items
 end

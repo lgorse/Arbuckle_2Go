@@ -15,4 +15,7 @@ class Item < ActiveRecord::Base
 	self.table_name = "ArbuckleItem"
   belongs_to :group, :foreign_key => "groupID", :include => :type
   accepts_nested_attributes_for :group
+
+  alias_attribute :price, :Price
+  alias_attribute :detail, :Detail
 end

@@ -16,82 +16,30 @@ require 'spec_helper'
 describe OrderDetail do
 
 
-	describe "POST 'create'" do
-		
-		describe "instance" do
+	describe "'CREATE'" do
 
-			
-			it "should create a new instance given a valid attribute" do
-				@detail =OrderDetail.new(:quantity => 2, :spicy => false)
-				@detail.orderID = 1
-				@detail.typeID = 1
-				@detail.groupID = 3
-				@detail.itemID = 30
-				@detail.save!
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+			@attr = {:orderID => @order.orderID, :typeID => 1, :groupID => 3, :itemID => 14,
+				:quantity => 2, :spicy => false}
 			end
 
-			it "should create from the user" do
-				@order = Order.new
-				@order.userID = 1
-				@order.date = Date.current
-				@order.day = Date.current.strftime('%a')
-				@order.due = Date.tomorrow
-				@order.time = Time.current
-				@order.blocked = false
-				@order.filled = false
-				@order.save
-
-				@detail = @order.order_details.new(:quantity => 2, :spicy => false)
-				@detail.orderID = @order.orderID
-				@detail.typeID = 1
-				@detail.groupID = 3
-				@detail.itemID = 30
-				@detail.save!
-			end
-		end
-
-		describe "validations" do
-
-			it "should require a quantity" do
-				no_quant_order = OrderDetail.new(:quantity => 0, :spicy => false)
-				no_quant_order.orderID = 1
-				no_quant_order.typeID = 1
-				no_quant_order.groupID = 3
-				no_quant_order.itemID = 30
-				no_quant_order.save
-				no_quant_order.should_not be_valid
+			it 'should create a new instance given a valid attribute' do
+				OrderDetail.create!(@attr)
 			end
 
-		end
-
-		describe "order associations" do
-			before(:each) do
-				@order = Order.new
-				@order.userID = 1
-				@order.date = Date.current
-				@order.day = Date.current.strftime('%a')
-				@order.due = Date.tomorrow
-				@order.time = Time.current
-				@order.blocked = false
-				@order.filled = false
-				@order.save
-
-				@detail = @order.order_details.new(:quantity => 2, :spicy => false)
-				@detail.orderID = @order.orderID
-				@detail.typeID = 1
-				@detail.groupID = 3
-				@detail.itemID = 30
-				@detail.save!
+			it 'should require a quantity less than or equal to 10' do
+				hi_quant_detail = OrderDetail.new(@attr.merge(:quantity => 11))
+				hi_quant_detail.should_not be_valid
 			end
 
-			it "should have an order attribute" do
-				@order.should respond_to(:order_details)
+			it 'should require a quantity greater than 0' do
+				lo_quant_detail = OrderDetail.new(@attr.merge(:quantity => 0))
+				lo_quant_detail.should_not be_valid
 			end
-
-			it "should have the right associatied user" do
-				@detail.order.should == @order
-			end
-		end
 
 	end
+
+
 end
+

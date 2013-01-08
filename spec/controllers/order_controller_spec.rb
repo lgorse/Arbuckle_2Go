@@ -43,7 +43,7 @@ describe OrderController do
 		describe "given an existing order" do
 
 			before(:each) do
-				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
+				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 				@detail1 = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
 				:itemID => 10)
 			@detail2 = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
@@ -52,7 +52,7 @@ describe OrderController do
 
 			it "should change the filled status to CONFIRMED" do
 				put :update, :order => @order, :order => {:orderID => @order.orderID, :filled => SENT}
-				Order.find(@order.orderID).filled.should == SENT
+				Order.find(@order.orderID).filled.should == @order.filled
 			end
 
 			it "should set the day to the proper format" do
