@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe OrderDetailController do
+	
 	render_views
-
-
 
 	describe "instantiates an order detail" do
 
@@ -39,7 +38,7 @@ describe OrderDetailController do
 
 	end
 
-	describe "create a new order detail" do
+	describe "'CREATE' a new order detail" do
 
 		before(:each) do
 			@user = FactoryGirl.create(:user)
@@ -81,6 +80,7 @@ describe OrderDetailController do
 				end
 			end
 
+
 		end
 
 		describe "'DELETE'" do
@@ -90,7 +90,7 @@ describe OrderDetailController do
 				@item = FactoryGirl.create(:item)
 			end
 
-			
+
 			it "should remove the order detail" do
 				lambda do
 					delete :delete, :id => @detail.detailID
@@ -105,52 +105,28 @@ describe OrderDetailController do
 		end
 
 
+		describe "'PUT' update order detail " do
+			before(:each) do
+				@order = FactoryGirl.create(:order)
+				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
+				@attr = {:orderID => @order.orderID, :typeID => 3, :groupID => 3,
+				:itemID => 74, :quantity => 7, :spicy => true}
+
+			end
+
+			it "should change the order's attributes" do
+				put :update, :id => @detail, :detail_updates => @attr
+				order = assigns(:order_detail).order
+				order_detail = assigns[:order_detail]
+				order_detail.should == @detail
+			end
+
+			it "should return the user to the order edit page" do
+				put :update, :id => @detail, :order_detail => @attr	
+				response.should redirect_to(edit_order_path(@order.orderID))
+			end
+		end
 	end
 
-=begin
-		describe "should show order detail informations" do
 
-			before(:each) do
-				@user = FactoryGirl.create(:user)
-			@order = FactoryGirl.create(:order, :userID => @user.userID)
-				@type = FactoryGirl.create(:type)
-				@group = FactoryGirl.create(:group, :typeID => @type.typeID)
-				@item = FactoryGirl.create(:item, :groupID => @group.groupID)
 
-			end
-
-			it "should show the order item name" do
-				get 'new', :orderID => @order.orderID, :item => @item
-				response.body.should have_content(@item.itemName)
-			end
-
-			it "should show the order group name" do
-				get 'new', :orderID => @order.orderID, :item => @item
-				response.body.should have_selector("detail_group", :text => @item.group.groupName)
-
-			end
-
-			it "should show the order type name" do
-				get 'new', :orderID => @order.orderID, :item => @item
-				response.body.should have_css("p", :text => @item.group.type.typeName)
-			end
-
-			it "should show the order detailed description" do
-				get 'new', :orderID => @order.orderID, :item => @item
-				response.body.should have_selector(".detail_description", :text => @item.detail)
-
-			end
-
-			it "should show the item price" do
-				get 'new', :orderID => @order.orderID, :item => @item
-				response.body.should have_selector(".detail_item_price", :text => @item.price)
-			end
-
-			it "should show the total price" do
-				get 'new', :orderID => @order.orderID, :item => @item
-				response.body.should have_selector("detail_total_price",  :text => "Stub")
-
-			end
-
-		end
-=end

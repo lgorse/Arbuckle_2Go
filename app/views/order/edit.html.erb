@@ -1,5 +1,17 @@
 <h1>Order Page</h1>
+
 <%= @order.userID %>
+
 <% @order.order_details.each do |detail| %>
-<p><%= Item.find(detail.itemID).itemName %></p>
+<% @detail = detail %>
+<% @orderID = @order.orderID %>
+<% @item = Item.find(@detail.itemID)  %>
+<%= @item.itemName %>
+<%= form_for @detail do |f| %>
+<%= render "order_detail/order_details_form", :f => f %>
+<%= f.submit "Save" %>
 <% end %>
+<% end %>
+<div><%= link_to 'Cancel', @order, :method => :delete,
+								   :confirm => "Your order will be deleted",
+								   :class => "delete_order" %></div>

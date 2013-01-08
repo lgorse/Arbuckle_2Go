@@ -32,5 +32,11 @@ class OrderDetailController < ApplicationController
 		#end
 	end
 
+	def update
+		@order_detail = OrderDetail.find(params[:id])
+		@order_detail.update_attributes(params[:order_detail])
+		redirect_to(edit_order_path(@order_detail.order.orderID))
+	end
+
 
 end

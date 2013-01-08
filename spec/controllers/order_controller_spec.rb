@@ -83,7 +83,8 @@ describe OrderController do
 	describe "GET edit" do
 		before(:each) do
 			@order = FactoryGirl.create(:order)
-			@item = FactoryGirl.create(:item)
+			@group = FactoryGirl.create(:group)
+			@item = FactoryGirl.create(:item, :groupID => @group.groupID)
 			@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
 										 :itemID => @item.itemID)
 			
