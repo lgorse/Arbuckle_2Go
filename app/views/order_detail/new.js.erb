@@ -1,8 +1,6 @@
-
 $("#slideout").html("<%=escape_javascript(render 'order_details')  %>").click(function(event){
 	event.stopPropagation()
 });
-
 
 $(function(){
 	$("#menu_core").css({opacity: 0.5})
@@ -12,8 +10,9 @@ $("#menu_core a").bind('click', false).css({cursor:'default'});
 });
 
 
-$('html, #menu_core a').click(function(){
+$('html, #menu_core a, #close_details, #save_order_detail, #delete_order_detail').click(function(){
 	$("#menu_core").css({opacity:1})
 	$("#order_details").animate({"right":"-400px"}, 250, "linear")
 	$("#menu_core a").unbind('click', false).css({cursor:'pointer'});
 });
+

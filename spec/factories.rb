@@ -25,7 +25,7 @@ FactoryGirl.define do
 
 	factory :item do |item|
 		item.itemName "Test item"
-		item.Detail ""
+		item.Detail "Tasty treat"
 		item.groupID 1
 		item.ComboSubset 0
 		item.Spicy 0

@@ -3,7 +3,7 @@
 </section>
 <section class = "instructions">
 	<h3>Place an order, <%= @user.first_name %></h3>
-	<%= form_for @order, :url => {:action => "update", :method => "put", :controller => "order"} do |f|%>
+	<%= form_for @order, :url => {:action => "update", :method => "put", :controller => "order", :id =>"confirm_link"} do |f|%>
 	<%= render 'order/order_update_fields', :f => f%>
 	<div><%= f.submit 'Confirm' %></div>
 	<% end %>
