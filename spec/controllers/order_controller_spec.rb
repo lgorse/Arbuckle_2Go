@@ -51,27 +51,27 @@ describe OrderController do
 			end
 
 			it "should not create an additional order " do
-				put :update, :order => @order, :order => {:orderID => @order, :filled => SENT}
+				put :update, :id => @order.orderID, :order => {:orderID => @order, :filled => SENT}
 				Order.where(:orderID => @order.orderID).size.should == 1
 			end
 
 			it "should change the filled status to CONFIRMED" do
-				put :update, :order => @order, :order => {:orderID => @order, :filled => SENT}
+				put :update, :id => @order, :order => {:orderID => @order, :filled => SENT}
 				Order.find(@order.orderID).filled.should == SENT
 			end
 
 			it "should set the day to the proper format" do
-				put :update, :order => @order, :order => {:orderID => @order.orderID, :day => @order.day}
+				put :update, :id => @order, :order => {:orderID => @order.orderID, :day => @order.day}
 				Order.find(@order.orderID).day.should == Date.current.strftime('%a')
 			end
 
 			it 'should set the date as appropriate' do
-				put :update, :order => @order, :order => {:orderID => @order.orderID, :date => @order.date}
+				put :update, :id => @order, :order => {:orderID => @order.orderID, :date => @order.date}
 				Order.find(@order.orderID).date.strftime('%Y%m%d').should == Date.current.strftime('%Y%m%d')
 			end
 
 			it "should return the user to a thank you screen" do
-				put :update, :order => @order, :order => {:orderID => @order.orderID, :day => @order.day, :filled => SENT}
+				put :update, :id => @order, :order => {:orderID => @order.orderID, :day => @order.day, :filled => SENT}
 				response.should render_template('order/update')
 			end
 
@@ -110,7 +110,7 @@ describe OrderController do
 
 		it "should have a confirm button" do
 get :edit, :id => @order
-			response.should have_link('Confirm', href: order_send_path(@order))
+			response.body.should have_link('Confirm', href: order_path(assigns(:order)))
 		end
 
 	end

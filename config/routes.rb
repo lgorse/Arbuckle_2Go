@@ -2,8 +2,8 @@ Arbuckle2Go::Application.routes.draw do
 
   root :to => 'pages#sign_in'
 
-  resources :order, :only => [:destroy, :update, :edit]
-  resources :order_detail, :except => [:delete]
+  resources :order
+  resources :order_detail
   
 
   match '/home' , :to => "pages#home"
@@ -13,11 +13,7 @@ Arbuckle2Go::Application.routes.draw do
   match '/menu', :to => "pages#menu"
   match '/items', :to => 'pages#items'
   match '/close', :to => 'pages#close'
-
-  match '/cancel', :to => 'order#destroy'
-  match '/update', :to => 'order#update'
-  match '/delete', :to => "order_detail#delete"
-
+  #match '/order_details', :to => 'order_detail#destroy'
 
   
   # The priority is based upon order of creation:

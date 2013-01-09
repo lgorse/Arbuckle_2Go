@@ -12,6 +12,15 @@ describe OrderDetailController do
 			@selected_item = FactoryGirl.create(:item)
 		end
 
+		describe "interface" do
+
+			it 'should have a link to clear order detail' do
+get 'new', :orderID => @order.orderID, :item => @selected_item
+response.body.should have_link('Clear', href: order_detail_path(assigns(:order)))
+			end
+
+		end
+
 		describe "when the order detail hasn't been created" do
 
 			it "should instantiate a new order detail" do
@@ -93,13 +102,13 @@ describe OrderDetailController do
 
 			it "should remove the order detail" do
 				lambda do
-					delete :delete, :id => @detail.detailID
+					delete :destroy, :id => @detail
 				end.should change(OrderDetail, :count).by(-1)
 
 			end
 
 			it "should take the user back to home" do
-				delete :delete, :id => @detail.detailID
+				delete :destroy, :id => @detail
 				response.should redirect_to(home_path)
 			end
 		end
@@ -115,7 +124,7 @@ describe OrderDetailController do
 			end
 
 			it "should change the order's attributes" do
-				put :update, :id => @detail, :detail_updates => @attr
+				put :update, :id => @detail, :order_detail => @attr
 				order = assigns(:order_detail).order
 				order_detail = assigns[:order_detail]
 				order_detail.should == @detail

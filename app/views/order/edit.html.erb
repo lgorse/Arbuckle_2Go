@@ -8,10 +8,11 @@
 <% @item = Item.find(@detail.itemID)  %>
 <%= @item.itemName %>
 <%= form_for @detail do |f| %>
-<%= render "order_detail/order_details_form", :f => f %>
+<%= render "order_detail/order_detail_form", :f => f %>
 <%= f.submit "Save" %>
 <% end %>
 <% end %>
 <div><%= link_to 'Cancel', @order, :method => :delete,
 								   :confirm => "Your order will be deleted",
 								   :class => "delete_order" %></div>
+<div><%= link_to 'Confirm', @order, :method => :update %></div>
