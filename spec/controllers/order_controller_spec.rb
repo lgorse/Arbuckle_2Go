@@ -103,6 +103,16 @@ describe OrderController do
 
 		end
 
+		it "should have a cancel button" do
+			get :edit, :id => @order
+			response.body.should have_link('Cancel', href: order_path(assigns(:order)))
+		end
+
+		it "should have a confirm button" do
+get :edit, :id => @order
+			response.should have_link('Confirm', href: order_send_path(@order))
+		end
+
 	end
 
 end
