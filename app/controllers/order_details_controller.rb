@@ -1,4 +1,4 @@
-class OrderDetailController < ApplicationController
+class OrderDetailsController < ApplicationController
 
 	
 	def new
@@ -21,14 +21,21 @@ class OrderDetailController < ApplicationController
 		end
 	end
 
-
-
 	def destroy
 		OrderDetail.find(params[:id]).destroy unless params[:id].blank?
+		#redirect_to home_path
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 
 		end
+	end
+
+	def show
+		#OrderDetail.find(params[:id]).destroy
+		#redirect_to home_path
+		@detail = params[:id]
+	
+
 	end
 
 	def update

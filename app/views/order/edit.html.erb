@@ -8,7 +8,8 @@
 <% @item = Item.find(@detail.itemID)  %>
 <%= @item.itemName %>
 <%= form_for @detail do |f| %>
-<%= render "order_detail/order_detail_form", :f => f %>
+<%= @detail.detailID %>
+<%= render "order_details/order_detail_form", :f => f %>
 <%= f.submit "Save" %>
 <% end %>
 <% end %>

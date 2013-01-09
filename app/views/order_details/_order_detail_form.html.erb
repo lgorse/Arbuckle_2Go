@@ -6,3 +6,5 @@
 <%= f.hidden_field :groupID, :value => @item.groupID %>
 <%= f.hidden_field :itemID, :value => @item.itemID %>
 <%= f.hidden_field  :orderID, :value => @orderID%>
+<div><%= button_to 'Clear order', @detail, :method => :delete ,
+					:confirm => "Are you sure?", :class => "clear_order", :remote => true %></div>

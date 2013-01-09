@@ -7,13 +7,8 @@
 	<p class = "detail_item_price">$<%= @item.price %></p>
 	<%= @detail.detailID %>
 
-	<%= form_for @detail, :url => {:action => "create", :method => "post", :controller => "order_detail"}, :remote => true do |f| %>
-		<%= render 'order_detail/order_detail_form', :f => f %>
-		<%= f.submit "Add to order", :id => 'save_order_detail' %>
-	<% end %>
-
-<div><%= link_to 'Clear', @detail, :method => :delete, 
-								   :confirm => "Your order will be deleted",
-								   :class => "delete_order" %></div>
-	
+	<%= form_for @detail, :url => {:action => "create", :method => "post", :controller => "order_details"}, :remote => true do |f| %>
+		<%= render 'order_details/order_detail_form', :f => f %>
+		<%= f.submit "Add to order", :id => 'save_order_detail' %>	
+	<% end %>	
 </div>

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrderDetailController do
+describe OrderDetailsController do
 	
 	render_views
 
@@ -16,7 +16,7 @@ describe OrderDetailController do
 
 			it 'should have a link to clear order detail' do
 get 'new', :orderID => @order.orderID, :item => @selected_item
-response.body.should have_link('Clear', href: order_detail_path(assigns(:order)))
+response.body.should have_link('Clear')
 			end
 
 		end
