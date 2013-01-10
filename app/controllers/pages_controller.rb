@@ -41,6 +41,7 @@ class PagesController < ApplicationController
 
 	def menu
 		@type = Type.find(params[:type])
+		@order = Order.find(params[:order])
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 
