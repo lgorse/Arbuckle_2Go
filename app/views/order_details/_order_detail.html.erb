@@ -1,12 +1,13 @@
-<div class = "order_details", id= "order_details">
+<section class = "order_details_menu", id= "order_details">
+	<div id = "detail_core">
 	<div><%= link_to 'Back', 'javascript:;', {:id => 'close_details'}, :remote => true %></div>
 	<h3>Add Item</h3>
 	<%= render 'order_detail_info' %>
-
 	<%= form_for @detail, :remote => true do |f| %>
 		<%= render 'order_details/order_detail_form', :f => f %>
-		<%= f.submit "Add to order", :id => 'save_order_detail' %>	
+		<%= f.submit "Save", :id => 'save_order_detail' %>	
 	<% end %>	
-	<div><%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail", :remote => true %></div>
+	<%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail", :remote => true %>
 </div>
+</section>
 

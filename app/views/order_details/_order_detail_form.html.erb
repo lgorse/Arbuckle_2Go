@@ -1,9 +1,12 @@
-<%= f.label "Spicy" %>
-<%= f.check_box :spicy %><br/>
-<%= f.label "Quantity" %>
-<%= f.select :quantity, (0..10) %><br/>
+<table class = "order_detail_input">
+	<tr>
+<td><%= f.label "Spicy" %></td>
+<td><%= f.check_box :spicy%></td>
+<td><%= f.label "Quantity" %></td>
+<td><%= f.select :quantity, (1..10) %></td>
+</tr>
+</table>
 <%= f.hidden_field :typeID, :value => @item.group.typeID %>
 <%= f.hidden_field :groupID, :value => @item.groupID %>
 <%= f.hidden_field :itemID, :value => @item.itemID %>
 <%= f.hidden_field  :orderID, :value => @orderID%>
-<p id = "detail_total_price"><%= total_price(@detail.quantity, @item.price) %></p>

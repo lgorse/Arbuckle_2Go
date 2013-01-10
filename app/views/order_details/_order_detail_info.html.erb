@@ -1,4 +1,5 @@
 <p class = "detail_type"><%= @item.group.type.typeName %></p>
 <h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4>
 <p class = "detail_description"><%= @item.detail %></p>
-<p class = "detail_item_price">$<%= @item.price %></p>
+<p class = "detail_item_price">$<%= @item.price %> per piece</p><br/>
+<p class = "detail_total_price"><%= total_price(@detail.quantity, @item.price) %></p>

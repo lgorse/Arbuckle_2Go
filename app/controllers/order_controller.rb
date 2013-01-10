@@ -11,6 +11,7 @@ class OrderController < ApplicationController
 	end
 
 	def edit
+		@title = "Confirm your order"
 		@order = Order.find(params[:id])
 		respond_to do |format|
 			format.html

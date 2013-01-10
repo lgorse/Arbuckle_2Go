@@ -90,7 +90,6 @@ describe OrderDetailsController do
 				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
 				@attr = {:orderID => @order.orderID, :typeID => 3, :groupID => 3,
 				:itemID => 74, :quantity => 7, :spicy => true}
-
 			end
 
 			it "should change the order's attributes" do

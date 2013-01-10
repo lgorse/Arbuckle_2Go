@@ -2,16 +2,7 @@
 	<p>Sushi</p>
 </section>
 <section class = "instructions">
-	<h3>Place an order, <%= @user.first_name %></h3>
-	<%= link_to 'Cart', edit_order_path(@order) %>
+	<div id = "title"><h3><%= @title %></h3></div>
+	<div id = "confirmer", class="round"><%= link_to 'Cart', edit_order_path(@order) %></div>
 	
 </section>
-
-<%
-=begin  %>
-<%= form_for @order, :url => {:action => "update", :method => "put", :controller => "order", :id =>"confirm_link"} do |f|%>
-	<%= render 'order/order_update_fields', :f => f%>
-	<div><%= f.submit 'Confirm' %></div>
-	<% end %>
-	<%
-=end  %>

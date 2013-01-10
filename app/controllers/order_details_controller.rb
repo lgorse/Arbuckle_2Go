@@ -34,7 +34,7 @@ class OrderDetailsController < ApplicationController
 
 	def update
 		@order_detail = OrderDetail.find(params[:id])
-		@order_detail.update_attributes(params[:order_detail])
+		@order_detail.update_attributes!(params[:order_detail])
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 

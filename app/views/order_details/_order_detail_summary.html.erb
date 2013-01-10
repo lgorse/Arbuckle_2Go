@@ -1,0 +1,9 @@
+<table id = "detail_summary_table">
+	<tr>
+<td class = "detail_type"><%= @item.group.type.typeName %></td>
+<td  class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></td>
+<td class = "detail_description"><%= @item.detail %></td>
+<td class = "detail_item_price">$<%= @item.price %> per piece</td>
+<td id = "detail_total_price"><%= total_price(@detail.quantity, @item.price) %></td>
+</tr>
+</table>

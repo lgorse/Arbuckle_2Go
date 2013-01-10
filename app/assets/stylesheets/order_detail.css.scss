@@ -1,3 +1,47 @@
 // Place all the styles related to the OrderDetail controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#order_details{
+	position: fixed;
+	top: 200px;
+	right: -350px;
+	width: 400px;
+	height: 400px;
+	margin: 0;
+	padding: 0;
+	background-color: grey;
+
+	#detail_core{
+		padding: 10px;
+	}
+
+	#save_order_detail{
+		left: 10px;
+	}
+
+	#delete_detail{
+		position: relative;
+		left:70px;
+		top: -25px;
+
+	}
+}
+
+#order_detail_outline{
+
+
+	padding: 10px;
+
+	#save_order_final{
+		left: 10px;
+	}
+
+	#delete_detail_final{
+		position: relative;
+		left:70px;
+		top: -25px;
+
+	}
+
+}

@@ -1,14 +1,4 @@
-<header class="greeting">
-	<div class = "welcome"><h2>Arbuckle 2Go</h2></div>
-	<div>
-<% flash.each do |key, value| %>
-			<div class = "flash <%= key %>"><%= value %></div>
-			<% end %>
-</div>
-	<div id="logout" class="round"><a><%= link_to 'Log out',  logout_path %><a></div>
-</header>
-	<header class="menu_header"><%= render 'instructions' %></header>
-
+<header class="menu_header"><%= render 'instructions' %></header>
 	<section id = "menu_core">
 		<section id="type_section"><%= render 'types' %></section>
 		<section class="menu_section"><%= render 'groups', :type => Type.first %></section>

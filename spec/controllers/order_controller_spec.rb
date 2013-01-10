@@ -83,7 +83,8 @@ describe OrderController do
 	describe "GET edit" do
 		before(:each) do
 			@order = FactoryGirl.create(:order)
-			@group = FactoryGirl.create(:group)
+			@type = FactoryGirl.create(:type)
+			@group = FactoryGirl.create(:group, :typeID => @type.typeID)
 			@item = FactoryGirl.create(:item, :groupID => @group.groupID)
 			@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
 										 :itemID => @item.itemID)
@@ -98,8 +99,8 @@ describe OrderController do
 
 		it "should show all of the order details" do
 			get :edit, :id => @order
-			response.body.should have_selector('h1', 
-							:text => "Order Page")
+			response.body.should have_selector('h3', 
+							:text => "Confirm your order")
 
 		end
 

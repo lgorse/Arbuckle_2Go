@@ -1,0 +1,7 @@
+<div class = "welcome"><h2>Arbuckle 2Go</h2></div>
+<div>
+	<% flash.each do |key, value| %>
+	<div class = "flash <%= key %>"><%= value %></div>
+	<% end %>
+</div>
+<div id="logout" class="round"><a><%= link_to 'Log out',  logout_path %><a></div>

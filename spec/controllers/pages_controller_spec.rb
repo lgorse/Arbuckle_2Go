@@ -49,12 +49,6 @@ describe PagesController do
 
 			end
 
-			it "must contain user name" do
-				get 'home'
-				response.body.should have_selector("h3", :text => @user.first_name)
-			end
-
-
 			it "should create a new session" do
 				get 'home'
 				session[:user_token].should == @user.userID

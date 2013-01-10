@@ -4,6 +4,7 @@ class PagesController < ApplicationController
 	before_filter :authenticate, :only => [:home]
 
 	def home
+		@title = "Place an order"
 		set_user
 		@order = Order.set_session_order(@user)
 		@name = @user.first_name
