@@ -113,6 +113,12 @@ get :edit, :id => @order
 			response.body.should have_link('Confirm', href: order_path(assigns(:order)))
 		end
 
+		it "should have a cancel link" do
+			get :edit, :id => @order
+			response.body.should have_link('Back', :back)
+
+		end
+
 	end
 
 end

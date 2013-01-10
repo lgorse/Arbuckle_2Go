@@ -1,18 +1,21 @@
 <h1>Order Page</h1>
-
+<%= link_to 'Back', :back %>
 <%= @order.userID %>
-
 <% @order.order_details.each do |detail| %>
-<% @detail = detail %>
-<% @orderID = @order.orderID %>
-<% @item = Item.find(@detail.itemID)  %>
-<%= @item.itemName %>
-<%= form_for @detail do |f| %>
-<%= @detail.detailID %>
-<%= render "order_details/order_detail_form", :f => f %>
-<%= f.submit "Save" %>
+<div id = "order_detail_outline">
+	<% @detail = detail %>
+	<% @orderID = @order.orderID %>
+	<% @item = Item.find(@detail.itemID)  %>
+	<%= @item.itemName %>
+	<%= form_for @detail do |f| %>
+		<%= @detail.detailID %>
+		<%= render "order_details/order_detail_form", :f => f %>
+		<%= f.submit "Save" %>
+	<% end %>
+	<%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail_final", :remote => true %>
+	</div>
 <% end %>
-<% end %>
+
 <div><%= link_to 'Cancel', @order, :method => :delete,
 								   :confirm => "Your order will be deleted",
 								   :class => "delete_order" %></div>

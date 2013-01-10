@@ -15,6 +15,7 @@ Arbuckle2Go::Application.routes.draw do
   match '/close', :to => 'pages#close'
 
 
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

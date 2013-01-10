@@ -13,8 +13,7 @@ class OrderDetailsController < ApplicationController
 	end
 
 	def create
-		@order_detail = OrderDetail.new(params[:order_detail])
-		@order_detail.detailID.blank? ? OrderDetail.create!(params[:order_detail]) : OrderDetail.find(@order_detail.detailID).update_attributes(params[:order_detail])
+		OrderDetail.create!(params[:order_detail])
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 
@@ -23,7 +22,6 @@ class OrderDetailsController < ApplicationController
 
 	def destroy
 		OrderDetail.find(params[:id]).destroy unless params[:id].blank?
-		#redirect_to home_path
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 
@@ -31,18 +29,16 @@ class OrderDetailsController < ApplicationController
 	end
 
 	def show
-		#OrderDetail.find(params[:id]).destroy
-		#redirect_to home_path
 		@detail = params[:id]
-	
-
 	end
 
 	def update
 		@order_detail = OrderDetail.find(params[:id])
 		@order_detail.update_attributes(params[:order_detail])
-		redirect_to(edit_order_path(@order_detail.order.orderID))
+		respond_to do |format|
+			format.html {redirect_to home_path}
+			format.js 
+		end
 	end
-
 
 end

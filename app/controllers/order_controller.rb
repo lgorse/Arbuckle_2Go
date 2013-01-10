@@ -12,6 +12,10 @@ class OrderController < ApplicationController
 
 	def edit
 		@order = Order.find(params[:id])
+		respond_to do |format|
+			format.html
+			format.js 
+		end
 	end
 
 end

@@ -4,21 +4,12 @@ describe OrderDetailsController do
 	
 	render_views
 
-	describe "instantiates an order detail" do
+	describe "'NEW' form to confirm order detail" do
 
 		before(:each) do
 			@user = FactoryGirl.create(:user)
 			@order = FactoryGirl.create(:order, :userID => @user.userID)
 			@selected_item = FactoryGirl.create(:item)
-		end
-
-		describe "interface" do
-
-			it 'should have a link to clear order detail' do
-get 'new', :orderID => @order.orderID, :item => @selected_item
-response.body.should have_link('Clear')
-			end
-
 		end
 
 		describe "when the order detail hasn't been created" do
@@ -45,6 +36,7 @@ response.body.should have_link('Clear')
 
 		end
 
+
 	end
 
 	describe "'CREATE' a new order detail" do
@@ -67,28 +59,6 @@ response.body.should have_link('Clear')
 					end.should change(OrderDetail, :count).by(1)
 				end
 			end
-
-			describe "when the detail already exists" do
-
-				before(:each) do
-					@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
-						:itemID => @selected_item.itemID)
-
-				end
-
-				it "should not add an entry to the database" do
-					lambda do
-						post 'create', :order_detail => @detail.attributes
-					end.should_not change(OrderDetail, :count)
-
-				end
-
-				it "should have the same ID as the pre-existing order" do
-					post 'create', :order_detail => @detail.attributes
-					assigns(:order_detail).detailID.should == @detail.detailID
-				end
-			end
-
 
 		end
 
@@ -130,10 +100,6 @@ response.body.should have_link('Clear')
 				order_detail.should == @detail
 			end
 
-			it "should return the user to the order edit page" do
-				put :update, :id => @detail, :order_detail => @attr	
-				response.should redirect_to(edit_order_path(@order.orderID))
-			end
 		end
 	end
 
