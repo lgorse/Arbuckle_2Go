@@ -14,4 +14,6 @@ class Group < ActiveRecord::Base
   belongs_to :type, :foreign_key => "typeID"
   has_many :items, :foreign_key => "groupID"
   accepts_nested_attributes_for :type, :items
+
+
 end

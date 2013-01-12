@@ -23,11 +23,35 @@ class OrderDetail < ActiveRecord::Base
   attr_accessible :quantity, :spicy, :orderID, :typeID, :groupID, :itemID, :DetailID, :detailID, :OrderID,:Quantity, :Spicy
   
   validates :quantity, :presence => true, 
-  					   :inclusion => 1..10
+  :inclusion => 1..10
   validates :orderID, :presence => true
 
   belongs_to :order, :foreign_key => :OrderID
   accepts_nested_attributes_for :order
 
+  
+  def combo?
+    true unless self.typeID == 1
+  end
+
+  def combo_master
+    self.combo? ? return_combo : nil
+  end
+
+
+  protected
+
+  def return_combo
+    case self.typeID
+      when SPECIAL then
+       Group.find(self.groupID)
+      when CHEF_SPECIAL then
+        Type.find(self.typeID)
+      else 
+        nil
+    end
+  end
 
 end
+
+
