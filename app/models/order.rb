@@ -64,7 +64,7 @@ class Order < ActiveRecord::Base
 
 	def filled?(combo)
 		if combo.class == Group
-			quant_by_combo(combo) == Order.order_max(combo.groupID)
+			quant_by_combo(combo) == Group.order_max(combo.groupID)
 		elsif combo.class == Type
 			combo.groups.where(:groupID =>[SUSHI_CHEF_SPECIAL_GROUPS]).all? {|group| self.filled?(group)}
 		else
@@ -77,20 +77,6 @@ class Order < ActiveRecord::Base
 	end
 
 
-	protected
-
-	def self.order_max(groupID)
-		case groupID
-		when SASHIMI then
-			7
-		when NIGIRI_CHEF then
-			3
-		when HAND_ROLL_CHEF then
-			1
-		else
-			false
-		end
-
-	end
+	
 
 end

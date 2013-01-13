@@ -30,12 +30,10 @@ class OrderDetail < ActiveRecord::Base
   accepts_nested_attributes_for :order
 
   
-  def combo?
-    true unless self.typeID == 1
-  end
+  
 
   def combo_master
-    self.combo? ? return_combo : nil
+    Item.find(self.itemID).combo? ? return_combo : nil
   end
 
 
@@ -51,6 +49,7 @@ class OrderDetail < ActiveRecord::Base
         nil
     end
   end
+
 
 end
 

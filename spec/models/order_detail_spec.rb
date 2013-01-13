@@ -55,16 +55,10 @@ describe OrderDetail do
 					@type =  FactoryGirl.create(:type,  :typeID => 3)
 					@group = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => 21)
 					@item = FactoryGirl.create(:item, :groupID => @group.groupID)
-					@order = FactoryGirl.create(:order)
-					@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID, 
-						:itemID => @item.itemID, :groupID => @group.groupID,
-						:typeID => @type.typeID)
-
-
 				end
 
 				it "should return true if the order_detail belongs to a combo" do
-					@detail.combo?.should be_true
+					@item.combo?.should be_true
 
 				end
 
@@ -76,16 +70,10 @@ describe OrderDetail do
 					@type =  FactoryGirl.create(:type,  :typeID => 5)
 					@group = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => 25)
 					@item = FactoryGirl.create(:item, :groupID => @group.groupID)
-					@order = FactoryGirl.create(:order)
-					@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID, 
-						:itemID => @item.itemID, :groupID => @group.groupID,
-						:typeID => @type.typeID)
-
 				end
 
 				it "should return true if the order_detail belongs to a combo" do
-
-					@detail.combo?.should be_true
+					@item.combo?.should be_true
 
 				end
 
@@ -97,16 +85,11 @@ describe OrderDetail do
 					@type =  FactoryGirl.create(:type,  :typeID => 1)
 					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
 					@item = FactoryGirl.create(:item, :groupID => @group.groupID)
-					@order = FactoryGirl.create(:order)
-					@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID, 
-						:itemID => @item.itemID, :groupID => @group.groupID,
-						:typeID => @type.typeID)
-
 				end
 
 
 				it "should return false" do
-					@detail.combo?.should be_false
+					@item.combo?.should be_false
 				end
 
 			end

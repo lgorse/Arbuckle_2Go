@@ -18,4 +18,9 @@ class Item < ActiveRecord::Base
 
   alias_attribute :price, :Price
   alias_attribute :detail, :Detail
+
+  def combo?
+    self.group.typeID != 1
+  end
+
 end

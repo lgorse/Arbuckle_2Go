@@ -13,4 +13,16 @@ module OrderDetailHelper
 		@orderID = @order.orderID
 	end
 
+	def quant_selector_max(group)
+		@item.combo? ? combo_remaining(group) : CARTE_MAX
+	end
+
+	protected
+
+	def combo_remaining(group)
+		current_orders =  @detail.order.quant_by_combo(group)
+		(Group.order_max(group.groupID) - current_orders).abs
+
+	end
+
 end
