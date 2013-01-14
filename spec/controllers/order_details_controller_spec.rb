@@ -65,8 +65,8 @@ describe OrderDetailsController do
 		describe "'DELETE'" do
 
 			before(:each) do
-				@detail = FactoryGirl.create(:order_detail)
 				@item = FactoryGirl.create(:item)
+				@detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID)
 			end
 
 

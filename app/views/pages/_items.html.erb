@@ -1,19 +1,8 @@
 <% group.items.find_in_batches(:batch_size => 2) do |items| %>
 <tr class = "item_row">
 	<% items.each do |item| %>
-	<td class = "item_data">
-		<%= link_to new_order_detail_path(:item => item, :orderID => @order, :controller => 'order_detail', :action =>'new', :class => 'item_link'), :remote => true do%>
-		<table class = "item_table">
-			<tr>
-			<% if item.Price.nil? %>
-			<td class = "item_name"><%= item.itemName %></td>
-			<% else %>
-			<td class = "item_name"><%= item.itemName %> - $<%= item.Price %></td>
-			<% end %>
-			</tr>
-			<tr><td class="item_detail"><%= item.Detail %></td></tr>
-		</table>
-		<% end %>
+	<td class = "item_data <%= item_select(item) %>", id = "item_<%= item.itemID %>" >
+		<%= render 'item', :item => item %>
 	</td>
 	<% end %>
 </tr>

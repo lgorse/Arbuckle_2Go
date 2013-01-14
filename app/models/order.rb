@@ -63,6 +63,7 @@ class Order < ActiveRecord::Base
 	#combo order filling
 
 	def filled?(combo)
+		return false if combo.typeID == 1
 		if combo.class == Group
 			quant_by_combo(combo) == Group.order_max(combo.groupID)
 		elsif combo.class == Type

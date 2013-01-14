@@ -105,12 +105,16 @@
 
 .group_row{
 	margin-top: 1px;
-	
+}
+
+.combo_filled{
+	background-color: grey;
 }
 
 .group_header{
 	border: 1px solid black;
-	padding:5px;
+	width: 700px;
+	margin: 0;
 
 }
 
@@ -120,6 +124,14 @@
 	text-align: left;
 	border: 1px solid black;
 }
+
+/*#item_default{
+		background-color: white;
+	}*/
+
+	.selected{
+		background-color: grey;
+	}
 
 .item_table{
 

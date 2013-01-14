@@ -27,7 +27,12 @@ class OrderDetail < ActiveRecord::Base
   validates :orderID, :presence => true
 
   belongs_to :order, :foreign_key => :OrderID
-  accepts_nested_attributes_for :order
+
+  belongs_to :item, :foreign_key => :itemID
+
+  belongs_to :group, :foreign_key => :groupID
+
+  accepts_nested_attributes_for :order, :item
 
   
   
