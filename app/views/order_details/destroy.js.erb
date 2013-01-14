@@ -2,6 +2,5 @@ $(function(){
 	$('#delete_detail_final').slideUp(20, function(){$('#order_detail_outline').remove();});
 	$("#item_<%= @detail.itemID %>").removeClass('selected').html("<%= escape_javascript(render 'pages/item', :item => @detail.item, :@order => @detail.order) %>");
 	$("#group_<%= @detail.groupID %>").html("<%= escape_javascript(render 'pages/group', :group => @detail.group) %>");
-	//$(".type_combo").css("background-color", "white").removeClass('combo_filled');
-
+	$("#chef_special_header").html("<%= escape_javascript(render 'pages/chef_special_header', :type => @detail.type) %>");
 });

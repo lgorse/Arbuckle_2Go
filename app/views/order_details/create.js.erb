@@ -1,5 +1,5 @@
 $(function(){
 	$("#item_<%= @detail.itemID %>").addClass('selected').html("<%= escape_javascript(render 'pages/item', :item => @detail.item, :@order => @detail.order) %>");
 	$("#group_<%= @detail.groupID %>").html("<%= escape_javascript(render 'pages/group', :group => @detail.group) %>");
-	//$(".type_combo").addClass('combo_filled').css('combo_filled').css("background-color", "grey");
+	$("#chef_special_header").html("<%= escape_javascript(render 'pages/chef_special_header', :type => @detail.type) %>");
 });

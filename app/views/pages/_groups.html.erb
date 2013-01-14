@@ -1,5 +1,5 @@
 <% if  type.typeID == CHEF_SPECIAL%>
-	<table><th class = "type_combo <%=combo_status(type) %>"><%= type.typeName %></th></table>
+	<table><tr id = "chef_special_header"><%= render 'chef_special_header', :type => type %></tr></table>
 <% end %>
 <% type.groups.reject{|thisGroup| thisGroup.groupID == 31}.each do |group| %>
 	<table class = "menu_table">

@@ -32,6 +32,8 @@ class OrderDetail < ActiveRecord::Base
 
   belongs_to :group, :foreign_key => :groupID
 
+  belongs_to :type, :foreign_key => :typeID
+
   accepts_nested_attributes_for :order, :item
 
   
