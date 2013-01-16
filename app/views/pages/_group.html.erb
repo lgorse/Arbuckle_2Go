@@ -3,6 +3,7 @@
 	<% if type.typeID == SPECIAL %>
 		<div><%= button_to 'Cancel combo', 
 				 cancel_special_path(:order => @order, :combo_id => group), 
-				 :class => 'combo_cancel', :id => combo_status(group), :remote => true %></div>
+				 :disabled => button_disabled(group), :class => 'combo_cancel', 
+				 :id => combo_status(group), :remote => true %></div>
 	<% end %>
 </th>

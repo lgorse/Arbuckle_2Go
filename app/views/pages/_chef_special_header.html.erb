@@ -2,4 +2,5 @@
 	<div>
 <%= button_to 'Cancel combo', 
 	cancel_chef_special_path(:order => @order, :combo_id => type), 
-	:class => 'chef_special_combo_cancel', :id => combo_status(type), :remote => true %></div></th>
+	:disabled => button_disabled(type),	:class => 'chef_special_combo_cancel',
+	:id => combo_status(type), :remote => true %></div></th>

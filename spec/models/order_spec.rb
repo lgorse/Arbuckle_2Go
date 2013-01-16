@@ -122,14 +122,14 @@ describe Order do
 
 			it 'should not change the order details' do
 				lambda do
-					@order.cancel_combo(@combo)
+					@order.cancel_special(@combo)
 				end.should_not change(OrderDetail, :count)
 
 			end
 
 		end
 
-		describe "if there is a combo - special" do
+		describe "CANCEL SPECIAL" do
 
 			before(:each)  do
 				@order = FactoryGirl.create(:order)
@@ -143,21 +143,21 @@ describe Order do
 			it "should remove all order details attached to that order" do
 				@order_detail = OrderDetail.create!(@attr)
 				lambda do
-					@order.cancel_combo(@combo)
+					@order.cancel_special(@combo)
 				end.should change(OrderDetail, :count).by(-1)
 
 			end
 
 			it "should state that the combo is now not filled" do
 				@order_detail = OrderDetail.create!(@attr)
-				@order.cancel_combo(@combo)
+				@order.cancel_special(@combo)
 				@order.filled?(@combo).should be_false
 
 			end
 
 		end
 
-		describe "if there is a combo - Chef's special" do
+		describe "'CANCEL CHEF SPECIAL'" do
 
 			before(:each) do
 				@order = FactoryGirl.create(:order)
@@ -176,13 +176,13 @@ describe Order do
 
 			it "should remove all order details attached to that order" do
 				lambda do
-					@order.cancel_combo(@chef_special)
+					@order.cancel_chef_special(@chef_special)
 				end.should change(OrderDetail, :count).by(-2)
 
 			end
 
 			it "should state that all combos under that type are now invalid" do
-				@order.cancel_combo(@chef_special)
+				@order.cancel_chef_special(@chef_special)
 				@order.filled?(@chef_special).should be_false
 			end
 
@@ -201,7 +201,7 @@ describe Order do
 
 			it "should remove the current order's pending items" do
 				lambda do
-					@order.cancel_combo(@combo)
+					@order.cancel_special(@combo)
 				end.should change(OrderDetail, :count).by(-1)
 
 			end
