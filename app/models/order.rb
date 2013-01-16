@@ -77,7 +77,16 @@ class Order < ActiveRecord::Base
 		self.order_details.select{|detail| detail.groupID == combo.groupID && detail.itemID != 0}.collect{|detail| detail.quantity}.sum
 	end
 
+	#combo order canceling
 
-	
+	def cancel_chef_special(combo)
+		self.order_details.where(:typeID => combo.typeID).destroy_all
+		#OrderDetail.where(:typeID => combo.typeID, :orderID => self.orderID).destroy_all
+	end
+
+	def cancel_special(combo)
+		self.order_details.where(:groupID => combo.groupID).destroy_all
+		#OrderDetail.where(:groupID => combo.groupID, :orderID => self.orderID).destroy_all
+	end
 
 end

@@ -2,7 +2,7 @@
 <tr class = "item_row">
 	<% items.each do |item| %>
 	<td class = "item_data <%= item_select(item) %>", id = "item_<%= item.itemID %>" >
-		<%= render 'item', :item => item %>
+		<%= render 'pages/item', :item => item %>
 	</td>
 	<% end %>
 </tr>

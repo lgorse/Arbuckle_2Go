@@ -122,4 +122,32 @@ get :edit, :id => @order
 
 	end
 
+	describe "'CANCEL COMBO ORDER'" do
+		before(:each)  do
+@order = FactoryGirl.create(:order)
+@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
+@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
+@order_detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID,
+									:groupID => @combo.groupID, :typeID => @combo.typeID,
+									:quantity => 7)
+		end
+
+		it "should be successful" do
+			@order.cancel_combo(@combo)
+			response.should be_success
+
+		end
+
+		it "should keep the user on the same page" do
+			@order.cancel_combo(@combo)
+response.should render_template('pages/group')
+		end
+
+		it "should have only not-filled content" do
+
+			response.body.should_not have_css('th', 'combo_filled')
+		end
+
+	end
+
 end

@@ -89,11 +89,38 @@
 	border: 1px solid black;
 	margin: 0;
 	width: 700px;
+	height: 75px;
 	text-align: center;
 }
 
 #menu_core{
 	height: auto;
+}
+
+.chef_special_combo_cancel{
+position: absolute;
+right: 100px;
+top: 30px;
+	disabled: true;
+	display: inline;
+
+	.combo_filled{
+		disabled: false;
+	}
+
+}
+
+.combo_cancel{
+position: absolute;
+right: 100px;
+top: 15px;
+	disabled: true;
+	display: inline;
+
+	.combo_filled{
+		disabled: false;
+	}
+
 }
 
 .menu_section{
@@ -121,7 +148,9 @@
 .group_header{
 	border: 1px solid black;
 	width: 700px;
+	height: 50px;
 	margin: 0;
+	position: relative;
 
 }
 
