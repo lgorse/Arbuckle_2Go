@@ -60,5 +60,33 @@ class Order < ActiveRecord::Base
 		self.update_attribute(:filled, order[:filled])
 	end
 
-  
+	#combo order filling
+
+	def filled?(combo)
+		return false if combo.typeID == 1
+		if combo.class == Group
+			quant_by_combo(combo) == Group.order_max(combo.groupID)
+		elsif combo.class == Type
+			combo.groups.where(:groupID =>[SUSHI_CHEF_SPECIAL_GROUPS]).all? {|group| self.filled?(group)}
+		else
+			nil
+		end
+	end
+
+	def quant_by_combo(combo)
+		self.order_details.select{|detail| detail.groupID == combo.groupID && detail.itemID != 0}.collect{|detail| detail.quantity}.sum
+	end
+
+	#combo order canceling
+
+	def cancel_chef_special(combo)
+		self.order_details.where(:typeID => combo.typeID).destroy_all
+		#OrderDetail.where(:typeID => combo.typeID, :orderID => self.orderID).destroy_all
+	end
+
+	def cancel_special(combo)
+		self.order_details.where(:groupID => combo.groupID).destroy_all
+		#OrderDetail.where(:groupID => combo.groupID, :orderID => self.orderID).destroy_all
+	end
+
 end

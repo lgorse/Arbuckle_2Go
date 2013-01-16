@@ -13,7 +13,8 @@ class OrderDetailsController < ApplicationController
 	end
 
 	def create
-		OrderDetail.create!(params[:order_detail])
+		@detail = OrderDetail.create!(params[:order_detail])
+		@item = Item.find(@detail.itemID)
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 
@@ -21,7 +22,7 @@ class OrderDetailsController < ApplicationController
 	end
 
 	def destroy
-		OrderDetail.find(params[:id]).destroy unless params[:id].blank?
+		@detail = OrderDetail.find(params[:id]).destroy unless params[:id].blank?
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 

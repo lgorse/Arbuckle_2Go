@@ -1,0 +1,9 @@
+<th class="group_header <%= combo_status(group) %>", colspan =4>
+	<div><%= group.groupName %></div>
+	<% if type.typeID == SPECIAL %>
+		<div><%= button_to 'Cancel combo', 
+				 cancel_special_path(:order => @order, :combo_id => group), 
+				 :disabled => button_disabled(group), :class => 'combo_cancel', 
+				 :id => combo_status(group), :remote => true %></div>
+	<% end %>
+</th>

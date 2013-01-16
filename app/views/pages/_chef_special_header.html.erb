@@ -1,0 +1,6 @@
+<th class = "chef_special_header <%=combo_status(type) %>"><div><%= type.typeName %></div>
+	<div>
+<%= button_to 'Cancel combo', 
+	cancel_chef_special_path(:order => @order, :combo_id => type), 
+	:disabled => button_disabled(type),	:class => 'chef_special_combo_cancel',
+	:id => combo_status(type), :remote => true %></div></th>

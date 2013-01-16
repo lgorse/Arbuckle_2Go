@@ -85,8 +85,42 @@
 
 }
 
+.chef_special_header{
+	border: 1px solid black;
+	margin: 0;
+	width: 700px;
+	height: 75px;
+	text-align: center;
+}
+
 #menu_core{
 	height: auto;
+}
+
+.chef_special_combo_cancel{
+position: absolute;
+right: 100px;
+top: 30px;
+	disabled: true;
+	display: inline;
+
+	.combo_filled{
+		disabled: false;
+	}
+
+}
+
+.combo_cancel{
+position: absolute;
+right: 100px;
+top: 15px;
+	disabled: true;
+	display: inline;
+
+	.combo_filled{
+		disabled: false;
+	}
+
 }
 
 .menu_section{
@@ -105,12 +139,18 @@
 
 .group_row{
 	margin-top: 1px;
-	
+}
+
+.combo_filled{
+	background-color: grey;
 }
 
 .group_header{
 	border: 1px solid black;
-	padding:5px;
+	width: 700px;
+	height: 50px;
+	margin: 0;
+	position: relative;
 
 }
 
@@ -120,6 +160,14 @@
 	text-align: left;
 	border: 1px solid black;
 }
+
+/*#item_default{
+		background-color: white;
+	}*/
+
+	.selected{
+		background-color: grey;
+	}
 
 .item_table{
 

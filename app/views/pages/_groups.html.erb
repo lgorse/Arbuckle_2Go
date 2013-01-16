@@ -1,8 +1,9 @@
-<% type.groups.find_each do |group| %>
+<% if  type.typeID == CHEF_SPECIAL%>
+	<table><tr id = "chef_special_header"><%= render 'pages/chef_special_header', :type => type %></tr></table>
+<% end %>
+<% type.groups.reject{|thisGroup| thisGroup.groupID == 31}.each do |group| %>
 	<table class = "menu_table">
-		<tr class = "group_row">
-			<th class="group_header" colspan =4><%= group.groupName %></th>
-		</tr>
-		<%= render 'items', :group => group %>
+	<tr class = "group_row", id = "group_<%= group.groupID %>"><%= render 'pages/group', :group => group, :type => type %></th>
+		<%= render 'pages/items', :group => group %></tr>
 	</table>
 <% end %>	

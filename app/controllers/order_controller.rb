@@ -19,4 +19,25 @@ class OrderController < ApplicationController
 		end
 	end
 
+	def cancel_special
+		@order = Order.find(params[:order])
+		@combo = Group.find(params[:combo_id])
+		@type = Type.find(@combo.typeID)
+		@order.cancel_special(@combo)
+		respond_to do |format|
+			format.html {redirect_to home_path}
+			format.js 
+		end
+	end
+
+	def cancel_chef_special
+		@order = Order.find(params[:order])
+		@combo = Type.find(params[:combo_id])
+		@order.cancel_chef_special(@combo)
+		respond_to do |format|
+			format.html {redirect_to home_path}
+			format.js 
+		end
+	end
+
 end

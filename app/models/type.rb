@@ -10,5 +10,6 @@
 class Type < ActiveRecord::Base
  self.table_name = "ArbuckleType"
   has_many :groups, :foreign_key => "typeID"
+  has_many :order_details, :foreign_key => :typeID
   accepts_nested_attributes_for :groups
 end

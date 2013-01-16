@@ -14,8 +14,17 @@
 class Item < ActiveRecord::Base
 	self.table_name = "ArbuckleItem"
   belongs_to :group, :foreign_key => "groupID", :include => :type
-  accepts_nested_attributes_for :group
+ 
+
+  has_many :order_details, :foreign_key => :itemID
+
+   accepts_nested_attributes_for :group, :order_details
 
   alias_attribute :price, :Price
   alias_attribute :detail, :Detail
+
+  def combo?
+    self.group.typeID != 1
+  end
+
 end
