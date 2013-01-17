@@ -96,14 +96,21 @@ describe OrderController do
 				@combo_type = FactoryGirl.create(:type, :typeID => SPECIAL)
 				@combo_group = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
 				@combo_item = FactoryGirl.create(:item, :groupID => @combo_group.groupID)
-				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
+				@attr = {:orderID => @order.orderID, :typeID => @combo_type.typeID,
 					:groupID => @combo_group.groupID, :itemID =>@combo_item.itemID,
-					:quantity => 3)
+					:quantity => 3, :spicy => false}
 			end
 
 			it "should redirect back to the menu if the order has unfulfilled combos" do
+				OrderDetail.create!(@attr)
 				get :edit, :id => @order
 				response.should redirect_to home_path
+			end
+
+			it "should be successful if the order combos are fulfilled" do
+				OrderDetail.create!(@attr.merge(:quantity => 7))
+				get :edit, :id => @order
+				response.should be_success
 			end
 
 		end

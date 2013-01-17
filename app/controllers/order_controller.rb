@@ -13,8 +13,9 @@ class OrderController < ApplicationController
 	def edit
 		@title = "Confirm your order"
 		@order = Order.find(params[:id])
-		if @order.incomplete_combos?
-			redirect_to home_path
+		failure = @order.incomplete_combos?
+		if !failure.blank?
+			redirect_to home_path, :group => failure.last
 		else
 		respond_to do |format|
 			format.html

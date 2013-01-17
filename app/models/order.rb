@@ -81,7 +81,9 @@ class Order < ActiveRecord::Base
 
 	def incomplete_combos?
 		  Group.where(:groupID => [COMBO_SPECIALS_LIST]).any? do |group|
-		  	self.quant_by_combo(group) > 0 && (!self.filled?(group)||!self.filled?(group.type))
+		  	if self.quant_by_combo(group) > 0 && (!self.filled?(group)||!self.filled?(group.type))
+		  		return true, group
+		  	end
 		  end
 	end
 
