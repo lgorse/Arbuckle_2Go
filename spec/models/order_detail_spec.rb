@@ -37,8 +37,6 @@ describe OrderDetail do
 			lo_quant_detail.should_not be_valid
 		end
 
-
-
 	end
 
 
@@ -200,7 +198,7 @@ describe OrderDetail do
 
 			describe "'FOR A GROUP: '" do
 				before(:each) do
-					@type =  FactoryGirl.create(:type,  :typeID => 3)
+					@type =  FactoryGirl.create(:type,  :typeID => SPECIAL)
 					@group = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
 
 					@item = FactoryGirl.create(:item, :groupID => @group.groupID)
@@ -229,7 +227,7 @@ describe OrderDetail do
 				it "should return the quantity ordered up to this point" do
 					@new_detail = OrderDetail.create!(@attr.merge(:quantity => 1))
 					quant_sum = @new_detail.quantity + @detail.quantity
-					@order.quant_by_combo(Group.find(@new_detail.groupID)).should ==  quant_sum
+					@order.quant_by_combo(@new_detail.group).should ==  quant_sum
 
 				end
 

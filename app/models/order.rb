@@ -24,6 +24,8 @@ class Order < ActiveRecord::Base
 
 	attr_protected :userID, :date, :day, :due, :time, :blocked, :filled
 
+	
+
 	has_many :order_details, :foreign_key => :orderID, :dependent => :destroy
 	accepts_nested_attributes_for :order_details
 

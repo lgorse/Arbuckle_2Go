@@ -22,9 +22,9 @@ class OrderDetail < ActiveRecord::Base
 
   attr_accessible :quantity, :spicy, :orderID, :typeID, :groupID, :itemID, :DetailID, :detailID, :OrderID,:Quantity, :Spicy
   
-  validates :quantity, :presence => true, 
-  :inclusion => 1..10
+  validates :quantity, :presence => true, :inclusion => 1..10
   validates :orderID, :presence => true
+ 
 
   belongs_to :order, :foreign_key => :OrderID
 
@@ -56,7 +56,6 @@ class OrderDetail < ActiveRecord::Base
         nil
     end
   end
-
 
 end
 

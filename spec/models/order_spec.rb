@@ -78,7 +78,6 @@ describe Order do
 	end
 
 
-
 	describe "dependencies" do
 
 		before(:each) do
@@ -108,103 +107,80 @@ describe Order do
 
 	end
 
-	describe "'CANCEL COMBO'" do
+	
+	describe "CANCEL SPECIAL" do
 
-
-		describe "if there is no combo attached" do
-			before(:each) do
-				@order = FactoryGirl.create(:order)
-				@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
-				@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
-				@order_detail = FactoryGirl.create(:order_detail)
-
-			end
-
-			it 'should not change the order details' do
-				lambda do
-					@order.cancel_special(@combo)
-				end.should_not change(OrderDetail, :count)
-
-			end
-
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+			@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
+			@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
+			@attr = {:itemID => @item.itemID, :groupID => @combo.groupID, :typeID => @combo.typeID, :quantity => 7, :spicy => false, :orderID => @order.orderID}
 		end
-
-		describe "CANCEL SPECIAL" do
-
-			before(:each)  do
-				@order = FactoryGirl.create(:order)
-				@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
-				@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
-				@attr = {:itemID => @item.itemID, :groupID => @combo.groupID, 
-						 :typeID => @combo.typeID, :quantity => 7, :spicy => false, 
-						 :orderID => @order.orderID}
-			end
-
-			it "should remove all order details attached to that order" do
-				@order_detail = OrderDetail.create!(@attr)
-				lambda do
-					@order.cancel_special(@combo)
-				end.should change(OrderDetail, :count).by(-1)
-
-			end
-
-			it "should state that the combo is now not filled" do
-				@order_detail = OrderDetail.create!(@attr)
+		
+		it "should remove all order details attached to that order" do
+			@order_detail = OrderDetail.create!(@attr)
+			lambda do
 				@order.cancel_special(@combo)
-				@order.filled?(@combo).should be_false
-
-			end
+			end.should change(OrderDetail, :count).by(-1)
 
 		end
 
-		describe "'CANCEL CHEF SPECIAL'" do
+		it "should state that the combo is now not filled" do
+			@order_detail = OrderDetail.create!(@attr)
+			@order.cancel_special(@combo)
+			@order.filled?(@combo).should be_false
 
-			before(:each) do
-				@order = FactoryGirl.create(:order)
-				@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL)
-				@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 23)
-				@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 25)
-				@item1 = FactoryGirl.create(:item, :groupID => @nigiri.groupID)
-				@item2 = FactoryGirl.create(:item, :groupID => @roll.groupID)
-				@detail1 = FactoryGirl.create(:order_detail, :itemID => @item1.itemID,
-											  :groupID => @nigiri.groupID, :typeID => @chef_special.typeID,
-											  :quantity => 3, :orderID => @order.orderID)
-				@detail2 = FactoryGirl.create(:order_detail, :itemID => @item2.itemID, 
-											  :groupID => @roll.groupID, :typeID => @chef_special.typeID,
-											  :quantity => 1, :orderID => @order.orderID)
-			end
+		end
 
-			it "should remove all order details attached to that order" do
-				lambda do
-					@order.cancel_chef_special(@chef_special)
-				end.should change(OrderDetail, :count).by(-2)
+	end
 
-			end
 
-			it "should state that all combos under that type are now invalid" do
+	describe "'CANCEL CHEF SPECIAL'" do
+
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+			@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL)
+			@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 23)
+			@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 25)
+			@item1 = FactoryGirl.create(:item, :groupID => @nigiri.groupID)
+			@item2 = FactoryGirl.create(:item, :groupID => @roll.groupID)
+			@detail1 = FactoryGirl.create(:order_detail, :itemID => @item1.itemID,
+				:groupID => @nigiri.groupID, :typeID => @chef_special.typeID,
+				:quantity => 3, :orderID => @order.orderID)
+			@detail2 = FactoryGirl.create(:order_detail, :itemID => @item2.itemID, 
+				:groupID => @roll.groupID, :typeID => @chef_special.typeID,
+				:quantity => 1, :orderID => @order.orderID)
+		end
+
+		it "should remove all order details attached to that order" do
+			lambda do
 				@order.cancel_chef_special(@chef_special)
-				@order.filled?(@chef_special).should be_false
-			end
+			end.should change(OrderDetail, :count).by(-2)
 
 		end
 
-		describe "if there is part of a combo ordered" do
+		it "should state that all combos under that type are now invalid" do
+			@order.cancel_chef_special(@chef_special)
+			@order.filled?(@chef_special).should be_false
+		end
 
-			before(:each)  do
-				@order = FactoryGirl.create(:order)
-				@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
-				@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
-				@order_detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID,
-												   :groupID => @combo.groupID, :typeID => @combo.typeID,
-												   :quantity => 2, :orderID => @order.orderID)
-			end
+	end
 
-			it "should remove the current order's pending items" do
-				lambda do
-					@order.cancel_special(@combo)
-				end.should change(OrderDetail, :count).by(-1)
+	describe "if there is part of a combo ordered" do
 
-			end
+		before(:each)  do
+			@order = FactoryGirl.create(:order)
+			@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
+			@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
+			@order_detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID,
+				:groupID => @combo.groupID, :typeID => @combo.typeID,
+				:quantity => 2, :orderID => @order.orderID)
+		end
+
+		it "should remove the current order's pending items" do
+			lambda do
+				@order.cancel_special(@combo)
+			end.should change(OrderDetail, :count).by(-1)
 
 		end
 
