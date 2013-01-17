@@ -7,11 +7,7 @@ module OrderDetailHelper
 		end
 	end
 
-	def define_order_values(detail)
-		@detail = detail
-		@item = Item.find(@detail.itemID)
-		@orderID = @order.orderID
-	end
+	
 
 	def quant_selector_max(group)
 		@item.combo? ? combo_remaining(group) : CARTE_MAX

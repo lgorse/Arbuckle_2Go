@@ -1,4 +1,5 @@
 $(function(){
 	$(".menu_section").html("<%= escape_javascript(render 'pages/groups', :type => @combo) %>");
+	$('#order_review').html("<%= escape_javascript(render 'order/types_summary') %>");
 
 });

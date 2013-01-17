@@ -23,6 +23,7 @@ class OrderDetailsController < ApplicationController
 
 	def destroy
 		@detail = OrderDetail.find(params[:id]).destroy unless params[:id].blank?
+		@order = @detail.order
 		respond_to do |format|
 			format.html {redirect_to home_path}
 			format.js 

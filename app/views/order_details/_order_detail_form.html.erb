@@ -4,8 +4,6 @@
 <td><%= f.check_box :spicy%></td>
 <td><%= f.label "Quantity" %></td>
 <td><%= f.select :quantity, (1..quant_selector_max(@item.group)) %></td>
-<%= @item.combo? %>
-
 </tr>
 </table>
 

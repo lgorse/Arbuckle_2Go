@@ -1,0 +1,13 @@
+<% Group.find_each do |group| %>
+	<% if @order.order_details.any? {|detail| detail.groupID == group.groupID && detail.typeID == type.typeID} %>
+<div id = "group_summary_<%= group.groupID %>">
+		<h4><%= group.groupName %></h4>
+		<% if group.typeID == SPECIAL %>
+		<p><%= "$#{group.price}" if group.price != nil %></p>
+		<div><%= button_to 'Cancel combo',  cancel_special_path(:order => @order, :combo_id => group), :class => 'combo_cancel_summary', 
+				 :id => combo_status(group), :remote => true %></div>
+		<% end %>
+		<div id = "order_detail_outline"><%= render 'order/details_summary', :group => group %></div>
+		</div>
+	<% end %>
+<% end %>
