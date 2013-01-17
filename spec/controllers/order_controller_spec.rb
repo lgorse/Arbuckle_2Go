@@ -91,6 +91,23 @@ describe OrderController do
 			
 		end
 
+		describe "if a combo is unfulfilled" do
+			before(:each) do
+				@combo_type = FactoryGirl.create(:type, :typeID => SPECIAL)
+				@combo_group = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
+				@combo_item = FactoryGirl.create(:item, :groupID => @combo_group.groupID)
+				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
+					:groupID => @combo_group.groupID, :itemID =>@combo_item.itemID,
+					:quantity => 3)
+			end
+
+			it "should redirect back to the menu if the order has unfulfilled combos" do
+				get :edit, :id => @order
+				response.should redirect_to home_path
+			end
+
+		end
+
 		it 'should be successful' do
 			get :edit, :id => @order
 			response.should be_success
@@ -128,53 +145,53 @@ describe OrderController do
 			@combo = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
 			@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
 			@attr = {:itemID => @item.itemID, :groupID => @combo.groupID, :typeID => @combo.typeID,
-					 :quantity => 7, :orderID => @order.orderID, :spicy => false}
+				:quantity => 7, :orderID => @order.orderID, :spicy => false}
+			end
+
+			it "should be successful" do
+				OrderDetail.create!(@attr)
+				@order.cancel_special(@combo)
+				response.should be_success
+
+			end
+
+			it "should have only not-filled content" do
+				OrderDetail.create!(@attr)
+				@order.cancel_special(@combo)
+				response.body.should_not have_css('th', 'combo_filled')
+			end
+
 		end
 
-		it "should be successful" do
-			OrderDetail.create!(@attr)
-			@order.cancel_special(@combo)
-			response.should be_success
-
-		end
-
-		it "should have only not-filled content" do
-			OrderDetail.create!(@attr)
-			@order.cancel_special(@combo)
-			response.body.should_not have_css('th', 'combo_filled')
-		end
-
-	end
-
-	describe "CANCEL CHEF SPECIAL ORDER" do
-		before(:each)  do
-			@order = FactoryGirl.create(:order)
+		describe "CANCEL CHEF SPECIAL ORDER" do
+			before(:each)  do
+				@order = FactoryGirl.create(:order)
 				@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL)
 				@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 23)
 				@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 25)
 				@item1 = FactoryGirl.create(:item, :groupID => @nigiri.groupID)
 				@item2 = FactoryGirl.create(:item, :groupID => @roll.groupID)
 				@attr1 = {:itemID => @item1.itemID, :groupID => @nigiri.groupID, :typeID => @chef_special.typeID,
-						  :quantity => 3, :orderID => @order.orderID, :spicy => false}
-				@attr2 = {:itemID => @item2.itemID, :groupID => @roll.groupID, :typeID => @chef_special.typeID, 
-						  :quantity => 1, :orderID => @order.orderID, :spicy => false}
-		end
+					:quantity => 3, :orderID => @order.orderID, :spicy => false}
+					@attr2 = {:itemID => @item2.itemID, :groupID => @roll.groupID, :typeID => @chef_special.typeID, 
+						:quantity => 1, :orderID => @order.orderID, :spicy => false}
+					end
 
-		it "should be successful" do
-			OrderDetail.create!(@attr1)
-			OrderDetail.create!(@attr2)
-			@order.cancel_chef_special(@chef_special)
-			response.should be_success
-		end
+					it "should be successful" do
+						OrderDetail.create!(@attr1)
+						OrderDetail.create!(@attr2)
+						@order.cancel_chef_special(@chef_special)
+						response.should be_success
+					end
 
-		it  "should have only not-filled content" do
-			OrderDetail.create!(@attr1)
-			OrderDetail.create!(@attr2)
-			@order.cancel_chef_special(@chef_special)
-			response.body.should_not have_css('th', 'combo_filled')
+					it  "should have only not-filled content" do
+						OrderDetail.create!(@attr1)
+						OrderDetail.create!(@attr2)
+						@order.cancel_chef_special(@chef_special)
+						response.body.should_not have_css('th', 'combo_filled')
 
-		end
+					end
 
-	end
+				end
 
-end
+			end

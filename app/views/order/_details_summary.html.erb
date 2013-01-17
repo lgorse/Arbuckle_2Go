@@ -2,7 +2,7 @@
 	<%= render 'order_details/order_detail_summary', :item => detail.item, :detail => detail %>
 	<% if detail.typeID == CARTE %>
 	<div id = "order_review_form">
-		<%= form_for detail do |f| %>
+		<%= form_for detail, :remote => true do |f| %>
 			<%= render "order_details/order_detail_form", :f => f, :@item => detail.item %>
 			<%= f.submit "Save", :id => 'save_order_final' %>
 		<% end %>

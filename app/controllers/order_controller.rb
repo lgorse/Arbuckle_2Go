@@ -13,10 +13,14 @@ class OrderController < ApplicationController
 	def edit
 		@title = "Confirm your order"
 		@order = Order.find(params[:id])
+		if @order.incomplete_combos?
+			redirect_to home_path
+		else
 		respond_to do |format|
 			format.html
 			format.js 
 		end
+	end
 	end
 
 	def cancel_special

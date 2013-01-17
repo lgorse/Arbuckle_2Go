@@ -79,6 +79,12 @@ class Order < ActiveRecord::Base
 		self.order_details.select{|detail| detail.groupID == combo.groupID && detail.itemID != 0}.collect{|detail| detail.quantity}.sum
 	end
 
+	def incomplete_combos?
+		  Group.where(:groupID => [COMBO_SPECIALS_LIST]).any? do |group|
+		  	self.quant_by_combo(group) > 0 && (!self.filled?(group)||!self.filled?(group.type))
+		  end
+	end
+
 	#combo order canceling
 
 	def cancel_chef_special(combo)
