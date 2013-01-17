@@ -24,7 +24,8 @@ class OrderDetail < ActiveRecord::Base
   
   validates :quantity, :presence => true, :inclusion => 1..10
   validates :orderID, :presence => true
- 
+  validate :combo_total_max, :on => :create
+  validate :combo_total_max, :on => :update
 
   belongs_to :order, :foreign_key => :OrderID
 
@@ -41,6 +42,14 @@ class OrderDetail < ActiveRecord::Base
 
   def combo_master
     Item.find(self.itemID).combo? ? return_combo : nil
+  end
+
+  def combo_total_max
+    Group.where(:groupID => [COMBO_SPECIALS_LIST]).each do |group|
+      if self.order.quant_by_combo(group) > Group.order_max(group.groupID)
+        errors.add(group.groupName, "has too many orders. Reduce your orders.")
+      end
+    end
   end
 
 

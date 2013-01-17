@@ -39,6 +39,30 @@ describe OrderDetail do
 
 	end
 
+	describe "validations" do
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+			@type = FactoryGirl.create(:type, :typeID => SPECIAL)
+			@group = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
+			@item = FactoryGirl.create(:item, :groupID => @group.groupID)
+			@attr = {:typeID => @type.typeID, :groupID => @group.groupID, :spicy => false,:itemID => @item.itemID, :orderID => @order.orderID, :quantity => 7}
+		end
+
+
+
+		it "should reject quantities above the maximum" do
+			@detail = OrderDetail.create!(@attr.merge(:quantity => 10))
+			@detail.should_not be_valid
+
+		end
+
+		it "should accept quantities within the maximum" do
+			@detail = OrderDetail.create!(@attr)
+			@detail.should be_valid
+		end
+	end
+
+
 
 	describe "COMBO ORDER MANAGEMENT" do
 
