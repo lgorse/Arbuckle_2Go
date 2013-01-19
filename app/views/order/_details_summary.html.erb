@@ -1,4 +1,4 @@
-<% @order.order_details.where(:groupID => group.groupID).each do |detail| %>
+<% @order.order_details.where(:groupID => group.groupID).reject{|detail| detail.itemID == 0}.each do |detail| %>
 	<%= render 'order_details/order_detail_summary', :item => detail.item, :detail => detail %>
 	<% if detail.typeID == CARTE %>
 	<div id = "order_review_form">

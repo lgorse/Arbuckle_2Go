@@ -1,5 +1,5 @@
 <section class = "instructions">
 <div id = "back"><%= link_to 'Back', home_path %></div>
 <div id = "title"><h3><%= @title %></h3></div>
-<div  id = "confirmer",  class="round"><%= link_to 'Confirm', @order, :method => :update %></div>
+<div  id = "confirmer",  class="round"><%= link_to 'Confirm', send_path(:id => @order.orderID) %></div>
 </section>

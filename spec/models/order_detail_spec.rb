@@ -251,7 +251,7 @@ describe OrderDetail do
 				it "should return the quantity ordered up to this point" do
 					@new_detail = OrderDetail.create!(@attr.merge(:quantity => 1))
 					quant_sum = @new_detail.quantity + @detail.quantity
-					@order.quant_by_combo(@new_detail.group).should ==  quant_sum
+				@order.quant_by_combo(@new_detail.group).should ==  quant_sum
 
 				end
 

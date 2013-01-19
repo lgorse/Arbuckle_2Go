@@ -53,13 +53,13 @@ class Order < ActiveRecord::Base
 		order_array.blank? ? @order = Order.blank_order(user.userID) : @order = order_array.first	
 	end
 
-	def update_order(order)
+	def update_order(blocked_value, filled_value)
 		self.update_attribute(:date, Date.current)
 		self.update_attribute(:day, Date.current.strftime('%a'))	
 		self.update_attribute(:due, Date.tomorrow)
 		self.update_attribute(:time, Time.current)
-		self.update_attribute(:blocked, order[:blocked])
-		self.update_attribute(:filled, order[:filled])
+		self.update_attribute(:blocked, blocked_value)
+		self.update_attribute(:filled, filled_value)
 	end
 
 	#combo order filling
@@ -80,11 +80,11 @@ class Order < ActiveRecord::Base
 	end
 
 	def incomplete_combos?
-		  Group.where(:groupID => [COMBO_SPECIALS_LIST]).any? do |group|
-		  	if self.quant_by_combo(group) > 0 && (!self.filled?(group)||!self.filled?(group.type))
-		  		return true, group
-		  	end
-		  end
+		Group.where(:groupID => [COMBO_SPECIALS_LIST]).any? do |group|
+			if self.quant_by_combo(group) > 0 && (!self.filled?(group)||!self.filled?(group.type))
+				return true, group
+			end
+		end
 	end
 
 	#combo order canceling
@@ -96,6 +96,36 @@ class Order < ActiveRecord::Base
 	def cancel_special(combo)
 		self.order_details.where(:groupID => combo.groupID).destroy_all
 		
+	end
+
+	def add_combo_hacks
+		Type.find_each do |type|
+			if self.order_details.find_by_typeID(type.typeID)
+				case type.typeID
+				when CHEF_SPECIAL then
+					Order.create_chef_special_hack(self.orderID, type.typeID) if !self.order_details.find_by_typeID_and_itemID(type.typeID, 0)
+				when SPECIAL then
+					if self.order_details.find_by_groupID(SASHIMI)
+						Order.create_special_hack(self.orderID, type.typeID, SASHIMI) if !self.order_details.find_by_groupID_and_itemID(SASHIMI, 0)
+					end
+				else 
+					nil
+				end
+			end
+		end
+
+	end
+
+	def self.create_chef_special_hack(orderID, typeID)
+		OrderDetail.create!(:orderID => orderID, :typeID => typeID,	
+			:groupID => typeID, :itemID => 0, :quantity => 1, 
+			:spicy => false)
+	end
+
+	def self.create_special_hack(orderID, typeID, groupID)
+		OrderDetail.create!(:orderID => orderID, :typeID => typeID,
+			:groupID => groupID, :itemID => 0, :quantity => 1,
+			:spicy => false)
 	end
 
 end

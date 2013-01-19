@@ -7,7 +7,7 @@ class OrderController < ApplicationController
 
 	def update
 		@order = Order.find(params[:id])
-		@order.update_order(params[:order])
+		@order.update_order(params[:order][:blocked], params[:order][:filled])
 	end
 
 	def edit
@@ -17,11 +17,11 @@ class OrderController < ApplicationController
 		if !failure.blank?
 			redirect_to home_path, :group => failure.last
 		else
-		respond_to do |format|
-			format.html
-			format.js 
+			respond_to do |format|
+				format.html
+				format.js 
+			end
 		end
-	end
 	end
 
 	def cancel_special
@@ -44,5 +44,13 @@ class OrderController < ApplicationController
 			format.js 
 		end
 	end
+
+	def send_order
+		@order = Order.find(params[:id])
+		@order.add_combo_hacks
+		@order.update_order(false, CONFIRMED)
+	end
+
+	
 
 end
