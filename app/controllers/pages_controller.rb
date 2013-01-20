@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+	include UserAuthenticate
 	include PagesHelper
 
 	before_filter :authenticate, :only => [:home]
@@ -35,9 +36,7 @@ class PagesController < ApplicationController
 	
 
 	def logout
-		logout_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/website_scripts/logoutRails.php"
-		reset_session
-		redirect_to(logout_url)
+		user_logout
 	end
 
 	def menu
@@ -51,10 +50,6 @@ class PagesController < ApplicationController
 
 
 	protected
-
-	def authenticate
-		redirect_to root_path if session[:user_token].nil?
-	end
 
 	def set_user
 		@user = User.find_by_userID(session[:user_token])

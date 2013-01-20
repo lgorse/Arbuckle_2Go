@@ -1,4 +1,7 @@
 class OrderController < ApplicationController
+include UserAuthenticate
+
+before_filter :authenticate, :only => [:edit, :send_order]
 
 	def destroy
 		Order.find(params[:id]).destroy
@@ -52,6 +55,8 @@ class OrderController < ApplicationController
 		@order.update_order(false, CONFIRMED)
 	end
 
-	
+	def logout
+		user_logout
+	end
 
 end

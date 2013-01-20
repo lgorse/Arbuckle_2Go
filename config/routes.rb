@@ -10,6 +10,7 @@ Arbuckle2Go::Application.routes.draw do
   match '/signin', :to => "pages#sign_in"
   match '/user_parse', :to => "pages#user_parse"
   match '/logout', :to => 'pages#logout'
+  match '/logout', :to => 'order#logout'
   match '/menu', :to => "pages#menu"
   match '/items', :to => 'pages#items'
   match '/close', :to => 'pages#close'

@@ -3,10 +3,14 @@ require 'spec_helper'
 describe OrderController do
 	render_views
 
+	before(:each) do
+		@user = FactoryGirl.create(:user)
+		request.session[:user_token] = @user.userID
+	end
+
 	describe "DELETE delete" do
 
 		before(:each) do
-			@user = FactoryGirl.create(:user)
 			@order = FactoryGirl.create(:order, :userID => @user.userID)
 			@orderRandom = FactoryGirl.create(:order, :userID => "300")
 			@detail1 = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
@@ -89,6 +93,12 @@ describe OrderController do
 			@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID,
 				:itemID => @item.itemID)
 			
+		end
+
+		it "should redirect the user to the signin page if he is not signed in" do
+			get 'logout'
+			get 'edit', :id => @order
+			response.should redirect_to root_path
 		end
 
 		describe "if a combo is unfulfilled" do
@@ -223,6 +233,12 @@ describe OrderController do
 
 
 			end
+
+			it "should redirect the user to the signin page if he is not signed in" do
+				get 'logout'
+				get 'send_order', :id => @order.orderID
+			response.should redirect_to root_path
+		end
 
 		end
 
