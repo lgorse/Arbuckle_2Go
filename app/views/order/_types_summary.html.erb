@@ -5,10 +5,12 @@
 		<% if type.typeID == CHEF_SPECIAL %>
 		<p><%= "$#{type.price}" if type.price != nil %></p>
 		<div>
-		<%= button_to 'Cancel combo', 
-			cancel_chef_special_path(:order => @order, :combo_id => type), 
-			:disabled => button_disabled(type),	:class => 'chef_special_combo_cancel_summary',
-			:id => combo_status(type), :remote => true %></div>
+			<% if @order.filled == PENDING %>
+				<%= button_to 'Cancel combo', 
+					cancel_chef_special_path(:order => @order, :combo_id => type), 
+					:disabled => button_disabled(type),	:class => 'chef_special_combo_cancel_summary',
+					:id => combo_status(type), :remote => true %></div>
+			<% end %>
 		<% end %>
 	<%= render 'order/groups_summary', :type => type %>
 	</div>

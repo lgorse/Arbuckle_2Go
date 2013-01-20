@@ -82,7 +82,7 @@ describe OrderController do
 
 	describe "GET edit" do
 		before(:each) do
-			@order = FactoryGirl.create(:order)
+			@order = FactoryGirl.create(:order, :filled => CONFIRMED)
 			@type = FactoryGirl.create(:type)
 			@group = FactoryGirl.create(:group, :typeID => @type.typeID)
 			@item = FactoryGirl.create(:item, :groupID => @group.groupID)
@@ -139,7 +139,11 @@ describe OrderController do
 		it "should have a cancel link" do
 			get :edit, :id => @order
 			response.body.should have_link('Back', :back)
+		end
 
+		it "should set the order to pending" do
+			get :edit, :id => @order
+			Order.find(@order.orderID).filled.should == PENDING
 		end
 
 	end

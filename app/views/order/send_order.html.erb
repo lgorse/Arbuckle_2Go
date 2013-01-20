@@ -1,2 +1,8 @@
 <h1>Order sent</h1>
+<div><%= link_to 'Cancel Order', @order, :method => :delete,
+			:confirm => "Your order will be deleted",
+								   :class => "delete_order" %>
+</div>
+<div id = "confirmer", class="round"><%= link_to 'Edit order', edit_order_path(@order) %></div>
 <p><%= @order.orderID %></p>
+<%= render 'order/types_summary' %>
