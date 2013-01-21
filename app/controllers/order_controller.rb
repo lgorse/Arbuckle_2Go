@@ -1,7 +1,6 @@
 class OrderController < ApplicationController
 include UserAuthenticate
 
-after_filter :authenticate_and_set_order_view, :only => [:edit]
 before_filter :authenticate, :only => [:send_order, :edit]
 
 	def destroy
@@ -51,7 +50,6 @@ before_filter :authenticate, :only => [:send_order, :edit]
 	end
 
 	def send_order
-		@order = Order.find(params[:id])
 		@order.add_combo_hacks
 		@order.update_order(false, CONFIRMED) if @order.filled == PENDING
 	end

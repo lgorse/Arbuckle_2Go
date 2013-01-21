@@ -86,7 +86,7 @@ describe OrderController do
 
 	describe "GET edit" do
 		before(:each) do
-			@order = FactoryGirl.create(:order, :filled => PENDING)
+			@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 			@type = FactoryGirl.create(:type)
 			@group = FactoryGirl.create(:group, :typeID => @type.typeID)
 			@item = FactoryGirl.create(:item, :groupID => @group.groupID)
@@ -143,7 +143,7 @@ describe OrderController do
 
 		it "should have a confirm button" do
 			get :edit, :id => @order
-			response.body.should have_link('Confirm', href: send_path(:id => @order.orderID))
+			response.body.should have_link('Confirm', href: send_path)
 		end
 
 		it "should have a cancel link" do
@@ -214,7 +214,7 @@ describe OrderController do
 
 		describe "regardless of order details"  do
 			before(:each)  do
-				@order = FactoryGirl.create(:order, :filled => PENDING)
+				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 				@group = FactoryGirl.create(:group)
 				@item = FactoryGirl.create(:item, :groupID => @group.groupID)
 				@detail = FactoryGirl.create(:order_detail, :groupID => @group.groupID, :itemID => @item.itemID, :orderID => @order.orderID)
@@ -242,9 +242,24 @@ describe OrderController do
 
 		end
 
+		describe "fraudulent entry" do
+
+			before(:each) do
+				@user_order = FactoryGirl.create(:order, :userID => @user.userID)
+				@other_order = FactoryGirl.create(:order, :userID => 10400)
+			end
+
+			it "should redirect the user to the user's order page" do
+				get 'send_order', :id => @other_order.orderID
+				assigns(:order).should == @user_order
+
+			end
+
+		end
+
 		describe "if the order is CONFIRMED" do
 			before(:each) do
-				@order = FactoryGirl.create(:order, :filled => CONFIRMED)
+				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
 
 			end
 
@@ -264,7 +279,7 @@ describe OrderController do
 
 		describe "if the order is SENT" do
 			before(:each) do
-				@order = FactoryGirl.create(:order, :filled => SENT)
+				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
 			end
 
 			it "should not have a cancel link" do
@@ -283,7 +298,7 @@ describe OrderController do
 		describe "if order contains a Special" do
 
 			before(:each)  do
-				@order = FactoryGirl.create(:order)
+				@order = FactoryGirl.create(:order, :userID => @user.userID)
 				@type = FactoryGirl.create(:type, :typeID => SPECIAL)
 				@combo = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
 				@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
@@ -314,7 +329,7 @@ describe OrderController do
 		describe "if order contains a chef's Special" do
 
 			before(:each)  do
-				@order = FactoryGirl.create(:order)
+				@order = FactoryGirl.create(:order, :userID => @user.userID)
 				@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL)
 				@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => NIGIRI_CHEF)
 				@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => HAND_ROLL_CHEF)

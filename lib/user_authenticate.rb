@@ -10,18 +10,22 @@ module UserAuthenticate
 		if session[:user_token].nil?
 			redirect_to root_path 
 		else
-			set_order_view
+			assign_current_order
+			redirect_to send_path if (@order.filled == CONFIRMED || @order.filled == SENT)
 		end
 	end
 
-	def set_order_view
-		@user = User.find_by_userID(session[:user_token])
-		@order = Order.set_session_order(@user)
-		redirect_to send_path(:id => @order.orderID) if (@order.filled == CONFIRMED || @order.filled == SENT)
+	def authenticate
+		if session[:user_token].nil?
+			redirect_to root_path 
+		else 
+			assign_current_order
+		end
 	end
 
-	def authenticate
-redirect_to root_path if session[:user_token].nil?
+	def assign_current_order
+		@user = User.find_by_userID(session[:user_token])
+		@order = Order.set_session_order(@user)
 	end
 
 end

@@ -16,41 +16,6 @@ require 'spec_helper'
 
 describe Order do
 
-	describe "General order features" do
-
-		before(:each) do
-			FactoryGirl.create(:order)
-			@order = Order.last
-
-		end
-
-		it "should return the same order as @order" do
-			Order.last.should == @order
-		end
-
-		it "should set the close-enough current time" do
-			diff = ((Time.current - @order.time)%3600/60).to_i
-			diff.should <= 1.minute
-			
-		end
-
-		it "should set today's date" do
-			@order.date.should == Date.current
-		end
-
-		it "should set the correct day format" do
-			@order.day.should == Date.current.strftime('%a')
-		end
-
-		it "should default to not blocked" do
-			@order.blocked.should_not be_true
-		end
-
-		it "should default to sent" do
-			@order.filled.should == 0
-		end
-
-	end
 
 	describe 'blank_order' do
 
@@ -73,6 +38,83 @@ describe Order do
 		it "should have an orderID" do
 			@order = Order.blank_order(@user.userID)
 			Order.find(@order.orderID).should_not be_blank
+		end
+
+		it "should set the close-enough current time" do
+			@order = Order.blank_order(@user.userID)
+			diff = ((Time.current - @order.time)%3600/60).to_i
+			diff.should <= 1.minute
+			
+		end
+
+		it "should set today's date" do
+			@order = Order.blank_order(@user.userID)
+			@order.date.should == Date.current
+		end
+
+		it "should set the correct day format" do
+			@order = Order.blank_order(@user.userID)
+			@order.day.should == Date.current.strftime('%a')
+		end
+
+		it "should set the DUE DATE as the appropriate next Monday or Thursday" do
+			@order = Order.blank_order(@user.userID)
+			time_data = @order.time_stamp
+			if time_data.fetch("validtime") == ORDER_NEXT_DAY
+				@order.due.should == Date.parse(time_data.fetch("nextDay"))
+			elsif  time_data.fetch("validtime") == ORDER_TODAY
+				@order.due.should == Date.current
+			end
+
+		end
+
+	end
+
+	describe "update order" do
+
+		before(:each) do
+			@order = FactoryGirl.create(:order, :filled => PENDING)
+			@attr = [false, CONFIRMED]
+		end
+
+		it "should set the close-enough current time" do
+			@order.update_order(*@attr)
+			diff = ((Time.current - @order.time)%3600/60).to_i
+			diff.should <= 1.minute
+			
+		end
+
+		it "should set today's date" do
+			@order.update_order(*@attr)
+			@order.date.should == Date.current
+		end
+
+		it "should set the correct day format" do
+			@order.update_order(*@attr)
+			@order.day.should == Date.current.strftime('%a')
+		end
+
+		it "should set the order status as requested" do
+			@order.update_order(*@attr)
+			@order.filled.should == CONFIRMED
+		end
+
+		describe "due date" do
+			before(:each) do
+				@time_data = @order.time_stamp
+				@alt_time = {"validtime"=> ORDER_NEXT_DAY, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => @order.time_stamp.fetch("nextDay")}
+			end
+
+			it "IF validtime = ORDER_NEXT_DAY, should set the DUE DATE as the appropriate next Monday or Thursday" do
+				@next_day_order = FactoryGirl.create(:order, :due => Order.set_due_date(@alt_time))
+				@next_day_order.due.should == Date.parse(@time_data.fetch("nextDay"))
+			end
+
+			it "IF validtime = ORDER_TODAY, should set the DUE DATE as TODAY" do
+				@today_order = FactoryGirl.create(:order)
+				@today_order.due.should == Date.current
+			end
+
 		end
 
 	end
@@ -107,7 +149,40 @@ describe Order do
 
 	end
 
-	
+	describe "TIMESTAMP" do
+
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+		end
+
+		it "should return a hash" do
+			@order.time_stamp.class.should == Hash
+
+		end
+
+		it "should return a hash with 5 items" do
+			@order.time_stamp.count.should == 5
+
+		end
+
+		it "VALIDTIME should contain the valid_time" do
+			time_hash = @order.time_stamp
+			time_hash.fetch("validtime").should be_integer
+		end
+
+		it "DEADLINES should contain the order deadlines as strings" do
+			time_hash = @order.time_stamp
+			time_hash.fetch("starttime").class.should == String
+		end
+
+		it "NEXTDAY should contain either Thursday or Monday" do
+			time_hash = @order.time_stamp
+			time_hash.fetch("nextDay").class.should == String
+		end
+
+	end
+
+
 	describe "CANCEL SPECIAL" do
 
 		before(:each) do
@@ -116,7 +191,7 @@ describe Order do
 			@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
 			@attr = {:itemID => @item.itemID, :groupID => @combo.groupID, :typeID => @combo.typeID, :quantity => 7, :spicy => false, :orderID => @order.orderID}
 		end
-		
+
 		it "should remove all order details attached to that order" do
 			@order_detail = OrderDetail.create!(@attr)
 			lambda do

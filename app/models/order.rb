@@ -13,6 +13,9 @@
 #
 
 class Order < ActiveRecord::Base
+require "net/http"
+require "uri"
+
 	self.table_name = "ArbuckleOrderList"
 	alias_attribute :userID, :UserID
 	alias_attribute :date, "Order Date"
@@ -31,10 +34,11 @@ class Order < ActiveRecord::Base
 
 	def self.blank_order(userID)
 		order = Order.new
+		time_data = order.time_stamp
 		order.userID = userID
 		order.date = Date.current
 		order.day = Date.current.strftime('%a')
-		order.due = Date.tomorrow
+		order.due = Order.set_due_date(time_data)
 		order.time = Time.current
 		order.blocked = false
 		order.filled = PENDING
@@ -54,12 +58,37 @@ class Order < ActiveRecord::Base
 	end
 
 	def update_order(blocked_value, filled_value)
+		time_data = self.time_stamp
 		self.update_attribute(:date, Date.current)
 		self.update_attribute(:day, Date.current.strftime('%a'))	
-		self.update_attribute(:due, Date.tomorrow)
+		self.update_attribute(:due, Order.set_due_date(time_data))
 		self.update_attribute(:time, Time.current)
 		self.update_attribute(:blocked, blocked_value)
 		self.update_attribute(:filled, filled_value)
+	end
+
+	#time stamp
+
+	def time_stamp
+		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint.php")
+		http = Net::HTTP.new(uri.host, uri.port)
+		request = Net::HTTP::Get.new(uri.request_uri)
+		response = http.request(request)
+		http.finish if http.started?
+		time_data = JSON.parse(response.body)
+	end
+
+	def self.set_due_date(time_data)
+		valid_time = time_data.fetch("validtime")
+		case valid_time
+		when ORDER_TODAY then
+			due = Date.current
+		when ORDER_NEXT_DAY then
+			due = Date.parse(time_data.fetch("nextDay"))
+		else
+			due = Date.parse(time_data.fetch("nextDay"))
+		end
+
 	end
 
 	#combo order filling
@@ -127,5 +156,7 @@ class Order < ActiveRecord::Base
 			:groupID => groupID, :itemID => 0, :quantity => 1,
 			:spicy => false)
 	end
+
+
 
 end

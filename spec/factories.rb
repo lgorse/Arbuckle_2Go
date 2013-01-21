@@ -37,7 +37,7 @@ FactoryGirl.define do
 		order.date Date.current
 		order.day Date.current.strftime('%a')
 		order.time Time.current
-		order.due Date.tomorrow
+		order.due Order.set_due_date("validtime"=> ORDER_TODAY, "starttime"=> "11:30", "cutoff" => "10:30", "endtime" => "14:00", "nextDay" => "Thursday" )
 		order.blocked false
 		order.filled 0
 	end
@@ -50,5 +50,6 @@ FactoryGirl.define do
 		detail.quantity 5
 		detail.spicy false
 	end
+
 
 end

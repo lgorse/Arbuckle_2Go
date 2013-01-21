@@ -72,15 +72,15 @@ describe PagesController do
 
 		end
 
-		describe "failed or irregular entry" do
+		describe "entry after logout" do
 
 			it "should redirect the user to the signin page if not signed in" do
 				get 'logout'
 				get 'home'
 				response.should redirect_to root_path
 			end
-
 		end
+
 
 		describe "order management" do
 
@@ -141,7 +141,7 @@ describe PagesController do
 
 				it "should redirect to the send_order page" do
 					get 'home'
-					response.should redirect_to send_path(:id => @order.orderID)
+					response.should redirect_to send_path
 				end
 
 			end
@@ -153,9 +153,8 @@ describe PagesController do
 
 				it "should redirect the user to send page" do
 					get 'home'
-					response.should redirect_to send_path(:id => @order.orderID)
+					response.should redirect_to send_path
 				end
-
 			end
 
 
