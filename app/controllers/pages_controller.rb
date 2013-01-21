@@ -2,12 +2,10 @@ class PagesController < ApplicationController
 	include UserAuthenticate
 	include PagesHelper
 
-	before_filter :authenticate, :only => [:home]
+	before_filter :authenticate_and_set_order_view, :only => [:home]
 
 	def home
 		@title = "Place an order"
-		set_user
-		@order = Order.set_session_order(@user)
 		@name = @user.first_name
 		@login = @user.UserName
 	end
@@ -51,18 +49,10 @@ class PagesController < ApplicationController
 
 	protected
 
-	def set_user
-		@user = User.find_by_userID(session[:user_token])
-	end
-
+	
 	def set_session
 		session[:user_token] = @user.userID
 	end
-
-	
-
-
-
 
 end
 

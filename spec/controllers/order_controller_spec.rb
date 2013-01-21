@@ -86,7 +86,7 @@ describe OrderController do
 
 	describe "GET edit" do
 		before(:each) do
-			@order = FactoryGirl.create(:order, :filled => CONFIRMED)
+			@order = FactoryGirl.create(:order, :filled => PENDING)
 			@type = FactoryGirl.create(:type)
 			@group = FactoryGirl.create(:group, :typeID => @type.typeID)
 			@item = FactoryGirl.create(:item, :groupID => @group.groupID)
@@ -138,7 +138,7 @@ describe OrderController do
 
 		it "should have a cancel button" do
 			get :edit, :id => @order
-			response.body.should have_link('Cancel', href: order_path(assigns(:order)))
+			response.body.should have_link('Cancel Order', href: order_path(@order))
 		end
 
 		it "should have a confirm button" do
@@ -237,8 +237,45 @@ describe OrderController do
 			it "should redirect the user to the signin page if he is not signed in" do
 				get 'logout'
 				get 'send_order', :id => @order.orderID
-			response.should redirect_to root_path
+				response.should redirect_to root_path
+			end
+
 		end
+
+		describe "if the order is CONFIRMED" do
+			before(:each) do
+				@order = FactoryGirl.create(:order, :filled => CONFIRMED)
+
+			end
+
+			it "should have a cancel link" do
+				get 'send_order', :id => @order.orderID
+				response.body.should have_link('Cancel Order', :href =>  order_path(@order))
+
+			end
+
+			it "should have an edit link" do
+				get 'send_order', :id => @order.orderID
+				response.body.should have_link('Edit Order', :href => edit_order_path(@order))
+
+			end
+
+		end
+
+		describe "if the order is SENT" do
+			before(:each) do
+				@order = FactoryGirl.create(:order, :filled => SENT)
+			end
+
+			it "should not have a cancel link" do
+				get 'send_order', :id => @order.orderID
+				response.body.should_not have_link('Cancel Order', :href =>  @order)
+			end
+
+			it "should not have an edit link" do
+				get 'send_order', :id => @order.orderID
+				response.body.should_not have_link('Edit Order', :href => edit_order_path(@order))
+			end
 
 		end
 
@@ -306,12 +343,12 @@ describe OrderController do
 
 				before(:each) do
 					get :send_order, :id => @order.orderID
-				@type = FactoryGirl.create(:type, :typeID => SPECIAL)
-				@combo = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
-				@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
-				@detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID, :groupID => @combo.groupID, 
-					:typeID => @combo.typeID,	:quantity => 7, :orderID => @order.orderID, 
-					:spicy => false)
+					@type = FactoryGirl.create(:type, :typeID => SPECIAL)
+					@combo = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
+					@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
+					@detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID, :groupID => @combo.groupID, 
+						:typeID => @combo.typeID,	:quantity => 7, :orderID => @order.orderID, 
+						:spicy => false)
 				end
 
 				it "should NOT block the creation of an ITEM HACK for the additional combo" do

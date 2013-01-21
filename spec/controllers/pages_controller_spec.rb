@@ -98,7 +98,7 @@ describe PagesController do
 				end
 			end
 
-			describe "if an order has not been confirmed" do
+			describe "if an order is pending" do
 				before(:each) do
 					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
 				end
@@ -109,10 +109,10 @@ describe PagesController do
 					order.should == Order.find(@order.orderID)
 				end
 
-				it "should have a filled status of 2" do
+				it "should have a filled status of PENDING" do
 					get 'home'
 					order = assigns(:order)
-					order.filled.should == 2
+					order.filled.should == PENDING
 				end
 
 			end
@@ -130,7 +130,7 @@ describe PagesController do
 
 			describe "if an order has been confirmed" do
 				before(:each) do
-					@order = FactoryGirl.create(:order, :userID => @user.userID)
+					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
 				end
 
 				it "should define the existing order as the session order" do
@@ -139,44 +139,62 @@ describe PagesController do
 					order.should == Order.find(@order.orderID)
 				end
 
-
-				describe "if there are redundant orders" do
-					
-					before(:each) do
-						@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
-						@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
-						@order3 = FactoryGirl.create(:order, :userID => 1003)
-						@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
-					end
-
-					it "should remove extra orders but create a single one" do
-						get 'home'
-						Order.where(:userID => @user.userID, :filled => [0,2]).size.should == 1
-					end	
-
-					it "should create an initialized basic order" do
-						get 'home'
-						@order = Order.where(:userID => @user.userID, :filled => [0,2]).first
-						@order.attributes.values.any?.should be_true
-					end
-
-					it "should create an initial basic order without order details" do
-						get 'home'
-						@order = Order.where(:userID => @user.userID, :filled => [0,2]).first
-						@order.order_details.blank?.should be_true
-					end
-
-					it "should not clear filled orders" do
-						get 'home'
-						Order.where(:userID => @user.userID, :filled => SENT).size.should == 1
-					end
-
+				it "should redirect to the send_order page" do
+					get 'home'
+					response.should redirect_to send_path(:id => @order.orderID)
 				end
 
 			end
-		end
 
+			describe "if an order has been sent" do
+				before(:each) do
+					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
+				end
+
+				it "should redirect the user to send page" do
+					get 'home'
+					response.should redirect_to send_path(:id => @order.orderID)
+				end
+
+			end
+
+
+			describe "if there are redundant orders" do
+
+				before(:each) do
+					@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+					@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
+					@order3 = FactoryGirl.create(:order, :userID => 1003)
+					@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
+				end
+
+				it "should remove extra orders but create a single one" do
+					get 'home'
+					Order.where(:userID => @user.userID, :filled => [0,2]).size.should == 1
+				end	
+
+				it "should create an initialized basic order" do
+					get 'home'
+					@order = Order.where(:userID => @user.userID, :filled => [0,2]).first
+					@order.attributes.values.any?.should be_true
+				end
+
+				it "should create an initial basic order without order details" do
+					get 'home'
+					@order = Order.where(:userID => @user.userID, :filled => [0,2]).first
+					@order.order_details.blank?.should be_true
+				end
+
+				it "should not clear filled orders" do
+					get 'home'
+					Order.where(:userID => @user.userID, :filled => SENT).size.should == 1
+				end
+
+			end
+
+		end
 	end
+
 
 	describe "GET 'create'" do
 
@@ -192,7 +210,7 @@ describe PagesController do
 			flash[:notice].should =~ /Welcome to Arbuckle 2Go!/i
 		end
 
-		
+
 
 	end
 
@@ -230,6 +248,5 @@ describe PagesController do
 			cookies.signed[:current_order].should == nil
 		end
 	end
-
 
 end

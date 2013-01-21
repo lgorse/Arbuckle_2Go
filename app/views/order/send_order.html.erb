@@ -1,8 +1,10 @@
 <h1>Order sent</h1>
+<% if @order.filled != SENT %>
 <div><%= link_to 'Cancel Order', @order, :method => :delete,
 			:confirm => "Your order will be deleted",
 								   :class => "delete_order" %>
 </div>
-<div id = "confirmer", class="round"><%= link_to 'Edit order', edit_order_path(@order) %></div>
+<div id = "confirmer", class="round"><%= link_to 'Edit Order', edit_order_path(@order) %></div>
+<% end %>
 <p><%= @order.orderID %></p>
 <%= render 'order/types_summary' %>
