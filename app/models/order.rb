@@ -47,10 +47,12 @@ require "uri"
 	end
 
 	def self.set_session_order(user)
-		order_array = Order.where(:userID => user.userID, :filled => [PENDING,CONFIRMED])
+		#order_array = Order.where(:userID => user.userID, :filled => [PENDING,CONFIRMED])
+		order_array = Order.where("`userID` =?  AND (`filled` = ? OR `filled` = ? OR (`filled` = ? AND `Due Date` = ?))",
+								  user.userID, PENDING, CONFIRMED, SENT, Date.current)
 
 		if order_array.size > 1
-			Order.destroy_all(:userID => user.userID, :filled => [PENDING, CONFIRMED])
+			order_array.destroy_all
 			set_session_order(user)
 		end
 

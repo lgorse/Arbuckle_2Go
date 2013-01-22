@@ -116,6 +116,35 @@ describe Order do
 			end
 
 		end
+	end
+
+	describe "set_session_order" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+		end
+
+		it "should set the order to PENDING if an order is pending" do
+			@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
+			Order.set_session_order(@user).orderID.should == @order.orderID
+		end
+
+		it "should set the order to CONFIRMED if an order is confirmed" do
+			@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+			Order.set_session_order(@user).orderID.should == @order.orderID
+
+		end
+
+		it "should set the order to Sent if an order is sent and due IN THE FUTURE" do
+			@order = FactoryGirl.create(:order, :userID => @user.userID, :due => Date.current, :filled => SENT)
+			Order.set_session_order(@user).orderID.should == @order.orderID
+
+		end
+
+		it "should be blank if there is a sent order due in the past" do
+			@order = FactoryGirl.create(:order, :userID => @user.userID, :due => Date.yesterday, :filled => SENT)
+			Order.set_session_order(@user).orderID.should_not == @order.orderID
+
+		end
 
 	end
 

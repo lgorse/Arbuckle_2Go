@@ -165,6 +165,7 @@ describe PagesController do
 					@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 					@order3 = FactoryGirl.create(:order, :userID => 1003)
 					@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
+					@order5 = FactoryGirl.create(:order, :userID => @user.userID, :due => Date.yesterday ,:filled => SENT)
 				end
 
 				it "should remove extra orders but create a single one" do
