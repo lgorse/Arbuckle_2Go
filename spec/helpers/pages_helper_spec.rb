@@ -11,5 +11,22 @@ require 'spec_helper'
 #   end
 # end
 describe PagesHelper do
-  #pending "add some examples to (or delete) #{__FILE__}"
+	
+	it "should return the correct flash ON ORDER_NEXT_DAY" do
+		@alt_time = {"validtime"=> ORDER_NEXT_DAY, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => "Thursday"}
+		assign(:time_data, @alt_time)
+		helper.home_flash.should =~ /thursday/i
+	end
+
+	it "should flash a NOTICE for TODAY if the order status is ORDER_TODAY" do
+		@alt_time = {"validtime"=> ORDER_TODAY, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => "Thursday"}
+		assign(:time_data, @alt_time)
+		helper.home_flash.should =~ /10:30/i
+	end
+
+	it "should flash a NOTICE for LOCKOUT if order status is ORDER_LOCKOUT" do
+		@alt_time = {"validtime"=> ORDER_LOCKOUT, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => "Thursday"}
+		assign(:time_data, @alt_time)
+		helper.home_flash.should =~ /Order blackout period/i
+	end
 end

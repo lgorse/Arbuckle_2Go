@@ -69,12 +69,6 @@ describe PagesController do
 				response.body.should have_link('Cart', href: edit_order_path(assigns(:order)))
 			end
 
-			it "should flash a NOTICE telling the user how long he has to order" do
-				get 'home'
-				flash[:notice].should =~/10:30/i
-
-			end
-
 		end
 
 		describe "entry after logout" do
@@ -162,6 +156,7 @@ describe PagesController do
 					response.should redirect_to send_path
 				end
 			end
+
 
 
 			describe "if there are redundant orders" do

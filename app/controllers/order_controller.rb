@@ -1,10 +1,12 @@
 class OrderController < ApplicationController
 include UserAuthenticate
+include OrderHelper
 
-before_filter :authenticate, :only => [:send_order, :edit]
+before_filter :authenticate_order, :only => [:send_order, :edit]
 
 	def destroy
 		Order.find(params[:id]).destroy
+		flash[:success] = "Your order has been cancelled"
 		redirect_to home_path
 	end
 
@@ -15,13 +17,13 @@ before_filter :authenticate, :only => [:send_order, :edit]
 
 	def edit
 		@title = "Confirm your order"
-		@order = Order.find(params[:id])
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
 		if !failure.blank?
 			flash[:error] = "Your #{failure.last.type.typeName} order is incomplete. Complete it and try again."
 			redirect_to home_path, :group => failure.last
 		else
+			flash[:notice] = "Edit or confirm your order here."
 			respond_to do |format|
 				format.html
 				format.js 
@@ -52,12 +54,8 @@ before_filter :authenticate, :only => [:send_order, :edit]
 
 	def send_order
 		@order.add_combo_hacks
-		@order.filled == PENDING ? time_data = @order.update_order(false, CONFIRMED) : time_data = @order.time_stamp
-		if @order.filled == CONFIRMED
-			flash[:notice] = "Your order is scheduled for pickup. You can edit it until #{time_data.fetch("cutoff")}"
-		elsif @order.filled == SENT
-			flash[:notice] = "Your order is ready for pickup. It's too late to alter it- it's been prepared!"
-		end
+		@order.update_order(false, CONFIRMED) if @order.filled == PENDING
+		send_order_flash
 	end
 
 	def logout

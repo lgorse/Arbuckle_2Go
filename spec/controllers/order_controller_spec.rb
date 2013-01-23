@@ -33,7 +33,11 @@ describe OrderController do
 		it "should redirect the user home" do
 			delete :destroy, :id => @order.orderID
 			response.should redirect_to(home_path)
+		end
 
+		it "should flash a confirmation message" do
+			delete :destroy, :id => @order.orderID
+			flash[:success].should =~ /cancelled/i
 		end
 
 	end
@@ -101,6 +105,12 @@ describe OrderController do
 			response.should redirect_to root_path
 		end
 
+		it "should flash the user that he can edit your order or confirm" do
+			get :edit, :id => @order
+			flash[:notice].should =~ /edit or confirm/i
+
+		end
+
 		describe "if a combo is unfulfilled" do
 			before(:each) do
 				@combo_type = FactoryGirl.create(:type, :typeID => SPECIAL)
@@ -126,6 +136,25 @@ describe OrderController do
 				OrderDetail.create!(@attr.merge(:quantity => 7))
 				get :edit, :id => @order
 				response.should be_success
+			end
+
+		end
+
+		describe "if an order is empty" do
+			before(:each) do
+				@order.order_details.destroy_all
+			end
+
+			it "should redirect the user to the order page" do
+				get :edit, :id => @order
+				response.should redirect_to home_path
+
+			end
+
+			it "should flash the user that his order was empty" do
+				get :edit, :id => @order
+				flash[:error].should =~ /Fill out an order first/i
+
 			end
 
 		end
@@ -264,6 +293,7 @@ describe OrderController do
 		describe "if the order is CONFIRMED" do
 			before(:each) do
 				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
 
 			end
 
@@ -282,7 +312,6 @@ describe OrderController do
 			it "should FLASH a notice" do
 				get :send_order, :id => @order.orderID
 				flash[:notice].should =~ /10:30/i
-
 			end
 
 		end
@@ -290,6 +319,7 @@ describe OrderController do
 		describe "if the order is SENT" do
 			before(:each) do
 				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
+				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
 			end
 
 			it "should not have a cancel link" do
@@ -304,7 +334,7 @@ describe OrderController do
 
 			it "should FLASH a notice" do
 				get :send_order, :id => @order.orderID
-				flash[:notice].should =~ /ready for pickup/i
+				flash[:notice].should =~ /free dessert/i
 
 			end
 

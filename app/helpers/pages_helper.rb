@@ -12,4 +12,17 @@ module PagesHelper
 		@order.filled?(combo) ? false : true
 	end
 
+	def home_flash
+		case @time_data.fetch("validtime")
+		when ORDER_TODAY then
+			flash[:notice] = "Place an order until #{@time_data.fetch("cutoff")}"
+		when ORDER_NEXT_DAY then
+			flash[:notice] = "Place an order for #{@time_data.fetch("nextDay")}"
+		else
+			flash[:error] = "Order blackout period. You can order again for #{@time_data.fetch("nextDay")} starting at #{@time_data.fetch("endtime")}"
+		end
+
+	end
+
+
 end
