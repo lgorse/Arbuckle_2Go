@@ -47,7 +47,6 @@ require "uri"
 	end
 
 	def self.set_session_order(user)
-		#order_array = Order.where(:userID => user.userID, :filled => [PENDING,CONFIRMED])
 		order_array = Order.where("`userID` =?  AND (`filled` = ? OR `filled` = ? OR (`filled` = ? AND `Due Date` = ?))",
 								  user.userID, PENDING, CONFIRMED, SENT, Date.current)
 
@@ -67,6 +66,7 @@ require "uri"
 		self.update_attribute(:time, Time.current)
 		self.update_attribute(:blocked, blocked_value)
 		self.update_attribute(:filled, filled_value)
+		return time_data
 	end
 
 	#time stamp

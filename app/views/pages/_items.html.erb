@@ -1,7 +1,7 @@
 <% group.items.find_in_batches(:batch_size => 2) do |items| %>
 <tr class = "item_row">
 	<% items.each do |item| %>
-	<td class = "item_data <%= item_select(item) %>", id = "item_<%= item.itemID %>" >
+	<td class = "item_data <%= item_select(item)%>", id = "item_<%= item.itemID %>" >
 		<%= render 'pages/item', :item => item %>
 	</td>
 	<% end %>

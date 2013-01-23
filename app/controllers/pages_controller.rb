@@ -8,6 +8,8 @@ class PagesController < ApplicationController
 		@title = "Place an order"
 		@name = @user.first_name
 		@login = @user.UserName
+		@time_data = @order.time_stamp
+		flash[:notice] = "Place an order until #{@time_data.fetch("cutoff")}"
 	end
 
 	def sign_in

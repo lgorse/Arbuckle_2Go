@@ -19,6 +19,7 @@ before_filter :authenticate, :only => [:send_order, :edit]
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
 		if !failure.blank?
+			flash[:error] = "Your #{failure.last.type.typeName} order is incomplete. Complete it and try again."
 			redirect_to home_path, :group => failure.last
 		else
 			respond_to do |format|
@@ -51,7 +52,12 @@ before_filter :authenticate, :only => [:send_order, :edit]
 
 	def send_order
 		@order.add_combo_hacks
-		@order.update_order(false, CONFIRMED) if @order.filled == PENDING
+		@order.filled == PENDING ? time_data = @order.update_order(false, CONFIRMED) : time_data = @order.time_stamp
+		if @order.filled == CONFIRMED
+			flash[:notice] = "Your order is scheduled for pickup. You can edit it until #{time_data.fetch("cutoff")}"
+		elsif @order.filled == SENT
+			flash[:notice] = "Your order is ready for pickup. It's too late to alter it- it's been prepared!"
+		end
 	end
 
 	def logout

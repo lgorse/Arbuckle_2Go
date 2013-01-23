@@ -115,6 +115,13 @@ describe OrderController do
 				response.should redirect_to home_path
 			end
 
+			it "should display an error message if the order is unfulfilled" do
+				OrderDetail.create!(@attr)
+				get :edit, :id => @order
+				flash[:error].should =~ /incomplete/i
+
+			end
+
 			it "should be successful if the order combos are fulfilled" do
 				OrderDetail.create!(@attr.merge(:quantity => 7))
 				get :edit, :id => @order
@@ -220,18 +227,15 @@ describe OrderController do
 				@detail = FactoryGirl.create(:order_detail, :groupID => @group.groupID, :itemID => @item.itemID, :orderID => @order.orderID)
 			end
 
-			it "should change the order status to CONFIRMED" do
+			it "should change the order status to CONFIRMED if the order was PREVIOUSLY PENDING" do
 				get :send_order, :id => @order.orderID
 				Order.find(@order.orderID).filled.should == CONFIRMED
-
 			end
 
 			it "should not add any details for a la carte" do
 				lambda do
 					get :send_order, :id => @order.orderID
 				end.should_not change(OrderDetail, :count)
-
-
 			end
 
 			it "should redirect the user to the signin page if he is not signed in" do
@@ -275,6 +279,12 @@ describe OrderController do
 
 			end
 
+			it "should FLASH a notice" do
+				get :send_order, :id => @order.orderID
+				flash[:notice].should =~ /10:30/i
+
+			end
+
 		end
 
 		describe "if the order is SENT" do
@@ -290,6 +300,12 @@ describe OrderController do
 			it "should not have an edit link" do
 				get 'send_order', :id => @order.orderID
 				response.body.should_not have_link('Edit Order', :href => edit_order_path(@order))
+			end
+
+			it "should FLASH a notice" do
+				get :send_order, :id => @order.orderID
+				flash[:notice].should =~ /ready for pickup/i
+
 			end
 
 		end

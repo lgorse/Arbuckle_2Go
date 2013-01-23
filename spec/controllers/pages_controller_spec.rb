@@ -67,6 +67,11 @@ describe PagesController do
 			it "should have a link to the order confirmation" do
 				get 'home'
 				response.body.should have_link('Cart', href: edit_order_path(assigns(:order)))
+			end
+
+			it "should flash a NOTICE telling the user how long he has to order" do
+				get 'home'
+				flash[:notice].should =~/10:30/i
 
 			end
 
@@ -79,6 +84,7 @@ describe PagesController do
 				get 'home'
 				response.should redirect_to root_path
 			end
+
 		end
 
 
