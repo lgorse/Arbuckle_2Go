@@ -61,7 +61,7 @@ describe Order do
 			@order = Order.blank_order(@user.userID)
 			time_data = Order.time_stamp
 			if time_data.fetch("validtime") == ORDER_NEXT_DAY
-				@order.due.should == Date.parse(time_data.fetch("nextDay"))
+				@order.due.should == Chronic.parse(time_data.fetch("nextDay", :context => :future)).to_date
 			elsif  time_data.fetch("validtime") == ORDER_TODAY
 				@order.due.should == Date.current
 			end
@@ -107,7 +107,7 @@ describe Order do
 
 			it "IF validtime = ORDER_NEXT_DAY, should set the DUE DATE as the appropriate next Monday or Thursday" do
 				@next_day_order = FactoryGirl.create(:order, :due => Order.set_due_date(@alt_time))
-				@next_day_order.due.should == Date.parse(@time_data.fetch("nextDay"))
+				@next_day_order.due.should == Chronic.parse(@time_data.fetch("nextDay"), :context => :future).to_date
 			end
 
 			it "IF validtime = ORDER_TODAY, should set the DUE DATE as TODAY" do

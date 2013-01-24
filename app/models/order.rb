@@ -15,6 +15,7 @@
 class Order < ActiveRecord::Base
 require "net/http"
 require "uri"
+require "chronic"
 
 	self.table_name = "ArbuckleOrderList"
 	alias_attribute :userID, :UserID
@@ -76,7 +77,7 @@ order_array = Order.where("`userID` =?  AND `filled` = ? AND `Due Date` = ?", us
 	#time stamp
 
 	def self.time_stamp
-		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint-next.php")
+		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint.php")
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Get.new(uri.request_uri)
 		response = http.request(request)
@@ -90,9 +91,9 @@ order_array = Order.where("`userID` =?  AND `filled` = ? AND `Due Date` = ?", us
 		when ORDER_TODAY then
 			due = Date.current
 		when ORDER_NEXT_DAY then
-			due = Date.parse(time_data.fetch("nextDay"))
+			due = Chronic.parse(time_data.fetch("nextDay", :context => :future)).to_date
 		else
-			due = Date.parse(time_data.fetch("nextDay"))
+			due = Chronic.parse(time_data.fetch("nextDay", :context => :future)).to_date
 		end
 
 	end
