@@ -41,11 +41,12 @@ describe PagesController do
 					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
 					FactoryGirl.create(:item, :groupID => @group.groupID)
 				end
+				@valid_time = Order.time_stamp.fetch("validtime")
 			end
 
 			it "should be successful" do
 				get 'home'
-				response.should be_success
+				response.should be_success if @valid_time != ORDER_LOCKOUT
 
 			end
 
@@ -61,12 +62,12 @@ describe PagesController do
 
 			it "should have a visible logout link" do
 				get 'home'
-				response.body.should have_css("a", :text =>"Log out")
+				response.body.should have_css("a", :text =>"Log out") if @valid_time != ORDER_LOCKOUT
 			end
 
 			it "should have a link to the order confirmation" do
 				get 'home'
-				response.body.should have_link('Cart', href: edit_order_path(assigns(:order)))
+				response.body.should have_link('Cart', href: edit_order_path(assigns(:order))) if @valid_time != ORDER_LOCKOUT
 			end
 
 		end
@@ -153,7 +154,7 @@ describe PagesController do
 
 				it "should redirect the user to send page" do
 					get 'home'
-					response.should redirect_to send_path
+					response.should redirect_to send_path if Order.time_stamp.fetch("validtime") == ORDER_LOCKOUT
 				end
 			end
 
@@ -166,7 +167,7 @@ describe PagesController do
 					@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 					@order3 = FactoryGirl.create(:order, :userID => 1003)
 					@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
-					@order5 = FactoryGirl.create(:order, :userID => @user.userID, :due => Date.yesterday ,:filled => SENT)
+		
 				end
 
 				it "should remove extra orders but create a single one" do

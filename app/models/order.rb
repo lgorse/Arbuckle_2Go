@@ -34,7 +34,7 @@ require "uri"
 
 	def self.blank_order(userID)
 		order = Order.new
-		time_data = order.time_stamp
+		time_data = Order.time_stamp
 		order.userID = userID
 		order.date = Date.current
 		order.day = Date.current.strftime('%a')
@@ -46,20 +46,24 @@ require "uri"
 		return order
 	end
 
-	def self.set_session_order(user)
-		order_array = Order.where("`userID` =?  AND (`filled` = ? OR `filled` = ? OR (`filled` = ? AND `Due Date` = ?))",
-								  user.userID, PENDING, CONFIRMED, SENT, Date.current)
+	def self.set_session_order(user, time_data)
+		if time_data.fetch("validtime") == ORDER_LOCKOUT
+order_array = Order.where("`userID` =?  AND `filled` = ? AND `Due Date` = ?", user.userID, SENT, Date.current)
+		else 
+			order_array = Order.where("`userID` =?  AND (`filled` = ? OR `filled` = ?)", user.userID, PENDING, CONFIRMED)
+		end
+		
 
 		if order_array.size > 1
 			order_array.destroy_all
-			set_session_order(user)
+			set_session_order(user, time_data)
 		end
 
 		order_array.blank? ? @order = Order.blank_order(user.userID) : @order = order_array.first	
 	end
 
 	def update_order(blocked_value, filled_value)
-		time_data = self.time_stamp
+		time_data = Order.time_stamp
 		self.update_attribute(:date, Date.current)
 		self.update_attribute(:day, Date.current.strftime('%a'))	
 		self.update_attribute(:due, Order.set_due_date(time_data))
@@ -71,8 +75,8 @@ require "uri"
 
 	#time stamp
 
-	def time_stamp
-		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint.php")
+	def self.time_stamp
+		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint-next.php")
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Get.new(uri.request_uri)
 		response = http.request(request)
@@ -158,7 +162,6 @@ require "uri"
 			:groupID => groupID, :itemID => 0, :quantity => 1,
 			:spicy => false)
 	end
-
 
 
 end

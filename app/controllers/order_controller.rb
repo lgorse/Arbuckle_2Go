@@ -2,7 +2,8 @@ class OrderController < ApplicationController
 include UserAuthenticate
 include OrderHelper
 
-before_filter :authenticate_order, :only => [:send_order, :edit]
+before_filter :authenticate_send, :only => [:send_order]
+before_filter :authenticate_edit, :only => [:edit]
 
 	def destroy
 		Order.find(params[:id]).destroy
@@ -16,7 +17,8 @@ before_filter :authenticate_order, :only => [:send_order, :edit]
 	end
 
 	def edit
-		redirect_to send_path and return if @order.filled == SENT
+		
+		redirect_to send_path if @time_data.fetch("validtime") == ORDER_LOCKOUT
 		@title = "Confirm your order"
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
@@ -55,7 +57,7 @@ before_filter :authenticate_order, :only => [:send_order, :edit]
 
 	def send_order
 		@order.add_combo_hacks
-		@order.update_order(false, CONFIRMED) if @order.filled == PENDING
+		@order.update_order(false, CONFIRMED) if @order.filled == PENDING unless @time_data.fetch('validtime') == ORDER_LOCKOUT
 		send_order_flash
 	end
 

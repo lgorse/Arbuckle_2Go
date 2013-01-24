@@ -1,5 +1,5 @@
 <h1>Order sent</h1>
-<% if @order.filled != SENT %>
+<% if @order.filled != SENT  && @time_data.fetch("validtime") != ORDER_LOCKOUT %>
 <div><%= link_to 'Cancel Order', @order, :method => :delete,
 			:confirm => "Your order will be deleted",
 								   :class => "delete_order" %>

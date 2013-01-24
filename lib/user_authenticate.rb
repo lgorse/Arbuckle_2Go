@@ -6,16 +6,25 @@ module UserAuthenticate
 		redirect_to(logout_url)
 	end
 
-	def authenticate_and_set_order_view
+	def authenticate_home
 		if session[:user_token].nil?
 			redirect_to root_path 
 		else
 			assign_current_order
-			redirect_to send_path if (@order.filled == CONFIRMED || @order.filled == SENT)
+			redirect_to send_path if (@order.filled == CONFIRMED || @time_data.fetch("validtime") == ORDER_LOCKOUT)
 		end
 	end
 
-	def authenticate_order
+	def authenticate_send
+		if session[:user_token].nil?
+			redirect_to root_path 
+		else 
+			assign_current_order
+			check_order_nil unless @time_data.fetch("validtime") == ORDER_LOCKOUT			
+		end
+	end
+
+	def authenticate_edit
 		if session[:user_token].nil?
 			redirect_to root_path 
 		else 
@@ -26,8 +35,8 @@ module UserAuthenticate
 
 	def assign_current_order
 		@user = User.find_by_userID(session[:user_token])
-		@order = Order.set_session_order(@user)
-		@time_data = @order.time_stamp
+		@time_data = Order.time_stamp
+		@order = Order.set_session_order(@user, @time_data)
 	end
 
 	def check_order_nil

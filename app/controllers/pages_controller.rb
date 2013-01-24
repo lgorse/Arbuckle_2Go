@@ -2,7 +2,7 @@ class PagesController < ApplicationController
 	include UserAuthenticate
 	include PagesHelper
 
-	before_filter :authenticate_and_set_order_view, :only => [:home]
+	before_filter :authenticate_home, :only => [:home]
 
 	def home
 		@title = "Place an order"

@@ -59,7 +59,7 @@ describe Order do
 
 		it "should set the DUE DATE as the appropriate next Monday or Thursday" do
 			@order = Order.blank_order(@user.userID)
-			time_data = @order.time_stamp
+			time_data = Order.time_stamp
 			if time_data.fetch("validtime") == ORDER_NEXT_DAY
 				@order.due.should == Date.parse(time_data.fetch("nextDay"))
 			elsif  time_data.fetch("validtime") == ORDER_TODAY
@@ -101,8 +101,8 @@ describe Order do
 
 		describe "due date" do
 			before(:each) do
-				@time_data = @order.time_stamp
-				@alt_time = {"validtime"=> ORDER_NEXT_DAY, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => @order.time_stamp.fetch("nextDay")}
+				@time_data = Order.time_stamp
+				@alt_time = {"validtime"=> ORDER_NEXT_DAY, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => Order.time_stamp.fetch("nextDay")}
 			end
 
 			it "IF validtime = ORDER_NEXT_DAY, should set the DUE DATE as the appropriate next Monday or Thursday" do
@@ -121,28 +121,27 @@ describe Order do
 	describe "set_session_order" do
 		before(:each) do
 			@user = FactoryGirl.create(:user)
+			@attr = {"validtime"=> ORDER_NEXT_DAY, "starttime"=> "11:30", "cutoff" => "10:30","endtime" => "14:00", "nextDay" => "Thursday"}
 		end
 
 		it "should set the order to PENDING if an order is pending" do
+			time_data = @attr
 			@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
-			Order.set_session_order(@user).orderID.should == @order.orderID
+			Order.set_session_order(@user, time_data).orderID.should == @order.orderID
 		end
 
 		it "should set the order to CONFIRMED if an order is confirmed" do
+			time_data = @attr
 			@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
-			Order.set_session_order(@user).orderID.should == @order.orderID
+			Order.set_session_order(@user, time_data).orderID.should == @order.orderID
 
 		end
 
-		it "should set the order to Sent if an order is sent and due IN THE FUTURE" do
-			@order = FactoryGirl.create(:order, :userID => @user.userID, :due => Date.current, :filled => SENT)
-			Order.set_session_order(@user).orderID.should == @order.orderID
-
-		end
 
 		it "should be blank if there is a sent order due in the past" do
+			time_data = @attr
 			@order = FactoryGirl.create(:order, :userID => @user.userID, :due => Date.yesterday, :filled => SENT)
-			Order.set_session_order(@user).orderID.should_not == @order.orderID
+			Order.set_session_order(@user, time_data).orderID.should_not == @order.orderID
 
 		end
 
@@ -185,27 +184,27 @@ describe Order do
 		end
 
 		it "should return a hash" do
-			@order.time_stamp.class.should == Hash
+			Order.time_stamp.class.should == Hash
 
 		end
 
 		it "should return a hash with 5 items" do
-			@order.time_stamp.count.should == 5
+			Order.time_stamp.count.should == 5
 
 		end
 
 		it "VALIDTIME should contain the valid_time" do
-			time_hash = @order.time_stamp
+			time_hash = Order.time_stamp
 			time_hash.fetch("validtime").should be_integer
 		end
 
 		it "DEADLINES should contain the order deadlines as strings" do
-			time_hash = @order.time_stamp
+			time_hash = Order.time_stamp
 			time_hash.fetch("starttime").class.should == String
 		end
 
 		it "NEXTDAY should contain either Thursday or Monday" do
-			time_hash = @order.time_stamp
+			time_hash = Order.time_stamp
 			time_hash.fetch("nextDay").class.should == String
 		end
 

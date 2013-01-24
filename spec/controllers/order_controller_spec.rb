@@ -211,8 +211,7 @@ describe OrderController do
 				@order.update_attribute(:filled, SENT)
 				@order.update_attribute(:due, Date.current)
 				get :edit, :id => @order
-				response.should redirect_to send_path
-
+				response.should redirect_to send_path if Order.time_stamp.fetch("validtime") == ORDER_LOCKOUT
 			end
 
 		end
@@ -345,21 +344,22 @@ describe OrderController do
 			before(:each) do
 				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
 				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
+				@time_data = Order.time_stamp
 			end
 
 			it "should not have a cancel link" do
 				get 'send_order', :id => @order.orderID
-				response.body.should_not have_link('Cancel Order', :href =>  @order)
+				response.body.should_not have_link('Cancel Order', :href =>  @order) if @time_data.fetch("validtime") == ORDER_LOCKOUT
 			end
 
 			it "should not have an edit link" do
 				get 'send_order', :id => @order.orderID
-				response.body.should_not have_link('Edit Order', :href => edit_order_path(@order))
+				response.body.should_not have_link('Edit Order', :href => edit_order_path(@order)) if @time_data.fetch("validtime") == ORDER_LOCKOUT
 			end
 
 			it "should FLASH a notice" do
 				get :send_order, :id => @order.orderID
-				flash[:notice].should =~ /free dessert/i
+				flash[:notice].should =~ /free dessert/i if @time_data.fetch("validtime") == ORDER_LOCKOUT
 
 			end
 

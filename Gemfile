@@ -7,6 +7,8 @@ gem 'rails', '3.2.11'
 
 gem 'mysql2'
 gem "will_paginate"
+gem "chronic"
+gem "ZenTest", "4.8.3"
 
 group :development do
 	gem 'rspec-rails'
