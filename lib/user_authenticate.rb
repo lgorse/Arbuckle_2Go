@@ -32,6 +32,7 @@ module UserAuthenticate
 
 	def check_order_nil
 		if @order.order_details.blank?
+			@order.update_attribute(:filled, PENDING)
 			flash[:error] = "Your order is empty! Fill out an order first."
 			redirect_to home_path
 		end

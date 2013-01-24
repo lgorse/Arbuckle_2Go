@@ -99,17 +99,57 @@ describe OrderController do
 			
 		end
 
-		it "should redirect the user to the signin page if he is not signed in" do
-			get 'logout'
-			get 'edit', :id => @order
-			response.should redirect_to root_path
+		describe "for a well-structured order" do
+
+			it "should redirect the user to the signin page if he is not signed in" do
+				get 'logout'
+				get 'edit', :id => @order
+				response.should redirect_to root_path
+			end
+
+			it "should flash the user that he can edit your order or confirm" do
+				get :edit, :id => @order
+				flash[:notice].should =~ /edit or confirm/i
+
+			end
+
+
+			it 'should be successful' do
+				get :edit, :id => @order
+				response.should be_success
+
+			end
+
+			it "should show all of the order details" do
+				get :edit, :id => @order
+				response.body.should have_selector('h3', 
+					:text => "Confirm your order")
+
+			end
+
+			it "should have a cancel button" do
+				get :edit, :id => @order
+				response.body.should have_link('Cancel Order', href: order_path(@order))
+			end
+
+			it "should have a confirm button" do
+				get :edit, :id => @order
+				response.body.should have_link('Confirm', href: send_path)
+			end
+
+			it "should have a cancel link" do
+				get :edit, :id => @order
+				response.body.should have_link('Back', :back)
+			end
+
+			it "should set the order to pending" do
+				get :edit, :id => @order
+				Order.find(@order.orderID).filled.should == PENDING
+			end
+
 		end
 
-		it "should flash the user that he can edit your order or confirm" do
-			get :edit, :id => @order
-			flash[:notice].should =~ /edit or confirm/i
 
-		end
 
 		describe "if a combo is unfulfilled" do
 			before(:each) do
@@ -157,39 +197,24 @@ describe OrderController do
 
 			end
 
-		end
-
-		it 'should be successful' do
-			get :edit, :id => @order
-			response.should be_success
-
-		end
-
-		it "should show all of the order details" do
-			get :edit, :id => @order
-			response.body.should have_selector('h3', 
-				:text => "Confirm your order")
+			it "should reset the order to PENDING" do
+				@order.update_attribute(:filled, CONFIRMED)
+				get :edit, :id => @order
+				Order.find(@order.orderID).filled.should == PENDING
+			end
 
 		end
 
-		it "should have a cancel button" do
-			get :edit, :id => @order
-			response.body.should have_link('Cancel Order', href: order_path(@order))
-		end
+		describe "if an order is SENT and due today" do
 
-		it "should have a confirm button" do
-			get :edit, :id => @order
-			response.body.should have_link('Confirm', href: send_path)
-		end
+			it "should redirect to the send_page" do
+				@order.update_attribute(:filled, SENT)
+				@order.update_attribute(:due, Date.current)
+				get :edit, :id => @order
+				response.should redirect_to send_path
 
-		it "should have a cancel link" do
-			get :edit, :id => @order
-			response.body.should have_link('Back', :back)
-		end
+			end
 
-		it "should set the order to pending" do
-			get :edit, :id => @order
-			Order.find(@order.orderID).filled.should == PENDING
 		end
 
 	end

@@ -16,6 +16,7 @@ before_filter :authenticate_order, :only => [:send_order, :edit]
 	end
 
 	def edit
+		redirect_to send_path and return if @order.filled == SENT
 		@title = "Confirm your order"
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
