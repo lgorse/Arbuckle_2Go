@@ -27,128 +27,133 @@ describe PagesController do
 
 	describe "GET 'home'" do
 
-		describe "valid login" do
+		if Order.time_stamp.fetch("validtime") != ORDER_LOCKOUT
 
-			before(:each) do
-				@user = FactoryGirl.create(:user)
-				request.session[:user_token] = @user.userID
+			describe "valid login" do
 
-				@type = FactoryGirl.create(:type)
-				3.times do |n|
-					FactoryGirl.create(:type)
-				end
-				5.times do |g|
-					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
-					FactoryGirl.create(:item, :groupID => @group.groupID)
-				end
-				@valid_time = Order.time_stamp.fetch("validtime")
-			end
-
-			it "should be successful" do
-				get 'home'
-				response.should be_success if @valid_time != ORDER_LOCKOUT
-
-			end
-
-			it "should create a new session" do
-				get 'home'
-				session[:user_token].should == @user.userID
-			end
-
-			it "should lead to the current user" do
-				get 'home'
-				User.find(session[:user_token]).should == @user
-			end
-
-			it "should have a visible logout link" do
-				get 'home'
-				response.body.should have_css("a", :text =>"Log out") if @valid_time != ORDER_LOCKOUT
-			end
-
-			it "should have a link to the order confirmation" do
-				get 'home'
-				response.body.should have_link('Cart', href: edit_order_path(assigns(:order))) if @valid_time != ORDER_LOCKOUT
-			end
-
-		end
-
-		describe "entry after logout" do
-
-			it "should redirect the user to the signin page if not signed in" do
-				get 'logout'
-				get 'home'
-				response.should redirect_to root_path
-			end
-
-		end
-
-
-		describe "order management" do
-
-			before(:each) do
-				@user = FactoryGirl.create(:user)
-				request.session[:user_token] = @user.userID
-
-				@type = FactoryGirl.create(:type)
-				3.times do |n|
-					FactoryGirl.create(:type)
-				end
-				5.times do |g|
-					@group = FactoryGirl.create(:group, :typeID => @type.typeID)
-					FactoryGirl.create(:item, :groupID => @group.groupID)
-				end
-			end
-
-			describe "if an order is pending" do
 				before(:each) do
-					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
+					@user = FactoryGirl.create(:user)
+					request.session[:user_token] = @user.userID
+
+					@type = FactoryGirl.create(:type)
+					3.times do |n|
+						FactoryGirl.create(:type)
+					end
+					5.times do |g|
+						@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+						FactoryGirl.create(:item, :groupID => @group.groupID)
+					end
+					@valid_time = Order.time_stamp.fetch("validtime")
 				end
 
-				it "should define it as the session order " do
+				it "should be successful" do
 					get 'home'
-					order = assigns(:order)
-					order.should == Order.find(@order.orderID)
+					response.should be_success if @valid_time != ORDER_LOCKOUT
+
 				end
 
-				it "should have a filled status of PENDING" do
+				it "should create a new session" do
 					get 'home'
-					order = assigns(:order)
-					order.filled.should == PENDING
+					session[:user_token].should == @user.userID
+				end
+
+				it "should lead to the current user" do
+					get 'home'
+					User.find(session[:user_token]).should == @user
+				end
+
+				it "should have a visible logout link" do
+					get 'home'
+					response.body.should have_css("a", :text =>"Log out") if @valid_time != ORDER_LOCKOUT
+				end
+
+				it "should have a link to the order confirmation" do
+					get 'home'
+					response.body.should have_link('Cart', href: edit_order_path(assigns(:order))) if @valid_time != ORDER_LOCKOUT
 				end
 
 			end
 
-			
-			
-			describe "if an order doesn't exist" do
+			describe "entry after logout" do
 
-				it "should create a new order" do
+				it "should redirect the user to the signin page if not signed in" do
+					get 'logout'
 					get 'home'
-					assigns(:order).should_not be_blank
+					response.should redirect_to root_path
 				end
 
 			end
 
-			describe "if an order has been confirmed" do
+
+			describe "order management" do
+
 				before(:each) do
-					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+					@user = FactoryGirl.create(:user)
+					request.session[:user_token] = @user.userID
+
+					@type = FactoryGirl.create(:type)
+					3.times do |n|
+						FactoryGirl.create(:type)
+					end
+					5.times do |g|
+						@group = FactoryGirl.create(:group, :typeID => @type.typeID)
+						FactoryGirl.create(:item, :groupID => @group.groupID)
+					end
 				end
 
-				it "should define the existing order as the session order" do
-					get 'home'
-					order = assigns(:order)
-					order.should == Order.find(@order.orderID)
+				describe "if an order is pending" do
+					before(:each) do
+						@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => 2)
+					end
+
+					it "should define it as the session order " do
+						get 'home'
+						order = assigns(:order)
+						order.should == Order.find(@order.orderID)
+					end
+
+					it "should have a filled status of PENDING" do
+						get 'home'
+						order = assigns(:order)
+						order.filled.should == PENDING
+					end
+
 				end
 
-				it "should redirect to the send_order page" do
-					get 'home'
-					response.should redirect_to send_path
+
+
+				describe "if an order doesn't exist" do
+
+					it "should create a new order" do
+						get 'home'
+						assigns(:order).should_not be_blank
+					end
+
+				end
+
+				describe "if an order has been confirmed" do
+					before(:each) do
+						@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+					end
+
+					it "should define the existing order as the session order" do
+						get 'home'
+						order = assigns(:order)
+						order.should == Order.find(@order.orderID)
+					end
+
+					it "should redirect to the send_order page" do
+						get 'home'
+						response.should redirect_to send_path
+					end
+
 				end
 
 			end
 
 			describe "if an order has been sent" do
 				before(:each) do
+					@user = FactoryGirl.create(:user)
 					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
 				end
 
@@ -163,11 +168,13 @@ describe PagesController do
 			describe "if there are redundant orders" do
 
 				before(:each) do
+					@user = FactoryGirl.create(:user)
+					request.session[:user_token] = @user.userID
 					@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
 					@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 					@order3 = FactoryGirl.create(:order, :userID => 1003)
 					@order4 = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
-		
+
 				end
 
 				it "should remove extra orders but create a single one" do

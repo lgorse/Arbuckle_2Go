@@ -49,12 +49,11 @@ require "chronic"
 
 	def self.set_session_order(user, time_data)
 		if time_data.fetch("validtime") == ORDER_LOCKOUT
-order_array = Order.where("`userID` =?  AND `filled` = ? AND `Due Date` = ?", user.userID, SENT, Date.current)
+			order_array = Order.where("`userID` =?  AND `filled` = ? AND `Due Date` = ?", user.userID, SENT, Date.current)
 		else 
 			order_array = Order.where("`userID` =?  AND (`filled` = ? OR `filled` = ?)", user.userID, PENDING, CONFIRMED)
 		end
 		
-
 		if order_array.size > 1
 			order_array.destroy_all
 			set_session_order(user, time_data)

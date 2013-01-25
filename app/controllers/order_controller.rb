@@ -17,8 +17,7 @@ before_filter :authenticate_edit, :only => [:edit]
 	end
 
 	def edit
-		
-		redirect_to send_path if @time_data.fetch("validtime") == ORDER_LOCKOUT
+		redirect_to send_path and return if @time_data.fetch("validtime") == ORDER_LOCKOUT
 		@title = "Confirm your order"
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?

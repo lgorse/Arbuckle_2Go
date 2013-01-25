@@ -15,7 +15,7 @@
  html, body{
  	margin: 0;
  	padding: 0;
-
+ 	background: #ddcf99;
  }
 
 
@@ -26,7 +26,7 @@
  	padding-right: 0;
  	height: 70px;
  	border-bottom: 2px solid;
- 	background-color: #2F4F4F;
+ 	background-color: #8C1515;
 
  	.flash{
  		display: inline-block;
@@ -40,6 +40,21 @@
 
  	}
 
+ 	#notice{
+ 		color: #FF9900;
+ 			border: 2px solid #FF9900;
+ 		}
+
+ 		#error{
+ 			background: #FF3333;
+ 			color: white;
+ 			border: 2px solid red;
+ 		}
+
+ 		#success{
+ 			color: green;
+ 			border: 2px solid green;
+ 		}
 
  }
 
@@ -84,7 +99,7 @@
  	height: 50px;
  	width: auto;
  	border: 1px solid black;
- 	background-color: grey;
+ 	background-color: #D2B48C;
 
  }
 

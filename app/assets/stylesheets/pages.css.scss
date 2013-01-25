@@ -2,56 +2,57 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
- header.menu_header{
- 	width: auto;
- 	min-width: 1150px;
- 	margin-right: 0;
- 	padding-right: 0;
- 	margin: 0;
+header.menu_header{
+	width: auto;
+	min-width: 1150px;
+	margin-right: 0;
+	padding-right: 0;
+	margin: 0;
 
- 	.menu_name{
- 		position: absolute;
- 		top: 71px;
- 		left: 55px;
- 		width: 200px;
- 		height: 100px;
- 		border: 1px solid  black;
- 		display: table;
+	.menu_name{
+		position: absolute;
+		top: 71px;
+		left: 55px;
+		width: 200px;
+		height: 100px;
+		border: 1px solid  black;
+		display: table;
+		background-color: white;
 
- 	}
+	}
 
- 	.menu_name p{
- 		text-align: center;
- 		display: table-cell;
- 		vertical-align: middle;
- 		color: blue;
- 	}
+	.menu_name p{
+		text-align: center;
+		display: table-cell;
+		vertical-align: middle;
+		color: blue;
+	}
 
- 	.instructions{
- 		margin-left: 257px;
- 	}
+	.instructions{
+		margin-left: 257px;
+	}
 
- 	#title{
- 		width: 200px;
- 		font-weight: normal;
- 		position: relative;
-	left: 1em;
-	top: -0.5em;
- 	}
+	#title{
+		width: 200px;
+		font-weight: normal;
+		position: relative;
+		left: 1em;
+		top: -0.5em;
+	}
 
- 	#confirmer{
- 	position: relative;
- 	right: 120px;
- 	top: -50px;
- 	float: right;
- 	background-color: white;
- 	padding-top: 5px;
- 	padding-bottom: 5px;
- 	width: 65px;
- 	text-align: center;
- }
+	#confirmer{
+		position: relative;
+		right: 120px;
+		top: -50px;
+		float: right;
+		background-color: white;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		width: 65px;
+		text-align: center;
+	}
 
- }
+}
 
 
 #type_section{
@@ -60,6 +61,7 @@
 	border: 1px solid black;
 	left: 55px;
 	width: 200px;
+	background-color: white;
 
 	ul{
 		margin: 0;
@@ -98,9 +100,9 @@
 }
 
 .chef_special_combo_cancel{
-position: absolute;
-right: 100px;
-top: 30px;
+	position: absolute;
+	right: 100px;
+	top: 30px;
 	disabled: true;
 	display: inline;
 
@@ -111,9 +113,9 @@ top: 30px;
 }
 
 .combo_cancel{
-position: absolute;
-right: 100px;
-top: 15px;
+	position: absolute;
+	right: 100px;
+	top: 15px;
 	
 	display: inline;
 
@@ -126,6 +128,7 @@ top: 15px;
 	left: 257px;
 	list-style-type: none;
 	text-align: center;
+	background-color: white;
 }
 
 .menu_table{
@@ -138,7 +141,7 @@ top: 15px;
 }
 
 .combo_filled{
-	background-color: grey;
+	background-color: #87CEFA;
 }
 
 .group_header{
@@ -155,27 +158,31 @@ top: 15px;
 	padding-left: 5px;
 	text-align: left;
 	border: 1px solid black;
+
 }
 
-/*#item_default{
-		background-color: white;
-	}*/
+.item_row :hover{
+	background-color: #DCAA79;
+}
 
-	.selected{
-		background-color: grey;
-	}
+.selected{
+	background-color: #87CEFA;
+}
 
 .item_table{
 
 }
 
 .item_name{
+	color: #820000;
 
 }
 
 .item_detail{
+	color: black;
 	font-style: italic;
 }
+
 
 
 

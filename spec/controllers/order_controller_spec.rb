@@ -89,6 +89,7 @@ describe OrderController do
 
 
 	describe "GET edit" do
+
 		before(:each) do
 			@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 			@type = FactoryGirl.create(:type)
@@ -99,108 +100,112 @@ describe OrderController do
 			
 		end
 
-		describe "for a well-structured order" do
+		if Order.time_stamp.fetch("validtime") != ORDER_LOCKOUT
 
-			it "should redirect the user to the signin page if he is not signed in" do
-				get 'logout'
-				get 'edit', :id => @order
-				response.should redirect_to root_path
-			end
+			describe "for a well-structured order" do
 
-			it "should flash the user that he can edit your order or confirm" do
-				get :edit, :id => @order
-				flash[:notice].should =~ /edit or confirm/i
+				it "should redirect the user to the signin page if he is not signed in" do
+					get 'logout'
+					get 'edit', :id => @order
+					response.should redirect_to root_path
+				end
 
-			end
+				it "should flash the user that he can edit your order or confirm" do
+					get :edit, :id => @order
+					flash[:notice].should =~ /edit or confirm/i
 
-
-			it 'should be successful' do
-				get :edit, :id => @order
-				response.should be_success
-
-			end
-
-			it "should show all of the order details" do
-				get :edit, :id => @order
-				response.body.should have_selector('h3', 
-					:text => "Confirm your order")
-
-			end
-
-			it "should have a cancel button" do
-				get :edit, :id => @order
-				response.body.should have_link('Cancel Order', href: order_path(@order))
-			end
-
-			it "should have a confirm button" do
-				get :edit, :id => @order
-				response.body.should have_link('Confirm', href: send_path)
-			end
-
-			it "should have a cancel link" do
-				get :edit, :id => @order
-				response.body.should have_link('Back', :back)
-			end
-
-			it "should set the order to pending" do
-				get :edit, :id => @order
-				Order.find(@order.orderID).filled.should == PENDING
-			end
-
-		end
+				end
 
 
+				it 'should be successful' do
+					get :edit, :id => @order
+					response.should be_success
 
-		describe "if a combo is unfulfilled" do
-			before(:each) do
-				@combo_type = FactoryGirl.create(:type, :typeID => SPECIAL)
-				@combo_group = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
-				@combo_item = FactoryGirl.create(:item, :groupID => @combo_group.groupID)
-				@attr = {:orderID => @order.orderID, :typeID => @combo_type.typeID,	:groupID => @combo_group.groupID, :itemID =>@combo_item.itemID,:quantity => 3, :spicy => false}
-			end
+				end
 
-			it "should redirect back to the menu if the order has unfulfilled combos" do
-				OrderDetail.create!(@attr)
-				get :edit, :id => @order
-				response.should redirect_to home_path
-			end
+				it "should show all of the order details" do
+					get :edit, :id => @order
+					response.body.should have_selector('h3', 
+						:text => "Confirm your order")
 
-			it "should display an error message if the order is unfulfilled" do
-				OrderDetail.create!(@attr)
-				get :edit, :id => @order
-				flash[:error].should =~ /incomplete/i
+				end
+
+				it "should have a cancel button" do
+					get :edit, :id => @order
+					response.body.should have_link('Cancel Order', href: order_path(@order))
+				end
+
+				it "should have a confirm button" do
+					get :edit, :id => @order
+					response.body.should have_link('Confirm', href: send_path)
+				end
+
+				it "should have a cancel link" do
+					get :edit, :id => @order
+					response.body.should have_link('Back', :back)
+				end
+
+				it "should set the order to pending" do
+					get :edit, :id => @order
+					Order.find(@order.orderID).filled.should == PENDING
+				end
 
 			end
 
-			it "should be successful if the order combos are fulfilled" do
-				OrderDetail.create!(@attr.merge(:quantity => 7))
-				get :edit, :id => @order
-				response.should be_success
+
+
+			describe "if a combo is unfulfilled" do
+				before(:each) do
+					@combo_type = FactoryGirl.create(:type, :typeID => SPECIAL)
+					@combo_group = FactoryGirl.create(:group, :typeID => SPECIAL, :groupID => SASHIMI)
+					@combo_item = FactoryGirl.create(:item, :groupID => @combo_group.groupID)
+					@attr = {:orderID => @order.orderID, :typeID => @combo_type.typeID,	:groupID => @combo_group.groupID, :itemID =>@combo_item.itemID,:quantity => 3, :spicy => false}
+				end
+
+				it "should redirect back to the menu if the order has unfulfilled combos" do
+					OrderDetail.create!(@attr)
+					get :edit, :id => @order
+					response.should redirect_to home_path
+				end
+
+				it "should display an error message if the order is unfulfilled" do
+					OrderDetail.create!(@attr)
+					get :edit, :id => @order
+					flash[:error].should =~ /incomplete/i
+
+				end
+
+				it "should be successful if the order combos are fulfilled" do
+					OrderDetail.create!(@attr.merge(:quantity => 7))
+					get :edit, :id => @order
+					response.should be_success
+				end
+
 			end
 
-		end
+			describe "if an order is empty" do
+				before(:each) do
+					@order.order_details.destroy_all
+				end
 
-		describe "if an order is empty" do
-			before(:each) do
-				@order.order_details.destroy_all
-			end
+				it "should redirect the user to the order page" do
+					get :edit, :id => @order
+					response.should redirect_to home_path
 
-			it "should redirect the user to the order page" do
-				get :edit, :id => @order
-				response.should redirect_to home_path
+				end
 
-			end
+				it "should flash the user that his order was empty" do
+					get :edit, :id => @order
+					flash[:error].should =~ /Fill out an order first/i
 
-			it "should flash the user that his order was empty" do
-				get :edit, :id => @order
-				flash[:error].should =~ /Fill out an order first/i
+				end
 
-			end
+				it "should reset the order to PENDING" do
+					@order.update_attribute(:filled, CONFIRMED)
+					get :edit, :id => @order
+					Order.find(@order.orderID).filled.should == PENDING
+				end
 
-			it "should reset the order to PENDING" do
-				@order.update_attribute(:filled, CONFIRMED)
-				get :edit, :id => @order
-				Order.find(@order.orderID).filled.should == PENDING
 			end
 
 		end
@@ -272,6 +277,8 @@ describe OrderController do
 
 	describe "'SEND'" do
 
+		if Order.time_stamp.fetch("validtime") != ORDER_LOCKOUT
+
 		describe "regardless of order details"  do
 			before(:each)  do
 				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
@@ -339,32 +346,6 @@ describe OrderController do
 			end
 
 		end
-
-		describe "if the order is SENT" do
-			before(:each) do
-				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
-				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
-				@time_data = Order.time_stamp
-			end
-
-			it "should not have a cancel link" do
-				get 'send_order', :id => @order.orderID
-				response.body.should_not have_link('Cancel Order', :href =>  @order) if @time_data.fetch("validtime") == ORDER_LOCKOUT
-			end
-
-			it "should not have an edit link" do
-				get 'send_order', :id => @order.orderID
-				response.body.should_not have_link('Edit Order', :href => edit_order_path(@order)) if @time_data.fetch("validtime") == ORDER_LOCKOUT
-			end
-
-			it "should FLASH a notice" do
-				get :send_order, :id => @order.orderID
-				flash[:notice].should =~ /free dessert/i if @time_data.fetch("validtime") == ORDER_LOCKOUT
-
-			end
-
-		end
-
 
 		describe "if order contains a Special" do
 
@@ -441,6 +422,33 @@ describe OrderController do
 					get :send_order,  :id => @order.orderID
 					@order.order_details.reject{|detail| detail.itemID == 0}.count.should == 3
 				end
+
+			end
+
+		end
+
+	end
+
+		describe "if the order is SENT" do
+			before(:each) do
+				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => SENT)
+				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
+				@time_data = Order.time_stamp
+			end
+
+			it "should not have a cancel link" do
+				get 'send_order', :id => @order.orderID
+				response.body.should_not have_link('Cancel Order', :href =>  @order) if @time_data.fetch("validtime") == ORDER_LOCKOUT
+			end
+
+			it "should not have an edit link" do
+				get 'send_order', :id => @order.orderID
+				response.body.should_not have_link('Edit Order', :href => edit_order_path(@order)) if @time_data.fetch("validtime") == ORDER_LOCKOUT
+			end
+
+			it "should FLASH a notice" do
+				get :send_order, :id => @order.orderID
+				flash[:notice].should =~ /free dessert/i if @time_data.fetch("validtime") == ORDER_LOCKOUT
 
 			end
 
