@@ -27,4 +27,21 @@ class Item < ActiveRecord::Base
     self.group.typeID != 1
   end
 
+  def combo_master
+    Item.find(self.itemID).combo? ? return_combo : nil
+  end
+
+  protected
+
+  def return_combo
+    case self.group.typeID
+      when SPECIAL then
+       Group.find(self.groupID)
+      when CHEF_SPECIAL then
+        Type.find(self.group.typeID)
+      else 
+        nil
+    end
+  end
+
 end

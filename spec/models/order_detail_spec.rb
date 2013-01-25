@@ -137,7 +137,7 @@ describe OrderDetail do
 
 
 				it "should return the determining criterion for the combo (a type or a group)" do
-					@detail.combo_master.should == @group
+					@item.combo_master.should == @group
 
 				end
 
@@ -157,7 +157,7 @@ describe OrderDetail do
 				end
 
 				it "should return the determining criterion for the combo (a type or a group)" do
-					@detail.combo_master.should == @type
+					@item.combo_master.should == @type
 				end
 
 			end
@@ -175,7 +175,7 @@ describe OrderDetail do
 				end
 
 				it "should return nil" do
-					@detail.combo_master.should == nil
+					@item.combo_master.should == nil
 				end
 
 			end
@@ -204,17 +204,17 @@ describe OrderDetail do
 				end
 
 				it "should return the type as the combo master" do
-					@detail.combo_master.should == Type.find(CHEF_SPECIAL)
+					@item.combo_master.should == Type.find(CHEF_SPECIAL)
 
 				end
 
 				it 'should return true if the nested group quantities amount to required sum' do
 					@new_detail = OrderDetail.create!(@attr)
-					@order.filled?(@new_detail.combo_master).should be_true
+					@order.filled?(@item.combo_master).should be_true
 				end
 
 				it 'should return false if the nested group quantities do not add up' do
-				@order.filled?(@detail.combo_master).should be_false
+				@order.filled?(@item.combo_master).should be_false
 				end
 
 			end
@@ -240,18 +240,18 @@ describe OrderDetail do
 
 				it 'should return true if the items are equal to the required number' do
 					@new_detail = OrderDetail.create!(@attr)
-					@order.filled?(@new_detail.combo_master).should be_true
+					@order.filled?(@item2.combo_master).should be_true
 				end
 
 				it 'should return false if the items do not add up' do
 					@new_detail = OrderDetail.create!(@attr.merge(:quantity => 1))
-					@order.filled?(@new_detail.combo_master).should be_false
+					@order.filled?(@item2.combo_master).should be_false
 				end
 
 				it "should return the quantity ordered up to this point" do
 					@new_detail = OrderDetail.create!(@attr.merge(:quantity => 1))
 					quant_sum = @new_detail.quantity + @detail.quantity
-				@order.quant_by_combo(@new_detail.group).should ==  quant_sum
+				@order.quant_by_combo(@item2.group).should ==  quant_sum
 
 				end
 

@@ -39,11 +39,6 @@ class OrderDetail < ActiveRecord::Base
 
   
   
-
-  def combo_master
-    Item.find(self.itemID).combo? ? return_combo : nil
-  end
-
   def combo_total_maxed_out?
     Group.where(:groupID => [COMBO_SPECIALS_LIST]).each do |group|
       if self.order.quant_by_combo(group) > Group.order_max(group.groupID)
@@ -52,19 +47,6 @@ class OrderDetail < ActiveRecord::Base
     end
   end
 
-
-  protected
-
-  def return_combo
-    case self.typeID
-      when SPECIAL then
-       Group.find(self.groupID)
-      when CHEF_SPECIAL then
-        Type.find(self.typeID)
-      else 
-        nil
-    end
-  end
 
 end
 

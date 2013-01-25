@@ -2,6 +2,6 @@
 <p class = "detail_description"><%= @item.detail %></p>
 <p class = "detail_item_price">$<%= @item.price %> per piece</p><br/>
 <% if @detail.quantity %>
-<p class = "detail_quantity">Ordered <strong><%= @detail.quantity %></strong> pieces</p>
+<div class = "detail_quantity">Ordered <strong><%= @detail.quantity %></strong> pieces</div>
 <p class = "detail_total_price">Total for this item: <strong>$<%= total_price(@detail.quantity, @item.price)%></strong></p>
 <% end %>

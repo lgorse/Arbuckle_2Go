@@ -2,7 +2,11 @@
 	<div id = "detail_core">
 	<div><%= link_to 'Back', 'javascript:;', {:id => 'close_details'}, :remote => true %></div>
 	<h3>Add this item to your order</h3>
-	<%= render 'order_detail_info' %>
+	<% if @item.group.typeID == CARTE %>
+		<%= render 'order_details/carte_info' %>
+	<% else %>
+		<%= render 'order_details/combo_info' %>
+	<% end %>
 	<%= form_for @detail, :remote => true do |f| %>
 		<%= render 'order_details/order_detail_form', :f => f %>
 		<%= f.submit "Save", :id => 'save_order_detail' %>	
