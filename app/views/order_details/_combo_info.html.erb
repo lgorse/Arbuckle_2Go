@@ -1,5 +1,9 @@
-<h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4>
-<p class = "combo_price">$<%= @item.combo_master.price %></p>
+<table class = "comb_detail_header">
+	<tr>
+		<td><h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4></td>
+<td><p class = "combo_price">$<%= @item.combo_master.price %></p></td>
+</tr>
+</table>
 <p class = "detail_description"><%= @item.detail %></p>
 <% if @detail.quantity %>
 <p class = "detail_quantity">Ordered <strong><%= @detail.quantity %></strong> pieces</p>

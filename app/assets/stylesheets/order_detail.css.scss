@@ -28,11 +28,13 @@
 		top: -25px;
 
 	}
+
+	h3{
+		color: #4D4F53;
+	}
 }
 
 #order_detail_outline{
-
-
 	padding: 10px;
 
 	#save_order_final{
@@ -51,11 +53,28 @@
 .detail_name{
 	color: #820000;
 	height: auto;
-	margin-bottom: 5px;
+	margin: 0px;
 }
 
 .detail_description{
 	font-style: italic;
 	height: 10px;
-	
+	margin-top: 0px;
+	margin-bottom: 15px;	
+}
+.detail_item_price{
+	margin-top: 30px;
+}
+
+.carte_name_header{
+	height: auto;
+	margin-bottom: 1px;
+}
+
+.combo_price{
+	font-weight: bold;
+}
+
+.order_detail_input{
+	margin-bottom: 15px;
 }

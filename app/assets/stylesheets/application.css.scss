@@ -31,11 +31,11 @@
 
  	.flash{
  		display: inline-block;
- 		position: absolute;
+ 		position: relative;
  		width: auto;
  		height: auto;
  		top: 20px;
- 		left: 200px;
+ 		left: 50px;
  		background: white;
  		padding: 5px;
 
@@ -70,25 +70,21 @@
  #logout{
 
  	a{
-
  		color: red;
  		width: 60px;
  		text-decoration: none;
- 		
  		position: relative;
  		display: block;
  		padding: 5px;
+ 		text-align: center;
+ 		float: right;
+ 		top: -15px;
+ 		right: 100px;
+ 		background-color: white;
+ 		border: 3px solid red;
+ 		display: block;
 
- 	
- 	text-align: center;
- 	float: right;
- 	top: 20px;
- 	right: 100px;
- 	background-color: white;
- 	border: 3px solid red;
- 	display: block;
-
-}
+ 	}
 
  }
 
