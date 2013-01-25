@@ -1,7 +1,7 @@
 <section class = "order_details_menu", id= "order_details">
 	<div id = "detail_core">
 	<div><%= link_to 'Back', 'javascript:;', {:id => 'close_details'}, :remote => true %></div>
-	<h3>Add Item</h3>
+	<h3>Add this item to your order</h3>
 	<%= render 'order_detail_info' %>
 	<%= form_for @detail, :remote => true do |f| %>
 		<%= render 'order_details/order_detail_form', :f => f %>

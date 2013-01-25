@@ -2,8 +2,7 @@ module OrderDetailHelper
 
 	def total_price(quantity, price)
 		if !quantity.nil? && !price.nil?
-			total_price = number_with_precision((quantity*price), :precision => 2)
-			"$#{total_price} for #{quantity} pieces" 
+			total_price = number_with_precision((quantity*price), :precision => 2) 
 		end
 	end
 

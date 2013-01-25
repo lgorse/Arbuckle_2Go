@@ -1,10 +1,10 @@
-<h1>Order sent</h1>
+<header class = "order_header"><%= render 'instructions_final' %></header>
 <% if @order.filled != SENT  && @time_data.fetch("validtime") != ORDER_LOCKOUT %>
-<div><%= link_to 'Cancel Order', @order, :method => :delete,
+<div class = "delete_order_holder"><%= link_to 'Cancel Order', @order, :method => :delete,
 			:confirm => "Your order will be deleted",
 								   :class => "delete_order" %>
 </div>
-<div id = "confirmer", class="round"><%= link_to 'Edit Order', edit_order_path(@order) %></div>
+<div class = "edit_order_holder"><%= link_to 'Edit Order', edit_order_path(@order), :class => "edit_order round" %></div>
 <% end %>
 <p><%= @order.orderID %></p>
 <%= render 'order/types_summary' %>

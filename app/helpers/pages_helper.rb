@@ -24,5 +24,9 @@ module PagesHelper
 
 	end
 
+	def signed_in
+		!@user.blank? && @user.userID == session[:user_token]
+	end
+
 
 end

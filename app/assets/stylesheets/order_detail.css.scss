@@ -10,7 +10,9 @@
 	height: 400px;
 	margin: 0;
 	padding: 0;
-	background-color: grey;
+	background-color: white;
+	border: 3px #8C1515;
+	border-style: solid none solid solid;
 
 	#detail_core{
 		padding: 10px;
@@ -44,4 +46,13 @@
 
 	}
 
+}
+
+.detail_name{
+	color: #820000;
+}
+
+.detail_description{
+	font-style: italic;
+	
 }
