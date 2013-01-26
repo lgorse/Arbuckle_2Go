@@ -19,13 +19,12 @@
 	}
 
 	#save_order_detail{
-		left: 10px;
+		position: relative;
 	}
 
 	#delete_detail{
 		position: relative;
-		left:70px;
-		top: -25px;
+		
 
 	}
 
@@ -37,16 +36,6 @@
 #order_detail_outline{
 	padding: 10px;
 
-	#save_order_final{
-		left: 10px;
-	}
-
-	#delete_detail_final{
-		position: relative;
-		left:70px;
-		top: -25px;
-
-	}
 
 }
 
@@ -77,4 +66,33 @@
 
 .order_detail_input{
 	margin-bottom: 15px;
+}
+
+#order_review{
+	position: relative;
+	padding-left: 15px;
+	padding-right: 5px;
+	top: 50px;
+	width: 550px;
+	background-color: white;
+	border: 3px solid black;
+	border-style: solid solid solid none;
+}
+
+.order_group_outline{
+	border: 1px solid black;
+	border-style: solid none none none;
+
+	h4{
+		margin-top:5px;
+		margin-bottom: 10px;
+
+	}
+
+	#order_review_form{
+		padding-bottom: 0px;
+		border: 1px solid grey;
+	border-style: none none solid none;
+
+	}
 }

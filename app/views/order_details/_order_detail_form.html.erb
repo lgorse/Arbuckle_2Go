@@ -1,13 +1,10 @@
-<table class = "order_detail_input">
-	<tr>
 <td><%= f.label "Spicy" %></td>
 <td><%= f.check_box :spicy%></td>
 <td><%= f.label "Quantity" %></td>
 <td><%= f.select :quantity, (1..quant_selector_max(@item.group)) %></td>
-</tr>
-</table>
-
 <%= f.hidden_field :typeID, :value => @item.group.typeID %>
 <%= f.hidden_field :groupID, :value => @item.groupID %>
 <%= f.hidden_field :itemID, :value => @item.itemID %>
 <%= f.hidden_field  :orderID, :value => @order.orderID%>
+
+

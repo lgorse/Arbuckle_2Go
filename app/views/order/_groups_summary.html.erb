@@ -1,6 +1,6 @@
 <% Group.find_each do |group| %>
 	<% if @order.order_details.any? {|detail| detail.groupID == group.groupID && detail.typeID == type.typeID} %>
-<div id = "group_summary_<%= group.groupID %>">
+<div class = "order_group_outline", id = "group_summary_<%= group.groupID %>">
 		<h4><%= group.groupName %></h4>
 		<% if group.typeID == SPECIAL %>
 			<p><%= "$#{group.price}" if group.price != nil %></p>

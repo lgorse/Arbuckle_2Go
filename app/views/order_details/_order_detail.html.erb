@@ -8,10 +8,16 @@
 		<%= render 'order_details/combo_info' %>
 	<% end %>
 	<%= form_for @detail, :remote => true do |f| %>
-		<%= render 'order_details/order_detail_form', :f => f %>
-		<%= f.submit "Save", :id => 'save_order_detail' %>	
+	<table>
+		<tr>
+		<%= render 'order_details/order_detail_form', :f => f %></tr></table>
+		<table>
+			<tr>
+				<td><%= f.submit "Save", :id => 'save_order_detail' %></td>
 	<% end %>	
-	<%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail", :remote => true %>
+	<td><%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail", :remote => true %></td>
+			</tr>
+		</table>
 </div>
 </section>
 
