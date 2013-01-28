@@ -1,0 +1,592 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+
+ */
+/* line 16, ../../app/assets/stylesheets/application.css.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #ddcf99;
+  position: relative;
+}
+
+/* line 24, ../../app/assets/stylesheets/application.css.scss */
+header.greeting {
+  width: auto;
+  min-width: 1150px;
+  margin-right: 0;
+  padding-right: 0;
+  height: 70px;
+  border-bottom: 2px solid;
+  background-color: #8C1515;
+}
+
+/* line 35, ../../app/assets/stylesheets/application.css.scss */
+.flash {
+  display: inline-block;
+  position: relative;
+  width: auto;
+  height: auto;
+  top: 20px;
+  left: 50px;
+  background: white;
+  padding: 5px;
+}
+
+/* line 47, ../../app/assets/stylesheets/application.css.scss */
+#notice {
+  color: #53284F;
+  border: 2px solid #53284f;
+}
+
+/* line 52, ../../app/assets/stylesheets/application.css.scss */
+#error {
+  background: #FF3333;
+  color: white;
+  border: 2px solid red;
+}
+
+/* line 58, ../../app/assets/stylesheets/application.css.scss */
+#success {
+  color: green;
+  border: 2px solid green;
+}
+
+/* line 63, ../../app/assets/stylesheets/application.css.scss */
+#warning {
+  color: blue;
+  border: 2px solid blue;
+  background-color: white;
+  width: auto;
+  top: -25px;
+  left: 230px;
+  font-style: italic;
+}
+
+/* line 75, ../../app/assets/stylesheets/application.css.scss */
+div.welcome {
+  text-align: left;
+  float: left;
+  color: white;
+  margin-left: 1em;
+}
+
+/* line 84, ../../app/assets/stylesheets/application.css.scss */
+#logout a {
+  color: red;
+  width: 60px;
+  text-decoration: none;
+  position: relative;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  float: right;
+  top: -15px;
+  right: 100px;
+  background-color: white;
+  border: 3px solid red;
+  display: block;
+}
+
+/* line 104, ../../app/assets/stylesheets/application.css.scss */
+#logout :hover {
+  color: white;
+  background-color: #FF5353;
+  font-weight: bold;
+}
+
+/* line 110, ../../app/assets/stylesheets/application.css.scss */
+.round {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* line 118, ../../app/assets/stylesheets/application.css.scss */
+.instructions {
+  position: static;
+  height: 50px;
+  width: auto;
+  border: 1px solid black;
+  background-color: #D2B48C;
+}
+/* line 5, ../../app/assets/stylesheets/order.css.scss */
+header.order_header {
+  width: auto;
+  min-width: 1150px;
+  margin-right: 0;
+  padding-right: 0;
+  margin: 0;
+}
+/* line 12, ../../app/assets/stylesheets/order.css.scss */
+header.order_header #back {
+  left: 2em;
+  top: 86px;
+  width: 50px;
+  position: absolute;
+}
+/* line 19, ../../app/assets/stylesheets/order.css.scss */
+header.order_header #title {
+  width: auto;
+  margin-top: 35px;
+  font-weight: normal;
+  position: relative;
+  top: -1.5em;
+  left: 5em;
+}
+
+/* line 31, ../../app/assets/stylesheets/order.css.scss */
+.order_subheader {
+  height: 75px;
+}
+
+/* line 36, ../../app/assets/stylesheets/order.css.scss */
+#pickup_instructions {
+  position: relative;
+  top: -62px;
+  left: 250px;
+}
+
+/* line 43, ../../app/assets/stylesheets/order.css.scss */
+#confirmer_final a {
+  position: relative;
+  right: 120px;
+  top: -70px;
+  float: right;
+  background-color: white;
+  padding: 5px;
+  width: 65px;
+  text-align: center;
+  border: 1px solid #009b76;
+  font-weight: bold;
+  text-decoration: none;
+  color: #009B76;
+}
+
+/* line 61, ../../app/assets/stylesheets/order.css.scss */
+#confirmer_final :hover {
+  background-color: #009B76;
+  color: white;
+  font-weight: bold;
+}
+
+/* line 69, ../../app/assets/stylesheets/order.css.scss */
+.delete_order {
+  position: relative;
+  left: 10px;
+  top: 20px;
+  width: 100px;
+  text-align: center;
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border: 1px solid red;
+  text-decoration: none;
+  color: red;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 89, ../../app/assets/stylesheets/order.css.scss */
+.delete_order_holder :hover {
+  color: white;
+  background-color: #FF5353;
+}
+
+/* line 95, ../../app/assets/stylesheets/order.css.scss */
+.edit_order {
+  position: relative;
+  left: 120px;
+  width: 50px;
+  text-align: center;
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border: 1px solid #00505c;
+  text-decoration: none;
+  color: #00505C;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 113, ../../app/assets/stylesheets/order.css.scss */
+.edit_order_holder :hover {
+  color: white;
+  background-color: #00505C;
+}
+
+/* line 119, ../../app/assets/stylesheets/order.css.scss */
+#promo {
+  position: relative;
+  top: -45px;
+  left: 210px;
+}
+
+/* line 125, ../../app/assets/stylesheets/order.css.scss */
+.total_order_price {
+  background-color: white;
+  color: #820000;
+  position: relative;
+  text-align: center;
+  width: 200px;
+  font-weight: bold;
+  padding: 5px;
+  left: 360px;
+}
+/* line 5, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_details {
+  position: fixed;
+  top: 200px;
+  right: -350px;
+  width: 400px;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border: 3px #8c1515;
+  border-style: solid none solid solid;
+}
+/* line 17, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_details #detail_core {
+  padding: 10px;
+}
+/* line 21, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_details #save_order_detail {
+  position: relative;
+}
+/* line 25, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_details #delete_detail {
+  position: relative;
+}
+/* line 31, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_details h3 {
+  color: #4D4F53;
+}
+
+/* line 36, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_detail_outline {
+  padding: 10px;
+}
+
+/* line 42, ../../app/assets/stylesheets/order_detail.css.scss */
+.detail_name {
+  color: #820000;
+  height: auto;
+  margin: 0px;
+}
+
+/* line 48, ../../app/assets/stylesheets/order_detail.css.scss */
+.detail_description {
+  font-style: italic;
+  height: 10px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+/* line 54, ../../app/assets/stylesheets/order_detail.css.scss */
+.detail_item_price {
+  margin-top: 30px;
+}
+
+/* line 58, ../../app/assets/stylesheets/order_detail.css.scss */
+.detail_total_price {
+  font-weight: bold;
+  color: #00505C;
+}
+
+/* line 63, ../../app/assets/stylesheets/order_detail.css.scss */
+.carte_name_header {
+  height: auto;
+  margin-bottom: 1px;
+}
+
+/* line 68, ../../app/assets/stylesheets/order_detail.css.scss */
+.combo_price {
+  font-weight: bold;
+}
+
+/* line 72, ../../app/assets/stylesheets/order_detail.css.scss */
+.order_detail_input {
+  margin-bottom: 15px;
+}
+
+/* line 76, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_review {
+  position: relative;
+  padding-left: 15px;
+  padding-right: 5px;
+  width: 550px;
+  background-color: white;
+  border: 3px solid black;
+  border-style: solid solid solid none;
+}
+/* line 85, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_review td {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 0px;
+  height: auto;
+}
+/* line 92, ../../app/assets/stylesheets/order_detail.css.scss */
+#order_review .order_type_outline {
+  margin-top: -2px;
+  padding-top: 5px;
+  border: 2px solid black;
+  border-style: solid none none none;
+}
+
+/* line 102, ../../app/assets/stylesheets/order_detail.css.scss */
+.order_group_outline {
+  border: 1px solid grey;
+  border-style: solid none none none;
+}
+/* line 107, ../../app/assets/stylesheets/order_detail.css.scss */
+.order_group_outline #order_review_form {
+  padding-bottom: 0px;
+}
+/* line 5, ../../app/assets/stylesheets/pages.css.scss */
+header.menu_header {
+  width: auto;
+  min-width: 1150px;
+  margin-right: 0;
+  padding-right: 0;
+  margin: 0;
+}
+/* line 12, ../../app/assets/stylesheets/pages.css.scss */
+header.menu_header .menu_name {
+  position: absolute;
+  top: 71px;
+  left: 55px;
+  width: 200px;
+  height: 100px;
+  border: 1px solid black;
+  display: table;
+  background-color: white;
+}
+/* line 24, ../../app/assets/stylesheets/pages.css.scss */
+header.menu_header .menu_name p {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  color: blue;
+}
+/* line 31, ../../app/assets/stylesheets/pages.css.scss */
+header.menu_header .instructions {
+  margin-left: 257px;
+}
+
+/* line 37, ../../app/assets/stylesheets/pages.css.scss */
+#authenticate {
+  position: relative;
+  display: inline-block;
+  top: 20px;
+}
+/* line 42, ../../app/assets/stylesheets/pages.css.scss */
+#authenticate h1 {
+  position: relative;
+}
+/* line 48, ../../app/assets/stylesheets/pages.css.scss */
+#authenticate #authenticate_button a {
+  text-decoration: none;
+  position: absolute;
+  text-align: center;
+  border: 2px solid #007c92;
+  background-color: #f3efd8;
+  color: #007C92;
+  font-weight: bold;
+  width: 100px;
+  padding: 10px;
+  font-size: large;
+  top: 17px;
+  left: 380px;
+}
+/* line 64, ../../app/assets/stylesheets/pages.css.scss */
+#authenticate #authenticate_button :hover {
+  color: #f3efd8;
+  background-color: #007C92;
+}
+
+/* line 73, ../../app/assets/stylesheets/pages.css.scss */
+#confirmer a {
+  position: relative;
+  right: 120px;
+  top: -50px;
+  float: right;
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 65px;
+  text-align: center;
+  border: 2px solid #009b76;
+  font-weight: bold;
+  text-decoration: none;
+  color: #009B76;
+}
+
+/* line 91, ../../app/assets/stylesheets/pages.css.scss */
+#confirmer :hover {
+  background-color: #009B76;
+  color: white;
+  font-weight: bold;
+}
+
+/* line 100, ../../app/assets/stylesheets/pages.css.scss */
+#type_section {
+  position: absolute;
+  top: 173px;
+  border: 1px solid black;
+  left: 55px;
+  width: 200px;
+  background-color: white;
+}
+/* line 108, ../../app/assets/stylesheets/pages.css.scss */
+#type_section ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 113, ../../app/assets/stylesheets/pages.css.scss */
+#type_section li {
+  height: 30px;
+  border-bottom: 1px solid black;
+  padding-top: 5px;
+}
+/* line 120, ../../app/assets/stylesheets/pages.css.scss */
+#type_section li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: #820000;
+  font-weight: bold;
+}
+/* line 129, ../../app/assets/stylesheets/pages.css.scss */
+#type_section ul :hover {
+  background-color: #DCAA79;
+}
+/* line 133, ../../app/assets/stylesheets/pages.css.scss */
+#type_section ul :active {
+  background-color: #DCAA79;
+}
+/* line 137, ../../app/assets/stylesheets/pages.css.scss */
+#type_section .type_tab {
+  list-style-type: none;
+}
+/* line 141, ../../app/assets/stylesheets/pages.css.scss */
+#type_section .type_link {
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+/* line 149, ../../app/assets/stylesheets/pages.css.scss */
+.chef_special_header {
+  border: 1px solid black;
+  margin: 0;
+  width: 700px;
+  height: 75px;
+  text-align: center;
+}
+
+/* line 157, ../../app/assets/stylesheets/pages.css.scss */
+#menu_core {
+  height: auto;
+  margin-bottom: 30px;
+}
+
+/* line 162, ../../app/assets/stylesheets/pages.css.scss */
+.chef_special_combo_cancel {
+  position: absolute;
+  right: 100px;
+  top: 30px;
+  disabled: true;
+  display: inline;
+}
+/* line 169, ../../app/assets/stylesheets/pages.css.scss */
+.chef_special_combo_cancel .combo_filled {
+  disabled: false;
+}
+
+/* line 175, ../../app/assets/stylesheets/pages.css.scss */
+.combo_cancel {
+  position: absolute;
+  right: 100px;
+  top: 15px;
+  display: inline;
+}
+
+/* line 184, ../../app/assets/stylesheets/pages.css.scss */
+.menu_section {
+  position: relative;
+  width: 700px;
+  top: 0px;
+  left: 257px;
+  list-style-type: none;
+  text-align: center;
+  background-color: white;
+}
+
+/* line 194, ../../app/assets/stylesheets/pages.css.scss */
+.menu_table {
+  width: 700px;
+  border-collapse: collapse;
+}
+
+/* line 199, ../../app/assets/stylesheets/pages.css.scss */
+.group_row {
+  margin-top: 1px;
+}
+
+/* line 203, ../../app/assets/stylesheets/pages.css.scss */
+.combo_filled {
+  background-color: #87CEFA;
+}
+
+/* line 207, ../../app/assets/stylesheets/pages.css.scss */
+.group_header {
+  border: 1px solid black;
+  width: 700px;
+  height: 50px;
+  margin: 0;
+  position: relative;
+}
+
+/* line 216, ../../app/assets/stylesheets/pages.css.scss */
+.item_data {
+  width: 300px;
+  padding-left: 5px;
+  text-align: left;
+  border: 1px solid black;
+}
+
+/* line 224, ../../app/assets/stylesheets/pages.css.scss */
+.item_row :hover {
+  background-color: #DCAA79;
+}
+
+/* line 228, ../../app/assets/stylesheets/pages.css.scss */
+.selected {
+  background-color: #87CEFA;
+}
+
+/* line 236, ../../app/assets/stylesheets/pages.css.scss */
+.item_name {
+  color: #820000;
+}
+
+/* line 241, ../../app/assets/stylesheets/pages.css.scss */
+.item_detail {
+  color: black;
+  font-style: italic;
+}
