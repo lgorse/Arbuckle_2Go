@@ -1,8 +1,10 @@
 <header class="menu_header"><%= render 'instructions' %></header>
+<% cache do %>
 	<section id = "menu_core">
 		<section id="type_section"><%= render 'types' %></section>
 		<section class="menu_section"><%= render 'pages/groups', :type => Type.first %></section>
 	</section>
+<% end %>
 	<div id = "slideout"></div>
 	
 
