@@ -55,6 +55,11 @@
 	margin-top: 30px;
 }
 
+.detail_total_price{
+	font-weight: bold;
+	color: #00505C;
+}
+
 .carte_name_header{
 	height: auto;
 	margin-bottom: 1px;
@@ -72,27 +77,37 @@
 	position: relative;
 	padding-left: 15px;
 	padding-right: 5px;
-	top: 50px;
 	width: 550px;
 	background-color: white;
 	border: 3px solid black;
 	border-style: solid solid solid none;
+
+	td{
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-bottom: 0px;
+		height: auto;
+	}
+
+	.order_type_outline{
+		margin-top: -2px;
+			padding-top: 5px;
+			border: 2px solid black;
+			border-style: solid none none none;
+
+		
+	}
 }
 
 .order_group_outline{
-	border: 1px solid black;
+	border: 1px solid grey;
 	border-style: solid none none none;
 
-	h4{
-		margin-top:5px;
-		margin-bottom: 10px;
-
-	}
-
+	
 	#order_review_form{
 		padding-bottom: 0px;
-		border: 1px solid grey;
-	border-style: none none solid none;
-
+		
 	}
+
 }
+

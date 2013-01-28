@@ -1,7 +1,7 @@
-<table class = "comb_detail_header">
+<table class = "combo_detail_header">
 	<tr>
 		<td><h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4></td>
-<td><p class = "combo_price">$<%= @item.combo_master.price %></p></td>
+<td><p class = "combo_price"><%= number_to_currency(@item.combo_master.price) %></p></td>
 </tr>
 </table>
 <p class = "detail_description"><%= @item.detail %></p>

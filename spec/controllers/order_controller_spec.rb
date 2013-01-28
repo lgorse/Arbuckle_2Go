@@ -126,7 +126,7 @@ describe OrderController do
 				it "should show all of the order details" do
 					get :edit, :id => @order
 					response.body.should have_selector('h3', 
-						:text => "Confirm your order")
+						:text => "Confirm")
 
 				end
 

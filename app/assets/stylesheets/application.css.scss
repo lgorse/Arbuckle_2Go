@@ -29,7 +29,9 @@
  	border-bottom: 2px solid;
  	background-color: #8C1515;
 
- 	.flash{
+ }
+
+ .flash{
  		display: inline-block;
  		position: relative;
  		width: auto;
@@ -57,7 +59,16 @@
  		border: 2px solid green;
  	}
 
- }
+ 	#warning{
+ 		color: blue;
+ 		border: 2px solid blue;
+ 		background-color: white;
+ 		width: auto;
+ 		top: -25px;
+ 		left: 230px;
+ 		font-style: italic;
+
+ 	}
 
 
  div.welcome{

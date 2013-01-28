@@ -32,20 +32,46 @@ header.menu_header{
 		margin-left: 257px;
 	}
 
-	#title{
-		width: 200px;
-		font-weight: normal;
+}
+
+#authenticate{
+	position: relative;
+	display: inline-block;
+	top: 20px;
+
+	h1{
 		position: relative;
-		left: 1em;
-		top: -0.5em;
 	}
 
-}
+	#authenticate_button{
+
+		a{
+		text-decoration: none;
+		position: absolute;
+		text-align: center;
+		border: 2px solid #007C92;
+		background-color: #f3efd8;
+		color: #007C92;
+		font-weight: bold;
+		width: 100px;
+		padding: 10px;
+		font-size: large;
+		top: 17px;
+		left: 380px;
+	}
+	}
+
+	#authenticate_button :hover{
+		color: #f3efd8;
+		background-color: #007C92;
+	}
+
+}	
 
 #confirmer{
 	
-		 a{
-		 	position: relative;
+	a{
+		position: relative;
 		right: 120px;
 		top: -50px;
 		float: right;
@@ -56,18 +82,18 @@ header.menu_header{
 		text-align: center;
 		border: 2px solid #009B76;
 		font-weight: bold;
-			text-decoration: none;
-			color: #009B76;
-		}
+		text-decoration: none;
+		color: #009B76;
 	}
+}
 
 
-	#confirmer :hover{
-		background-color: #009B76;
-			color:white;
-			font-weight: bold;
-		
-	}
+#confirmer :hover{
+	background-color: #009B76;
+	color:white;
+	font-weight: bold;
+
+}
 
 
 

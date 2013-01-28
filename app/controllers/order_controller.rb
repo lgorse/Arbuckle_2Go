@@ -18,7 +18,7 @@ before_filter :authenticate_edit, :only => [:edit]
 
 	def edit
 		redirect_to send_path and return if @time_data.fetch("validtime") == ORDER_LOCKOUT
-		@title = "Confirm your order"
+		@title = "Check your order then Confirm"
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
 		if !failure.blank?
@@ -59,6 +59,7 @@ before_filter :authenticate_edit, :only => [:edit]
 		@order.add_combo_hacks
 		@order.update_order(false, CONFIRMED) if @order.filled == PENDING unless @time_data.fetch('validtime') == ORDER_LOCKOUT
 		send_order_flash
+		flash.now[:warning] = "Don't forget to get a free dessert with your order"
 	end
 
 	def logout

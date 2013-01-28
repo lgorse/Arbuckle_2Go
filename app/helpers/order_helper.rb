@@ -13,4 +13,14 @@ module OrderHelper
 		end
 	end
 
+	def order_pickup_instructions
+		if @order
+		if @time_data.fetch("validtime") == ORDER_TODAY
+			"Pick up your order today from #{@time_data.fetch("starttime")} at the deliverables section"
+		else
+			"Pick up your order on #{@time_data.fetch("nextDay")} at #{@time_data.fetch("starttime")}"
+		end
+	end
+	end
+
 end

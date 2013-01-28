@@ -170,6 +170,7 @@ describe PagesController do
 				before(:each) do
 					@user = FactoryGirl.create(:user)
 					request.session[:user_token] = @user.userID
+					@type = FactoryGirl.create(:type)
 					@order1 = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
 					@order2 = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
 					@order3 = FactoryGirl.create(:order, :userID => 1003)

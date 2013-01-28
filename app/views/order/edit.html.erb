@@ -1,6 +1,7 @@
 <header class = "order_header"><%= render 'instructions_final' %></header>
+<div class = "order_subheader">
 	<div class = "delete_order_holder"><%= link_to 'Cancel Order', @order, :method => :delete,
 			:confirm => "Your order will be deleted",
-								   :class => "delete_order" %></div>
+								   :class => "delete_order" %></div></div>
 <section id= "order_review"><%= render 'order/types_summary' %>
 </section>

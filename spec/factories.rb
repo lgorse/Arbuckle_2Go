@@ -11,12 +11,14 @@ FactoryGirl.define do
 
 	factory :type do |type|
 		type.typeName "Test type"
+		type.price 10.25
 	end
 
 	factory :group do |group|
 		group.groupName "Test group"
 		group.typeID 1
 		group.Detail ""
+		group.price 9.20
 	end
 
 	factory :group_with_item, :parent => :group do |group|

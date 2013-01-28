@@ -1,4 +1,5 @@
 <header class = "order_header"><%= render 'instructions_final' %></header>
+<div class = "order_subheader">
 <% if @order.filled != SENT  && @time_data.fetch("validtime") != ORDER_LOCKOUT %>
 <div class = "delete_order_holder"><%= link_to 'Cancel Order', @order, :method => :delete,
 			:confirm => "Your order will be deleted",
@@ -6,5 +7,11 @@
 </div>
 <div class = "edit_order_holder"><%= link_to 'Edit Order', edit_order_path(@order), :class => "edit_order round" %></div>
 <% end %>
-<p><%= @order.orderID %></p>
-<%= render 'order/types_summary' %>
+<% flash.select {|key, value| key == (:warning)}.each do |key, value| %>
+<div class= "flash", id = "<%= key %>"><%= value %></div>
+<% end %>
+</div>
+<div class =  "total_order_price">TOTAL PRICE: <%= number_to_currency(@order.total) unless @order.total.blank? %></div>
+<section id= "order_review">
+	<%= render 'order/types_summary' %>
+</section>

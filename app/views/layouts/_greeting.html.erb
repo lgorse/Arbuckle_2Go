@@ -1,7 +1,7 @@
 <div class = "welcome">
 	<h2>Arbuckle 2Go</h2>
 </div>
-	<% flash.each do |key, value| %>
+	<% flash.reject {|key, value| key == (:warning)}.each do |key, value| %>
 	<div class = "flash" id = "<%= key %>"><%= value %></div>
 	<% end %>
 	<% if signed_in %>

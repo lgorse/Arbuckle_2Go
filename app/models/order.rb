@@ -73,6 +73,18 @@ require "chronic"
 		return time_data
 	end
 
+	def total
+		@total = self.order_details.inject(0) do |result, detail|
+			detail.item.blank? || detail.item.price.blank? ? price = 0 : price = detail.item.price
+			result + detail.quantity * price
+		end
+		SPECIALS_LIST.each do |groupNum|
+			@total += Group.find(groupNum).price if self.order_details.any?{|detail| detail.groupID == groupNum}
+		end
+		@total += Type.find(CHEF_SPECIAL).price if self.order_details.any?{|detail| detail.typeID == CHEF_SPECIAL}
+		return @total
+	end
+
 	#time stamp
 
 	def self.time_stamp

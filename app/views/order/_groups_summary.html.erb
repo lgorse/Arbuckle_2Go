@@ -1,14 +1,17 @@
 <% Group.find_each do |group| %>
 	<% if @order.order_details.any? {|detail| detail.groupID == group.groupID && detail.typeID == type.typeID} %>
 <div class = "order_group_outline", id = "group_summary_<%= group.groupID %>">
-		<h4><%= group.groupName %></h4>
+	<table>
+		<tr>
+		<td><h4 class = "detail_name"><%= group.groupName %></h4></td>
 		<% if group.typeID == SPECIAL %>
-			<p><%= "$#{group.price}" if group.price != nil %></p>
+			<td><p class = "combo_price"><%= number_to_currency(group.price) if group.price != nil %></p></td>
 			<% if @order.filled == PENDING %>
-				<div><%= button_to 'Cancel combo',  cancel_special_path(:order => @order, :combo_id => group), :class => 'combo_cancel_summary', 
-						 :id => combo_status(group), :remote => true %></div>
+				<td><div><%= button_to 'Cancel combo',  cancel_special_path(:order => @order, :combo_id => group), :class => 'combo_cancel_summary', 
+						 :id => combo_status(group), :remote => true %></div></td>
 			<% end %>
 		<% end %>
+	</tr></table>
 		<div id = "order_detail_outline"><%= render 'order/details_summary', :group => group %></div>
 		</div>
 	<% end %>

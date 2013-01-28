@@ -1,7 +1,7 @@
 <div class = "carte_name_header">
 <h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4></div>
 <p class = "detail_description"><%= @item.detail %></p>
-<p class = "detail_item_price"><strong>$<%= @item.price %></strong> per piece</p><br/>
+<p class = "detail_item_price"><strong><%=number_to_currency(@item.price) %></strong> per piece</p><br/>
 <% if @detail.quantity %>
 <div class = "detail_quantity">Ordered <strong><%= @detail.quantity %></strong> pieces</div>
 <p class = "detail_total_price">Total for this item: <strong>$<%= total_price(@detail.quantity, @item.price)%></strong></p>

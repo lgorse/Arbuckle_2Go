@@ -147,6 +147,65 @@ describe Order do
 
 	end
 
+	describe "total" do
+		before(:each) do
+			@order = FactoryGirl.create(:order)
+			@item1 = FactoryGirl.create(:item, :price => 2.5)
+			@item2 = FactoryGirl.create(:item, :itemID => 20, :price => 3.98)
+			@detail1 = FactoryGirl.create(:order_detail, :quantity => 2, :itemID => @item1.itemID, :orderID => @order.orderID)
+			@detail2 = FactoryGirl.create(:order_detail, :itemID => @item2.itemID, :orderID => @order.orderID)
+		end
+
+		describe "with item orders " do
+
+			it "should return the price" do
+				total = @detail1.item.price * @detail1.quantity + @detail2.item.price * @detail2.quantity
+				@order.total.should == total
+
+			end
+
+		end
+
+		describe "with a combo special" do
+			before(:each) do
+				@group = FactoryGirl.create(:group, :groupID => SASHIMI, :typeID => SPECIAL, :price => 8.15)
+				@item3 = FactoryGirl.create(:item, :groupID => @group.groupID)
+				@detail3 = FactoryGirl.create(:order_detail, :groupID => @group.groupID, :itemID => @item3.itemID, :quantity => 7, :orderID => @order.orderID)
+			end
+
+			it "should return the price" do
+				total = @detail1.item.price * @detail1.quantity + @detail2.item.price * @detail2.quantity + @group.price
+				@order.total.should == total
+
+			end
+
+		end
+
+		describe "with a chef special" do
+			before(:each) do
+				@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL, :price => 10.25)
+				@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 23)
+				@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => 25)
+				@item3 = FactoryGirl.create(:item, :groupID => @nigiri.groupID)
+				@item4 = FactoryGirl.create(:item, :groupID => @roll.groupID)
+				@detail3 = FactoryGirl.create(:order_detail, :itemID => @item3.itemID,
+					:groupID => @nigiri.groupID, :typeID => @chef_special.typeID,
+					:quantity => 3, :orderID => @order.orderID)
+				@detail4 = FactoryGirl.create(:order_detail, :itemID => @item4.itemID, 
+					:groupID => @roll.groupID, :typeID => @chef_special.typeID,
+					:quantity => 1, :orderID => @order.orderID)
+
+			end
+
+			it "should return the price" do
+				total = @detail1.item.price * @detail1.quantity + @detail2.item.price * @detail2.quantity + @chef_special.price
+				@order.total.should == total
+			end
+
+		end
+
+	end
+
 
 	describe "dependencies" do
 

@@ -1,17 +1,19 @@
 <% Type.find_each do|type| %>
 	<% if @order.order_details.any? {|detail| detail.typeID == type.typeID} %>
-	<div id = "type_summary_<%= type.typeID %>">
-	<h3><%= type.typeName %></h3>
+	<div class = "order_type_outline", id = "type_summary_<%= type.typeID %>">
+		<table><tr>
+	<td><h3 class = "type_name"><%= type.typeName %></h3></td>
 		<% if type.typeID == CHEF_SPECIAL %>
-		<p><%= "$#{type.price}" if type.price != nil %></p>
+		<td><p class = "combo_price"><%= "$#{type.price}" if type.price != nil %></p></td>
 		<div>
 			<% if @order.filled == PENDING %>
-				<%= button_to 'Cancel combo', 
+				<td><%= button_to 'Cancel combo', 
 					cancel_chef_special_path(:order => @order, :combo_id => type), 
 					:disabled => button_disabled(type),	:class => 'chef_special_combo_cancel_summary',
-					:id => combo_status(type), :remote => true %></div>
+					:id => combo_status(type), :remote => true %></td></div>
 			<% end %>
 		<% end %>
+	</tr></table>
 	<%= render 'order/groups_summary', :type => type %>
 	</div>
 	<% end %>
