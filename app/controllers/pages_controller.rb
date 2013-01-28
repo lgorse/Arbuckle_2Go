@@ -12,7 +12,7 @@ class PagesController < ApplicationController
 	end
 
 	def sign_in
-		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails.php"
+		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails-local.php"
 	end
 
 	def user_parse
