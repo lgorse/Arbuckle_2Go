@@ -81,28 +81,29 @@
  }
 
  #logout{
+ 	width: auto;
+ 	height: auto;
+ 	position: relative;
+ 	top: 20px;
 
- 	a{
+ 	
  		color: red;
  		width: 60px;
  		text-decoration: none;
- 		position: absolute;
- 		display: block;
+ 		position: relative;
  		padding: 5px;
  		text-align: center;
  		float: right;
- 		top: 10px;
+ 		
  		right: 100px;
  		background-color: white;
  		border: 3px solid red;
- 		display: block;
-
- 	}
+ 	
 
  }
 
 
- #logout :hover{
+ #logout:hover{
  	color: white;
  	background-color: #FF5353;
  	font-weight: bold;

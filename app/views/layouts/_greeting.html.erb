@@ -5,8 +5,6 @@
 	<div class = "flash" id = "<%= key %>"><%= value %></div>
 	<% end %>
 	<% if signed_in %>
-<div id="logout" class="round">
-	<%= link_to 'Log out',  logout_path, :class => "round" %>
-	</div>
+<%= link_to 'Log out',  logout_path, :class => "round", :id => "logout" %>
 	<% end %>
 </div>

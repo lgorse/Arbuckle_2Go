@@ -2,11 +2,8 @@
 <div class = "order_subheader">
 	
 <% if @order.filled != SENT  && @time_data.fetch("validtime") != ORDER_LOCKOUT %>
-<div class = "delete_order_holder"><%= link_to 'Cancel Order', @order, :method => :delete,
-			:confirm => "Your order will be deleted",
-								   :class => "delete_order" %>
-</div>
-<div class = "edit_order_holder"><%= link_to 'Edit Order', edit_order_path(@order), :class => "edit_order round" %></div>
+<%= link_to 'Cancel Order', @order, :method => :delete,	:confirm => "Your order will be deleted", :class => "delete_order" %>
+<%= link_to 'Edit Order', edit_order_path(@order), :class => "edit_order round" %>
 <% end %>
 
 <% if @order.order_details.any? %>

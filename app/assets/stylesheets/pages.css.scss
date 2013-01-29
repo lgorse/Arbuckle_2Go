@@ -74,7 +74,6 @@ header.menu_header{
 
 #confirmer{
 	
-	a{
 		position: relative;
 		right: 120px;
 		top: -50px;
@@ -88,11 +87,10 @@ header.menu_header{
 		font-weight: bold;
 		text-decoration: none;
 		color: #009B76;
-	}
 }
 
 
-#confirmer :hover{
+#confirmer:hover{
 	background-color: #009B76;
 	color:white;
 	font-weight: bold;

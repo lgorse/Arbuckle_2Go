@@ -1,12 +1,12 @@
 <section class = "instructions">
 	<% if current_page?(edit_order_path(@order)) %>
-<div id = "back"><%= link_to 'Back', home_path %></div>
-<% end %>
-<div id = "title"><h3><%= @title %></h3></div>
-<% if current_page?(send_path) %>
-<div id = "pickup_instructions"><p><%= order_pickup_instructions %></p></div>
-<% end %>
-<% unless current_page?(send_path) %>
-<div id = "confirmer_final",  class="round"><%= link_to 'Confirm', send_path, :class => "round" %></div>
-<% end %>
+		<div id = "back"><%= link_to 'Back', home_path %></div>
+	<% end %>
+	<div id = "title"><h3><%= @title %></h3></div>
+	<% if current_page?(send_path) %>
+		<div id = "pickup_instructions"><p><%= order_pickup_instructions %></p></div>
+	<% end %>
+	<% unless current_page?(send_path) %>
+		<%= link_to 'Confirm', send_path, :class => "round", :id => "confirmer_final" %>
+	<% end %>
 </section>

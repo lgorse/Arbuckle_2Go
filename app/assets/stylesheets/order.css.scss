@@ -52,10 +52,9 @@ top: -70px;
 }
 
 #confirmer_final{
-	a{
 	position: relative;
 	right: 120px;
-	top: -70px;
+	top: -66px;
 	float: right;
 	background-color: white;
 	
@@ -67,10 +66,9 @@ top: -70px;
 	text-decoration: none;
 		color: #009B76;
 		
-	}
 }
 
-#confirmer_final :hover{
+#confirmer_final:hover{
 		background-color: #009B76;
 			color:white;
 			font-weight: bold;
@@ -98,7 +96,7 @@ top: -70px;
 
 }
 
-.delete_order_holder :hover{
+.delete_order:hover{
 		color: white;
 		background-color: #FF5353;
 		
@@ -106,7 +104,8 @@ top: -70px;
 
 .edit_order{
 		position: relative;
-		left: 120px;
+		left: 20px;
+		top: 20px;
 	width: 50px;
 	text-align: center;
 	background-color: white;
@@ -122,7 +121,7 @@ top: -70px;
 
 	}
 
-.edit_order_holder :hover{
+.edit_order:hover{
 	color: white;
 	background-color: #00505C;
 
