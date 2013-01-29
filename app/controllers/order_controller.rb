@@ -55,7 +55,11 @@ before_filter :authenticate_edit, :only => [:edit]
 	end
 
 	def send_order
-		@title = "Order Confirmed"
+		if @order.order_details.any?
+			@order.filled == SENT ? @title = "Order filled." : @title = "Order Confirmed"
+		else
+			@title = "No order confirmed"
+		end
 		@order.add_combo_hacks
 		@order.update_order(false, CONFIRMED) if @order.filled == PENDING unless @time_data.fetch('validtime') == ORDER_LOCKOUT
 		send_order_flash
