@@ -309,12 +309,6 @@ describe PagesController do
 
 		end
 
-		it "should show the menu as a list" do
-			get 'what_else'
-			response.body.should have_css('ul')
-
-		end
-
 		it "should have a title" do
 			get 'what_else'
 			response.body.should have_css('h3', 'else is on')
