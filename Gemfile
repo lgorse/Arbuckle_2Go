@@ -10,6 +10,7 @@ gem "will_paginate"
 gem "chronic"
 gem "feedzirra"
 gem "htmlentities"
+gem "dalli"
 
 group :development do
 	gem 'rspec-rails'
