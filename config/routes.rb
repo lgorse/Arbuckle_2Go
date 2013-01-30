@@ -17,6 +17,8 @@ Arbuckle2Go::Application.routes.draw do
   match '/cancel_special', :to => 'order#cancel_special'
   match '/cancel_chef_special', :to => 'order#cancel_chef_special'
   match '/send', :to => 'order#send_order'
+  match '/info', :to => 'pages#info'
+  match '/what_else', :to => 'pages#what_else'
 
 
 

@@ -115,6 +115,46 @@
  	border-radius: 10px;
  }
 
+.about{
+	display: inline-block;
+	position: relative;
+	left: 20px;
+	top: 20px;
+	text-decoration: none;
+	background: white;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 2px solid #175E54;
+	color: #175E54;
+}
+
+.about:hover{
+	color: white;
+	background-color: #175E54;
+}
+
+.what_else{
+	display: inline-block;
+	position: relative;
+	left: 20px;
+	top: 20px;
+	text-decoration: none;
+	background: white;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 2px solid #B3995D;
+	color: #5E3032;
+}
+
+.what_else:hover{
+	color: white;
+	background-color: #B3995D;
+}
+
 
 
  .instructions{

@@ -1,6 +1,6 @@
 <section class = "instructions">
 	<% if current_page?(edit_order_path(@order)) %>
-		<div id = "back"><%= link_to 'Back', home_path %></div>
+		<div id = "back"><%= link_to 'Back', :back %></div>
 	<% end %>
 	<div id = "title"><h3><%= @title %></h3></div>
 	<% if current_page?(send_path) %>

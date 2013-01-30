@@ -1,0 +1,7 @@
+<%= render 'pages/instructions_info' %>
+<div class = "day_menu_list round">
+<% @day_menu.entries.reject{|entry| entry.title.to_date < Date.current}.each do |entry| %>
+<h3 class = "day_menu_date round"><%= entry.title %></h3>
+<div class = "day_menu_content round"><%= sanitize entry.summary.gsub("[", "|").gsub("]", "|") %></div>
+<% end %>
+</div>

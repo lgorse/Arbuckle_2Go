@@ -259,4 +259,72 @@ describe PagesController do
 		end
 	end
 
+	describe "GET 'info'" do
+		before(:each) do
+			@user = FactoryGirl.create(:user)
+			request.session[:user_token] = @user.userID
+		end
+
+		it "should be successful" do
+			get 'info'
+			response.should be_success
+
+		end
+
+		it "should have a back button " do
+			get 'info'
+			response.body.should have_selector('a', 'back')
+
+		end
+
+		it "should have a list of instructions" do
+			get 'info'
+			response.body.should have_css('ul')
+
+		end
+
+		it "should have a title" do
+			get 'info'
+			response.body.should have_css('h3', 'works')
+
+		end
+
+	end
+
+	describe "GET 'what_else'" do
+		before(:each) do
+@user = FactoryGirl.create(:user)
+			request.session[:user_token] = @user.userID
+		end
+
+		it "should be successful" do
+			get 'what_else'
+			response.should be_success
+
+		end
+
+		it "should grab the menu list" do
+			get 'what_else'
+			assigns(:day_menu).should_not == nil
+
+		end
+
+		it "should show the menu as a list" do
+			get 'what_else'
+			response.body.should have_css('ul')
+
+		end
+
+		it "should have a title" do
+			get 'what_else'
+			response.body.should have_css('h3', 'else is on')
+
+		end
+
+		it "should have a back button" do
+			get 'what_else'
+			response.body.should have_selector('a', 'back')
+		end
+	end
+
 end

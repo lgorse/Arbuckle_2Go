@@ -17,15 +17,17 @@ header.menu_header{
 		height: 100px;
 		border: 1px solid  black;
 		display: table;
-		background-color: white;
+		background-color: #eee6cb;
 
 	}
 
 	.menu_name p{
 		text-align: center;
+		padding: 5px;
 		display: table-cell;
 		vertical-align: middle;
-		color: blue;
+		color: black;
+		font-size: large;
 	}
 
 	.instructions{
@@ -37,6 +39,7 @@ header.menu_header{
 	}
 
 }
+
 
 #authenticate{
 	position: relative;
@@ -243,6 +246,55 @@ header.menu_header{
 .item_detail{
 	color: black;
 	font-style: italic;
+}
+
+.info_list{
+	background-color: white;
+	position: relative;
+	width: 900px;
+	font-size: x-large;
+	left: 100px;
+
+
+	.info_line{
+		padding: 10px;
+		position: relative;
+		display: block;
+
+	}
+}
+
+.day_menu_list{
+	background-color: white;
+	position: relative;
+	width: 900px;
+	font-size: large;
+	left: 75px;
+
+	.day_menu_date{
+		background-color: #FFFF30;
+		position: relative;
+		height: 35px;
+		width: auto;
+		text-align: center;
+		margin-left: 0px;
+	}
+
+	.day_menu_content{
+		position: relative;
+		padding-left: 50px;
+		padding-right: 20px;
+
+		h3{
+		text-decoration: underline;
+		background-color: #9FD8EF
+;
+	}
+	}
+
+
+
+
 }
 
 

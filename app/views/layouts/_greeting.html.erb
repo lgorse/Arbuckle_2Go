@@ -1,6 +1,12 @@
 <div class = "welcome">
 	<h2>Arbuckle 2Go</h2>
 </div>
+<% unless current_page?(info_path) %>
+	<%= link_to "About", info_path, :class => "about round" %>
+<% end %>
+<% unless current_page?(what_else_path) %>
+<%= link_to "Full menu", what_else_path, :class => "what_else round" %>
+<% end %>
 	<% flash.reject {|key, value| key == (:warning)}.each do |key, value| %>
 	<div class = "flash" id = "<%= key %>"><%= value %></div>
 	<% end %>

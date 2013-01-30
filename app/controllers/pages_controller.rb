@@ -1,4 +1,10 @@
 class PagesController < ApplicationController
+
+	require "net/http"
+	require "uri"
+	require "feedzirra"
+	require 'htmlentities'
+
 	include UserAuthenticate
 	include PagesHelper
 
@@ -8,11 +14,12 @@ class PagesController < ApplicationController
 		@title = "Place an order"
 		@name = @user.first_name
 		@login = @user.UserName
+		@name.blank? ? @message = "would god that all the lord's men were prophets" : @message = "Welcome, #{@name}!"
 		home_flash
 	end
 
 	def sign_in
-		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails.php"
+		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails-local.php"
 	end
 
 	def user_parse
@@ -47,11 +54,30 @@ class PagesController < ApplicationController
 		end
 	end
 
+	def info 
+@title = "Here's how it works"
+@instructions = get_how_it_works
+	end
+
+	def what_else
+		@title = "What else is on - Arbuckle's daily menu"
+		@day_menu = Feedzirra::Feed.fetch_and_parse("http://www.cafebonappetit.com/rss/menu/269")
+	end
+
 
 	protected
 	
 	def set_session
 		session[:user_token] = @user.userID
+	end
+
+	def get_how_it_works
+		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleInstructions.php")
+		http = Net::HTTP.new(uri.host, uri.port)
+		request = Net::HTTP::Get.new(uri.request_uri)
+		response = http.request(request)
+		http.finish if http.started?
+		instructions = JSON.parse(response.body)
 	end
 
 
