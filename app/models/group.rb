@@ -12,6 +12,8 @@
 class Group < ActiveRecord::Base
 	self.table_name = "ArbuckleGroup"
 	alias_attribute :price, :Price
+	alias_attribute :detail, :Detail
+
   belongs_to :type, :foreign_key => "typeID"
   has_many :items, :foreign_key => "groupID"
   has_many :order_details, :foreign_key => :groupID
