@@ -157,6 +157,15 @@ header.menu_header{
 	width: 700px;
 	height: 75px;
 	text-align: center;
+
+	.combo_price{
+		position: absolute;
+		display: inline;
+		right: 245px;
+		top: 32px;
+		font-weight: normal;
+	}
+
 }
 
 #menu_core{
@@ -179,7 +188,7 @@ header.menu_header{
 
 .combo_cancel{
 	position: absolute;
-	right: 100px;
+	right: 75px;
 	top: 15px;
 	
 	display: inline;
@@ -215,6 +224,25 @@ header.menu_header{
 	height: 50px;
 	margin: 0;
 	position: relative;
+
+	.combo_price{
+		position: absolute;
+		display: inline;
+		right: 225px;
+		bottom: 15px;
+		font-weight: normal;
+	}
+
+	.combo_detail{
+		position: absolute;
+		text-align: center;
+		display: inline;
+		left: 150px;
+		bottom: 18px;
+		font-weight: normal;
+		font-style: italic;
+		color: #8D3C1E;
+	}
 
 }
 
@@ -287,10 +315,9 @@ header.menu_header{
 
 		h3{
 		text-decoration: underline;
-		background-color: #9FD8EF
-;
+		background-color: #9FD8EF;
 	}
-	}
+}
 
 
 

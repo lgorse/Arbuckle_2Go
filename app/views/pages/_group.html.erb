@@ -1,5 +1,7 @@
 <th class="group_header <%= combo_status(group) %>", colspan =4>
 	<div><%= group.groupName %></div>
+	<div class = "combo_price"><%= number_to_currency(group.price) unless group.price.blank?%></div>
+	<div class = "combo_detail"><%= group.detail %></div>
 	<% if type.typeID == SPECIAL %>
 		<div><%= button_to 'Cancel combo', 
 				 cancel_special_path(:order => @order, :combo_id => group), 
