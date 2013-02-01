@@ -165,7 +165,7 @@ require "chronic"
 
 	def self.create_chef_special_hack(orderID, typeID)
 		OrderDetail.create!(:orderID => orderID, :typeID => typeID,	
-			:groupID => typeID, :itemID => 0, :quantity => 1, 
+			:groupID => USELESS_SPECIAL, :itemID => 0, :quantity => 1, 
 			:spicy => false)
 	end
 
