@@ -88,7 +88,7 @@ require "chronic"
 	#time stamp
 
 	def self.time_stamp
-		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint-next.php")
+		uri = URI.parse("http://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafeTimeStampPrint.php")
 		http = Net::HTTP.new(uri.host, uri.port)
 		request = Net::HTTP::Get.new(uri.request_uri)
 		response = http.request(request)
