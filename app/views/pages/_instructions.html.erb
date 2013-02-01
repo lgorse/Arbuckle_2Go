@@ -1,8 +1,4 @@
-<section class = "menu_name">
-	<p><%= @message %></p>
-</section>
-<section class = "instructions">
 	<div id = "title"><h3><%= @title %></h3></div>
+	<div class = "total_order_price round"><%= render 'pages/price' %></div>
 	<%= link_to 'Cart', edit_order_path(@order), :class => "round", :id => "confirmer" %>
 	
-</section>

@@ -36,6 +36,18 @@ header.menu_header{
 		#title{
 			margin-left: 1em;
 		}
+
+		.total_order_price{
+			position: absolute;
+			display: block;
+			top: 85px;
+			left: 1005px;
+			background: white;
+			font-weight: normal;
+			padding: 5px;
+			text-align: center;
+			width: 120px;
+		}
 	}
 
 }
@@ -53,19 +65,19 @@ header.menu_header{
 	#authenticate_button{
 
 		a{
-		text-decoration: none;
-		position: absolute;
-		text-align: center;
-		border: 2px solid #007C92;
-		background-color: #f3efd8;
-		color: #007C92;
-		font-weight: bold;
-		width: 100px;
-		padding: 10px;
-		font-size: large;
-		top: 17px;
-		left: 380px;
-	}
+			text-decoration: none;
+			position: absolute;
+			text-align: center;
+			border: 2px solid #007C92;
+			background-color: #f3efd8;
+			color: #007C92;
+			font-weight: bold;
+			width: 100px;
+			padding: 10px;
+			font-size: large;
+			top: 17px;
+			left: 380px;
+		}
 	}
 
 	#authenticate_button :hover{
@@ -73,23 +85,24 @@ header.menu_header{
 		background-color: #007C92;
 	}
 
-}	
+}
+
 
 #confirmer{
 	
-		position: relative;
-		right: 120px;
-		top: -50px;
-		float: right;
-		background-color: white;
-		padding-top: 5px;
-		padding-bottom: 5px;
-		width: 65px;
-		text-align: center;
-		border: 2px solid #009B76;
-		font-weight: bold;
-		text-decoration: none;
-		color: #009B76;
+	position: relative;
+	right: 120px;
+	top: -50px;
+	float: right;
+	background-color: white;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 65px;
+	text-align: center;
+	border: 2px solid #009B76;
+	font-weight: bold;
+	text-decoration: none;
+	color: #009B76;
 }
 
 
@@ -314,10 +327,10 @@ header.menu_header{
 		padding-right: 20px;
 
 		h3{
-		text-decoration: underline;
-		background-color: #9FD8EF;
+			text-decoration: underline;
+			background-color: #9FD8EF;
+		}
 	}
-}
 
 
 

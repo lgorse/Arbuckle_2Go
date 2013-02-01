@@ -136,9 +136,11 @@ top: -70px;
 .total_order_price{
 	background-color: white;
 	color: #820000;
-	position: relative;
-	text-align: center;
-	width: 200px;
+	position: absolute;
+	top: 170px;
+	left: 450px;
+	//text-align: center;
+	display: block;
 	font-weight: bold;	
 	padding: 5px;
 	margin: 0px;

@@ -1,6 +1,5 @@
 class OrderDetailsController < ApplicationController
 
-	
 	def new
 		@item = Item.find(params[:item])
 		@order = Order.find(params[:orderID])
@@ -37,6 +36,7 @@ class OrderDetailsController < ApplicationController
 	def update
 		@order_detail = OrderDetail.find(params[:id])
 		@order_detail.update_attributes!(params[:order_detail])
+		@order = Order.find(@order_detail.orderID)
 		respond_to do |format|
 			format.html {redirect_to edit_order_path(@order_detail.order)}
 			format.js 

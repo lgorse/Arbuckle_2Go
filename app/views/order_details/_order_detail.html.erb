@@ -5,6 +5,7 @@
 	<% if @item.group.typeID == CARTE %>
 		<%= render 'order_details/carte_info' %>
 	<% else %>
+	<h4>Order <%= pluralize(combo_remaining(@item.group), 'more piece') %></h4>
 		<%= render 'order_details/combo_info' %>
 	<% end %>
 	<%= form_for @detail, :remote => true do |f| %>

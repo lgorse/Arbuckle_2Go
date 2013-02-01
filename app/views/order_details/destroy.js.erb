@@ -3,4 +3,5 @@ $(function(){
 	$("#item_<%= @detail.itemID %>").removeClass('selected').html("<%= escape_javascript(render 'pages/item', :item => @detail.item, :@order => @detail.order) %>");
 	$("#group_<%= @detail.groupID %>").html("<%= escape_javascript(render 'pages/group', :group => @detail.group, :type => @detail.type) %>");
 	$("#chef_special_header").html("<%= escape_javascript(render 'pages/chef_special_header', :type => @detail.type) %>");
+	$(".total_order_price").html("<%= escape_javascript(render 'pages/price') %>");
 });

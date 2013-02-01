@@ -1,3 +1,4 @@
 $(function(){
 	$("#order_review").html("<%= escape_javascript(render 'order/types_summary') %>");
+	$(".total_order_price").html("<%= escape_javascript(render 'pages/price') %>");
 });
