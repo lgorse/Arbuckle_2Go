@@ -32,45 +32,45 @@
  }
 
  .flash{
- 		display: inline-block;
- 		position: relative;
- 		width: auto;
- 		height: auto;
- 		top: 20px;
- 		left: 50px;
- 		padding: 5px;
+ 	display: inline-block;
+ 	position: relative;
+ 	width: auto;
+ 	height: auto;
+ 	top: 20px;
+ 	left: 50px;
+ 	padding: 5px;
 
- 	}
+ }
 
- 	#notice{
- 		color: white;
- 		border: 2px solid white;
- 		background: #53284F;
- 	}
+ #notice{
+ 	color: white;
+ 	border: 2px solid white;
+ 	background: #53284F;
+ }
 
- 	#error{
- 		background: #FF3333;
- 		color: white;
- 		border: 2px solid white;
- 	}
+ #error{
+ 	background: #FF3333;
+ 	color: white;
+ 	border: 2px solid white;
+ }
 
- 	#success{
- 		color: white;
- 		border: 2px solid white;
- 		background: green;
- 	}
+ #success{
+ 	color: white;
+ 	border: 2px solid white;
+ 	background: green;
+ }
 
- 	#warning{
- 		color: blue;
- 		border: 2px solid blue;
- 		background-color: white;
- 		width: auto;
- 		top: 135px;
- 		left: 230px;
- 		font-style: italic;
- 		position: absolute;
+ #warning{
+ 	color: blue;
+ 	border: 2px solid blue;
+ 	background-color: white;
+ 	width: auto;
+ 	top: 135px;
+ 	left: 230px;
+ 	font-style: italic;
+ 	position: absolute;
 
- 	}
+ }
 
 
  div.welcome{
@@ -83,21 +83,17 @@
  #logout{
  	width: auto;
  	height: auto;
- 	position: relative;
+ 	position: absolute;
  	top: 20px;
-
+left: 900px;
  	
- 		color: red;
- 		width: 60px;
- 		text-decoration: none;
- 		position: relative;
- 		padding: 5px;
- 		text-align: center;
- 		float: right;
- 		
- 		right: 100px;
- 		background-color: white;
- 		border: 3px solid red;
+ 	color: red;
+ 	width: 60px;
+ 	text-decoration: none;
+ 	padding: 5px;
+ 	text-align: center; 		
+ 	background-color: white;
+ 	border: 3px solid red;
  	
 
  }
@@ -115,45 +111,45 @@
  	border-radius: 10px;
  }
 
-.about{
-	display: inline-block;
-	position: relative;
-	left: 20px;
-	top: 20px;
-	text-decoration: none;
-	background: white;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border: 2px solid #175E54;
-	color: #175E54;
-}
+ .about{
+ 	display: inline-block;
+ 	position: relative;
+ 	left: 20px;
+ 	top: 20px;
+ 	text-decoration: none;
+ 	background: white;
+ 	padding-left: 10px;
+ 	padding-right: 10px;
+ 	padding-top: 5px;
+ 	padding-bottom: 5px;
+ 	border: 2px solid #175E54;
+ 	color: #175E54;
+ }
 
-.about:hover{
-	color: white;
-	background-color: #175E54;
-}
+ .about:hover{
+ 	color: white;
+ 	background-color: #175E54;
+ }
 
-.what_else{
-	display: inline-block;
-	position: relative;
-	left: 20px;
-	top: 20px;
-	text-decoration: none;
-	background: white;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	border: 2px solid #B3995D;
-	color: #5E3032;
-}
+ .what_else{
+ 	display: inline-block;
+ 	position: relative;
+ 	left: 20px;
+ 	top: 20px;
+ 	text-decoration: none;
+ 	background: white;
+ 	padding-left: 10px;
+ 	padding-right: 10px;
+ 	padding-top: 5px;
+ 	padding-bottom: 5px;
+ 	border: 2px solid #B3995D;
+ 	color: #5E3032;
+ }
 
-.what_else:hover{
-	color: white;
-	background-color: #B3995D;
-}
+ .what_else:hover{
+ 	color: white;
+ 	background-color: #B3995D;
+ }
 
 
 
