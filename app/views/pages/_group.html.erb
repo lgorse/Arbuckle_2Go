@@ -1,6 +1,8 @@
 <th class="group_header <%= combo_status(group) %>", colspan =4>
 	<div><%= group.groupName %></div>
+	<% if group.typeID == SPECIAL %>
 	<div class = "combo_price"><%= number_to_currency(group.price) unless group.price.blank?%></div>
+	<% end %>
 	<div class = "combo_detail"><%= group.detail %></div>
 	<% if type.typeID == SPECIAL %>
 		<div><%= button_to 'Cancel combo', 
