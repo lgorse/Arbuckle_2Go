@@ -1,5 +1,5 @@
 <div class = "welcome">
-	<h2>Arbuckle 2Go</h2>
+	<h2><%= link_to "Arbuckle 2Go",home_path, :id => "app_name" %></h2>
 </div>
 <% unless current_page?(info_path) %>
 	<%= link_to "About", info_path, :class => "about round" %>
