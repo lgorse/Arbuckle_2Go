@@ -8,17 +8,11 @@
 	<h4>Order <%= pluralize(combo_remaining(@item.group), 'more piece') %></h4>
 		<%= render 'order_details/combo_info' %>
 	<% end %>
-	<table>
-		<tr>
 	<%= form_for @detail, :remote => true do |f| %>
-		<%= render 'order_details/order_detail_form', :f => f %></tr></table>
-		<table>
-			<tr>
-				<td><%= f.submit "Save", :id => 'save_order_detail' %></td>
-	<% end %>	
-	<td><%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail", :remote => true %></td>
-			</tr>
-		</table>
+		<%= render 'order_details/order_detail_form', :f => f %>
+		<%= f.submit "Save", :id => 'save_order_detail' %>
+	<% end %>
+	<%= button_to 'Clear order', @detail, :method => :delete, :id => "delete_detail", :remote => true %>
 </div>
 </section>
 

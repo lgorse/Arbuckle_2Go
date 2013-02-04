@@ -1,16 +1,14 @@
 <% @order.order_details.where(:groupID => group.groupID).reject{|detail| detail.itemID == 0}.each do |detail| %>
+
 	<%= render 'order_details/order_detail_summary', :item => detail.item, :detail => detail %>
 	<% if detail.typeID == CARTE && @order.filled == PENDING %>
 	<div id = "order_review_form">
-		<table class = "order_detail_input">
-			<tr>
 		<%= form_for detail do |f| %>
 			<%= render "order_details/order_detail_form", :f => f, :@item => detail.item %>
-			<td><%= f.submit "Save", :id => 'save_order_final' %></td>
+			<%= f.submit "Save", :id => 'save_order_final' %>
 		<% end %>
-		<td><%= button_to 'Clear order', detail, :method => :delete, :id => "delete_detail_final", :remote => true %></td>
-		</tr></table>
-	</div>
+		<%= button_to 'Clear order', detail, :method => :delete, :id => "delete_detail_final", :remote => true %>
+		</div>
 	<% end %>
 <% end %>
 

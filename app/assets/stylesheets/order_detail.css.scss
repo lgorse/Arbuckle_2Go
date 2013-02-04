@@ -20,12 +20,12 @@
 
 	#save_order_detail{
 		position: relative;
+		float: left;
 	}
 
 	#delete_detail{
 		position: relative;
-		
-
+		float: left;
 	}
 
 	h3{
@@ -70,7 +70,7 @@
 }
 
 .order_detail_input{
-	margin-bottom: 15px;
+	
 }
 
 #order_review{
@@ -103,9 +103,13 @@
 	border: 1px solid grey;
 	border-style: solid none none none;
 
-	
-	#order_review_form{
+	h4{
 		padding-bottom: 0px;
+	}
+
+	#order_review_form{
+		padding-bottom: 15px;
+		margin-bottom: 20px;
 		
 	}
 
@@ -122,5 +126,13 @@
 	display: inline-block;
 	left: 250px;
 
+}
+
+#delete_detail_final{
+	float: left;
+}
+
+#save_order_final{
+float: left;
 }
 
