@@ -61,7 +61,7 @@ describe Order do
 			@order = Order.blank_order(@user.userID)
 			time_data = Order.time_stamp
 			if time_data.fetch("validtime") == ORDER_NEXT_DAY
-				@order.due.should == Chronic.parse(time_data.fetch("nextDay", :context => :future)).to_date
+				@order.due.should == Chronic.parse("next "+time_data.fetch("nextDay")).to_date
 			elsif  time_data.fetch("validtime") == ORDER_TODAY
 				@order.due.should == Date.current
 			end

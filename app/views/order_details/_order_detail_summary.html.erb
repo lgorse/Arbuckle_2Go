@@ -1,6 +1,6 @@
 <table id = "detail_summary_table">
 	<tr>
-<td  class = "detail_name"><%= item.itemName %> <%= item.group.groupName unless item.group.groupName =~ /combo/i%></td>
+<td  class = "detail_name"><%= item.itemName %> <%= item.group.groupName unless item.group.groupName =~ /combo/i || item.group.groupName == item.itemName%></td>
 <td class = "detail_description"><%= item.detail %></td>
 <% if item.price %>
 <td class = "detail_item_price"><strong><%= number_to_currency(item.price) %></strong>/ piece</td>

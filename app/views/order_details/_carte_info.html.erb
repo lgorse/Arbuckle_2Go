@@ -1,5 +1,5 @@
 <div class = "carte_name_header">
-<h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName %></h4></div>
+<h4 class = "detail_name"><%= @item.itemName %> <%= @item.group.groupName unless @item.group.groupName == @item.itemName%></h4></div>
 <p class = "detail_description"><%= @item.detail %></p>
 <p class = "detail_item_price"><strong><%=number_to_currency(@item.price) %></strong> per piece</p><br/>
 <% if @detail.quantity %>

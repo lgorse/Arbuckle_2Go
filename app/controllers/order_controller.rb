@@ -22,7 +22,7 @@ before_filter :authenticate_edit, :only => [:edit]
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
 		if !failure.blank?
-			flash[:error] = "Your #{failure.last.type.typeName} order is incomplete. Complete it and try again."
+			flash[:error] = "Your #{failure.last.type.typeName} order is incomplete."
 			redirect_to home_path, :group => failure.last
 		else
 			flash[:notice] = "Edit or confirm your order here."
@@ -63,7 +63,7 @@ before_filter :authenticate_edit, :only => [:edit]
 		@order.add_combo_hacks
 		@order.update_order(false, CONFIRMED) if @order.filled == PENDING unless @time_data.fetch('validtime') == ORDER_LOCKOUT
 		send_order_flash
-		flash.now[:warning] = "Don't forget to get a free dessert with your order"
+		flash.now[:warning] = "Don't forget to pick up any free dessert from the Deliverables section"
 	end
 
 	def logout

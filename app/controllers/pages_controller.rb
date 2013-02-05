@@ -14,12 +14,12 @@ class PagesController < ApplicationController
 		@title = "Place an order"
 		@name = @user.first_name
 		@login = @user.UserName
-		@name.blank? ? @message = "would god that all the lord's men were prophets" : @message = "Welcome, #{@name}!"
+		@name.blank? ? @message = "would God that all the lord's men were prophets" : @message = "Welcome, #{@name}!"
 		home_flash
 	end
 
 	def sign_in
-		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails.php"
+		@auth_url = "https://www.stanford.edu/group/arbucklecafe/cgi-bin/ArbuckleCafe/webauthRails-local.php"
 	end
 
 	def user_parse

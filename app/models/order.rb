@@ -102,9 +102,9 @@ require "chronic"
 		when ORDER_TODAY then
 			due = Date.current
 		when ORDER_NEXT_DAY then
-			due = Chronic.parse(time_data.fetch("nextDay", :context => :future)).to_date
+			due = Chronic.parse('next '+time_data.fetch("nextDay")).to_date
 		else
-			due = Chronic.parse(time_data.fetch("nextDay", :context => :future)).to_date
+			due = Chronic.parse('next '+time_data.fetch("nextDay")).to_date
 		end
 
 	end

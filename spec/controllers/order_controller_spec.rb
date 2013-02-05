@@ -279,137 +279,78 @@ describe OrderController do
 
 		if Order.time_stamp.fetch("validtime") != ORDER_LOCKOUT
 
-		describe "regardless of order details"  do
-			before(:each)  do
-				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
-				@group = FactoryGirl.create(:group)
-				@item = FactoryGirl.create(:item, :groupID => @group.groupID)
-				@detail = FactoryGirl.create(:order_detail, :groupID => @group.groupID, :itemID => @item.itemID, :orderID => @order.orderID)
-			end
+			describe "regardless of order details"  do
+				before(:each)  do
+					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => PENDING)
+					@group = FactoryGirl.create(:group)
+					@item = FactoryGirl.create(:item, :groupID => @group.groupID)
+					@detail = FactoryGirl.create(:order_detail, :groupID => @group.groupID, :itemID => @item.itemID, :orderID => @order.orderID)
+				end
 
-			it "should change the order status to CONFIRMED if the order was PREVIOUSLY PENDING" do
-				get :send_order, :id => @order.orderID
-				Order.find(@order.orderID).filled.should == CONFIRMED
-			end
-
-			it "should not add any details for a la carte" do
-				lambda do
+				it "should change the order status to CONFIRMED if the order was PREVIOUSLY PENDING" do
 					get :send_order, :id => @order.orderID
-				end.should_not change(OrderDetail, :count)
-			end
+					Order.find(@order.orderID).filled.should == CONFIRMED
+				end
 
-			it "should redirect the user to the signin page if he is not signed in" do
-				get 'logout'
-				get 'send_order', :id => @order.orderID
-				response.should redirect_to root_path
-			end
+				it "should not add any details for a la carte" do
+					lambda do
+						get :send_order, :id => @order.orderID
+					end.should_not change(OrderDetail, :count)
+				end
 
-		end
-
-		describe "fraudulent entry" do
-
-			before(:each) do
-				@user_order = FactoryGirl.create(:order, :userID => @user.userID)
-				@other_order = FactoryGirl.create(:order, :userID => 10400)
-			end
-
-			it "should redirect the user to the user's order page" do
-				get 'send_order', :id => @other_order.orderID
-				assigns(:order).should == @user_order
+				it "should redirect the user to the signin page if he is not signed in" do
+					get 'logout'
+					get 'send_order', :id => @order.orderID
+					response.should redirect_to root_path
+				end
 
 			end
 
-		end
-
-		describe "if the order is CONFIRMED" do
-			before(:each) do
-				@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
-				@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
-
-			end
-
-			it "should have a cancel link" do
-				get 'send_order', :id => @order.orderID
-				response.body.should have_link('Cancel Order', :href =>  order_path(@order))
-
-			end
-
-			it "should have an edit link" do
-				get 'send_order', :id => @order.orderID
-				response.body.should have_link('Edit Order', :href => edit_order_path(@order))
-
-			end
-
-			it "should FLASH a notice" do
-				get :send_order, :id => @order.orderID
-				flash[:notice].should =~ /10:30/i
-			end
-
-		end
-
-		describe "if order contains a Special" do
-
-			before(:each)  do
-				@order = FactoryGirl.create(:order, :userID => @user.userID)
-				@type = FactoryGirl.create(:type, :typeID => SPECIAL)
-				@combo = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
-				@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
-				@detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID, :groupID => @combo.groupID, 
-					:typeID => @combo.typeID,	:quantity => 7, :orderID => @order.orderID, 
-					:spicy => false)
-			end
-
-			it "should add a special 'SPECIAL' line to the database" do
-				get :send_order, :id => @order.orderID
-				OrderDetail.where(:orderID => @order.orderID, :itemID => 0).count.should == 1
-			end
-
-			it "(hack) should return the number of details MINUS any item where itemID is 0" do
-				get :send_order, :id => @order.orderID
-				@order.order_details.where(:groupID=>@combo.groupID).reject{|detail| detail.itemID == 0}.count.should == 1
-			end
-
-			it "should only add ONE hack item per order" do
-				get :send_order, :id => @order.orderID
-				get :send_order, :id => @order.orderID
-				@order.order_details.where(:itemID => 0).count.should == 1
-			end
-
-
-		end
-
-		describe "if order contains a chef's Special" do
-
-			before(:each)  do
-				@order = FactoryGirl.create(:order, :userID => @user.userID)
-				@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL)
-				@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => NIGIRI_CHEF)
-				@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => HAND_ROLL_CHEF)
-				@item1 = FactoryGirl.create(:item, :groupID => @nigiri.groupID)
-				@item2 = FactoryGirl.create(:item, :groupID => @roll.groupID)
-				@detail1 = FactoryGirl.create(:order_detail, :itemID => @item1.itemID, :groupID => @nigiri.groupID,
-					:typeID => @chef_special.typeID, :quantity => 3, :orderID => @order.orderID, 
-					:spicy => false)
-				@detail2 = FactoryGirl.create(:order_detail, :itemID => @item2.itemID, :groupID => @roll.groupID, 
-					:typeID => @chef_special.typeID, :quantity => 1, :orderID => @order.orderID, 
-					:spicy => false)
-			end
-
-			it "should add a special 'CHEF_SPECIAL' line to the database" do
-				get :send_order, :id => @order.orderID
-				OrderDetail.where(:orderID => @order.orderID, :groupID => @chef_special.typeID, :itemID => 0).count.should == 1
-			end
-
-			it "should only add ONE hack item per order" do
-				get :send_order, :id => @order.orderID
-				get :send_order, :id => @order.orderID
-				@order.order_details.where(:itemID => 0).count.should == 1
-			end
-
-			describe "if another combo is added, like this Special" do
+			describe "fraudulent entry" do
 
 				before(:each) do
+					@user_order = FactoryGirl.create(:order, :userID => @user.userID)
+					@other_order = FactoryGirl.create(:order, :userID => 10400)
+				end
+
+				it "should redirect the user to the user's order page" do
+					get 'send_order', :id => @other_order.orderID
+					assigns(:order).should == @user_order
+
+				end
+
+			end
+
+			describe "if the order is CONFIRMED" do
+				before(:each) do
+					@order = FactoryGirl.create(:order, :userID => @user.userID, :filled => CONFIRMED)
+					@detail = FactoryGirl.create(:order_detail, :orderID => @order.orderID)
+
+				end
+
+				it "should have a cancel link" do
+					get 'send_order', :id => @order.orderID
+					response.body.should have_link('Cancel Order', :href =>  order_path(@order))
+
+				end
+
+				it "should have an edit link" do
+					get 'send_order', :id => @order.orderID
+					response.body.should have_link('Edit Order', :href => edit_order_path(@order))
+
+				end
+
+				it "should FLASH a notice" do
 					get :send_order, :id => @order.orderID
+					flash[:notice].should =~ /10:30/i
+				end
+
+			end
+
+			describe "if order contains a Special" do
+
+				before(:each)  do
+					@order = FactoryGirl.create(:order, :userID => @user.userID)
 					@type = FactoryGirl.create(:type, :typeID => SPECIAL)
 					@combo = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
 					@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
@@ -418,16 +359,75 @@ describe OrderController do
 						:spicy => false)
 				end
 
-				it "should NOT block the creation of an ITEM HACK for the additional combo" do
-					get :send_order,  :id => @order.orderID
-					@order.order_details.reject{|detail| detail.itemID == 0}.count.should == 3
+				it "should add a special 'SPECIAL' line to the database" do
+					get :send_order, :id => @order.orderID
+					OrderDetail.where(:orderID => @order.orderID, :itemID => 0).count.should == 1
+				end
+
+				it "(hack) should return the number of details MINUS any item where itemID is 0" do
+					get :send_order, :id => @order.orderID
+					@order.order_details.where(:groupID=>@combo.groupID).reject{|detail| detail.itemID == 0}.count.should == 1
+				end
+
+				it "should only add ONE hack item per order" do
+					get :send_order, :id => @order.orderID
+					get :send_order, :id => @order.orderID
+					@order.order_details.where(:itemID => 0).count.should == 1
+				end
+
+
+			end
+
+			describe "if order contains a chef's Special" do
+
+				before(:each)  do
+					@order = FactoryGirl.create(:order, :userID => @user.userID)
+					@chef_special = FactoryGirl.create(:type, :typeID => CHEF_SPECIAL)
+					@nigiri = FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => NIGIRI_CHEF)
+					@roll= FactoryGirl.create(:group, :typeID => @chef_special.typeID, :groupID => HAND_ROLL_CHEF)
+					@item1 = FactoryGirl.create(:item, :groupID => @nigiri.groupID)
+					@item2 = FactoryGirl.create(:item, :groupID => @roll.groupID)
+					@detail1 = FactoryGirl.create(:order_detail, :itemID => @item1.itemID, :groupID => @nigiri.groupID,
+						:typeID => @chef_special.typeID, :quantity => 3, :orderID => @order.orderID, 
+						:spicy => false)
+					@detail2 = FactoryGirl.create(:order_detail, :itemID => @item2.itemID, :groupID => @roll.groupID, 
+						:typeID => @chef_special.typeID, :quantity => 1, :orderID => @order.orderID, 
+						:spicy => false)
+				end
+
+				it "should add a special 'CHEF_SPECIAL' line to the database" do
+					get :send_order, :id => @order.orderID
+					OrderDetail.where(:orderID => @order.orderID, :groupID => USELESS_SPECIAL, :itemID => 0).count.should == 1
+				end
+
+				it "should only add ONE hack item per order" do
+					get :send_order, :id => @order.orderID
+					get :send_order, :id => @order.orderID
+					@order.order_details.where(:itemID => 0).count.should == 1
+				end
+
+				describe "if another combo is added, like this Special" do
+
+					before(:each) do
+						get :send_order, :id => @order.orderID
+						@type = FactoryGirl.create(:type, :typeID => SPECIAL)
+						@combo = FactoryGirl.create(:group, :typeID => @type.typeID, :groupID => SASHIMI)
+						@item = FactoryGirl.create(:item, :groupID => @combo.groupID)
+						@detail = FactoryGirl.create(:order_detail, :itemID => @item.itemID, :groupID => @combo.groupID, 
+							:typeID => @combo.typeID,	:quantity => 7, :orderID => @order.orderID, 
+							:spicy => false)
+					end
+
+					it "should NOT block the creation of an ITEM HACK for the additional combo" do
+						get :send_order,  :id => @order.orderID
+						@order.order_details.reject{|detail| detail.itemID == 0}.count.should == 3
+					end
+
 				end
 
 			end
 
 		end
-
-	end
 
 		describe "if the order is SENT" do
 			before(:each) do
