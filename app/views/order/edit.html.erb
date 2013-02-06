@@ -3,6 +3,7 @@
 	<div class = "delete_order_holder"><%= link_to 'Cancel Order', @order, :method => :delete,
 			:confirm => "Your order will be deleted",
 								   :class => "delete_order" %></div></div>
-<div class =  "total_order_price"><%= render "pages/price" %></div>
-<section id= "order_review"><%= render 'order/types_summary' %>
+<section id= "order_review">
+	<div class =  "total_order_price"><%= render "pages/price" %></div>
+	<%= render 'order/types_summary' %>
 </section>

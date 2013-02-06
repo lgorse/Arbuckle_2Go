@@ -137,7 +137,7 @@ describe OrderController do
 
 				it "should have a confirm button" do
 					get :edit, :id => @order
-					response.body.should have_link('Confirm', href: send_path)
+					response.body.should have_link('Checkout', href: send_path)
 				end
 
 				it "should have a cancel link" do
@@ -196,7 +196,7 @@ describe OrderController do
 
 				it "should flash the user that his order was empty" do
 					get :edit, :id => @order
-					flash[:error].should =~ /Fill out an order first/i
+					flash[:error].should =~ /is empty/i
 
 				end
 

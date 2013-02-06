@@ -1,5 +1,6 @@
 <th class="group_header <%= combo_status(group) %>", colspan =4>
-	<div><%= group.groupName %></div>
+	<div id = "header_holder">
+	<h4><%= group.groupName %></h4>
 	<% if group.typeID == SPECIAL %>
 	<div class = "combo_price"><%= number_to_currency(group.price) unless group.price.blank?%></div>
 	<% end %>
@@ -10,4 +11,5 @@
 				 :disabled => button_disabled(group), :class => 'combo_cancel', 
 				 :id => combo_status(group), :remote => true %></div>
 	<% end %>
+	</div>
 </th>

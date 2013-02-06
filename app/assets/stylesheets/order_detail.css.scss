@@ -35,7 +35,7 @@
 
 #order_detail_outline{
 	padding: 10px;
-
+	font-size: 16px;
 
 }
 
@@ -74,10 +74,10 @@
 }
 
 #order_review{
-	position: relative;
+	position: absolute;
 	padding-left: 15px;
 	padding-right: 5px;
-	width: 550px;
+	//width: 550px;
 	background-color: white;
 	border: 3px solid black;
 	border-style: solid solid solid none;
@@ -87,6 +87,7 @@
 		padding-right: 5px;
 		margin-bottom: 0px;
 		height: auto;
+		width: auto;
 	}
 
 	.order_type_outline{

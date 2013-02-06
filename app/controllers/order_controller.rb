@@ -7,7 +7,7 @@ before_filter :authenticate_edit, :only => [:edit]
 
 	def destroy
 		Order.find(params[:id]).destroy
-		flash[:success] = "Your order has been cancelled"
+		flash[:success] = "Order cancelled"
 		redirect_to home_path
 	end
 
@@ -22,7 +22,7 @@ before_filter :authenticate_edit, :only => [:edit]
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
 		if !failure.blank?
-			flash[:error] = "Your #{failure.last.type.typeName} order is incomplete."
+			flash[:error] = "#{failure.last.type.typeName} order is incomplete."
 			redirect_to home_path, :group => failure.last
 		else
 			flash[:notice] = "Edit or confirm your order here."

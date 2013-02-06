@@ -38,7 +38,6 @@ header.menu_header{
 			margin-left: 1em;
 			position: relative;
 			bottom: 5px;
-
 		}
 
 		.total_order_price{
@@ -50,7 +49,7 @@ header.menu_header{
 			font-weight: normal;
 			padding: 5px;
 			text-align: center;
-			width: 120px;
+			font-size: 16px;
 		}
 	}
 
@@ -61,26 +60,21 @@ header.menu_header{
 	position: relative;
 	display: inline-block;
 	top: 20px;
-
-	h1{
-		position: relative;
-	}
+	left: 20px;
 
 	#authenticate_button{
 
 		a{
 			text-decoration: none;
-			position: absolute;
+			position: relative;
 			text-align: center;
 			border: 2px solid #007C92;
 			background-color: #f3efd8;
 			color: #007C92;
 			font-weight: bold;
-			width: 100px;
 			padding: 10px;
-			font-size: large;
-			top: 17px;
-			left: 380px;
+			font-size: 16px;
+			//top: 17px;
 		}
 	}
 
@@ -172,12 +166,16 @@ header.menu_header{
 	height: 75px;
 	text-align: center;
 
+	h4{
+		font-size: 16px;
+	}
 	.combo_price{
 		position: absolute;
 		display: inline;
-		right: 245px;
+		right: 240px;
 		top: 32px;
 		font-weight: normal;
+		font-size: 16px;
 	}
 
 }
@@ -239,22 +237,34 @@ header.menu_header{
 	margin: 0;
 	position: relative;
 
+	#header_holder{
+		margin-bottom: 10px;
+	}
+
+	h4{
+		font-size: 16px;
+		margin-bottom: 0px;
+		padding-bottom: 0px;
+	}
+
 	.combo_price{
-		position: absolute;
+		position: relative;
 		display: inline;
-		right: 225px;
-		bottom: 15px;
+		left: 175px;
+		bottom: 20px;
+		font-size: 16px;
 		font-weight: normal;
 	}
 
 	.combo_detail{
-		position: absolute;
+		position: relative;
 		text-align: center;
 		display: inline;
-		left: 150px;
-		bottom: 18px;
+		right: 200px;
+		bottom: 20px;
 		font-weight: normal;
 		font-style: italic;
+		font-size: 16px;
 		color: #8D3C1E;
 	}
 
@@ -265,6 +275,9 @@ header.menu_header{
 	padding-left: 5px;
 	text-align: left;
 	border: 1px solid grey;
+a{
+	text-decoration: none;
+}
 
 }
 
@@ -282,7 +295,6 @@ header.menu_header{
 
 .item_name{
 	color: #820000;
-
 }
 
 .item_detail{
