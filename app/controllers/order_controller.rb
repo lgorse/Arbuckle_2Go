@@ -18,14 +18,14 @@ before_filter :authenticate_edit, :only => [:edit]
 
 	def edit
 		redirect_to send_path and return if @time_data.fetch("validtime") == ORDER_LOCKOUT
-		@title = "Check your order then Confirm"
+		@title = "Review your order then Check out"
 		@order.update_order(false, PENDING)
 		failure = @order.incomplete_combos?
 		if !failure.blank?
 			flash[:error] = "#{failure.last.type.typeName} order is incomplete."
 			redirect_to home_path, :group => failure.last
 		else
-			flash[:notice] = "Edit or confirm your order here."
+			flash[:notice] = "Edit your order or Check out."
 			respond_to do |format|
 				format.html
 				format.js 
